@@ -8,9 +8,10 @@ use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
+class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface, UserLoaderInterface
 {
     private UserPasswordEncoderInterface $encoder;
 
@@ -20,17 +21,13 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         $this->encoder = $encoder;
     }
 
-    public function findUserByEmail(): ?User
+    public function findUserByEmail(string $email): ?User
     {
-        return $this->findOneBy([
-
-        ]);
+        return $this->findOneBy(['email' => $email]);
     }
 
     /**
-     * @param string $email
-     * @param string $password
-     * @param string $username
+     * @inheritDoc
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -39,10 +36,16 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     {
         $em = $this->getEntityManager();
         $user = new User();
+        $user->setEmail($email);
         $user->setUsername($username);
         $user->setPassword($this->encoder->encodePassword($user, $password));
 
         $em->persist($user);
         $em->flush();
+    }
+
+    public function loadUserByUsername(string $usernameOrEmail = null)
+    {
+        return $this->findOneBy(['email' => $usernameOrEmail]);
     }
 }

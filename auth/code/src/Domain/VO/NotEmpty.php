@@ -9,9 +9,7 @@ final class NotEmpty extends ValueObject
     protected string $input = '';
 
     /**
-     * NotEmpty constructor.
-     *
-     * @param string $input
+     * @inheritDoc
      *
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException

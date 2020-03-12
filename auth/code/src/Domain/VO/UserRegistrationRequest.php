@@ -15,11 +15,7 @@ final class UserRegistrationRequest extends ValueObject
     protected string $password;
 
     /**
-     * UserRegistrationRequest constructor.
-     *
-     * @param string $email
-     * @param string $password
-     * @param string $username
+     * @inheritDoc
      *
      * @throws ImmutableObjectException
      */
@@ -30,11 +26,7 @@ final class UserRegistrationRequest extends ValueObject
     }
 
     /**
-     * @param string $email
-     * @param string $password
-     * @param string $username
-     *
-     * @return UserRegistrationRequest|ValueObject
+     * @inheritDoc
      *
      * @throws \InvalidArgumentException
      * @throws ImmutableObjectException

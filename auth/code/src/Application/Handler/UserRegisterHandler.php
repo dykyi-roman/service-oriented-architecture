@@ -24,7 +24,7 @@ final class UserRegisterHandler
     }
 
     /**
-     * @param UserRegisterCommand $command
+     * @inheritDoc
      *
      * @throws CreateUserException
      */

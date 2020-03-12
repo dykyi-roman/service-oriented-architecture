@@ -7,7 +7,6 @@ security:
         entity_provider:
             entity:
                 class: App\Domain\Entity\User
-                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

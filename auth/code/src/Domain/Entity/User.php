@@ -28,20 +28,15 @@ class User implements UserInterface
      */
     private string $password;
 
-//    /**
-//     * @ORM\Column(type="string", length=80, unique=true)
-//     */
-//    private string $email;
+    /**
+     * @ORM\Column(type="string", length=80, unique=true)
+     */
+    private string $email;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private bool $isActive;
-
-    public function __construct()
-    {
-        $this->isActive = true;
-    }
 
     public function setUsername(string $username): void
     {

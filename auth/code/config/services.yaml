@@ -31,3 +31,13 @@ services:
     App\Application\Handler\UserRegisterHandler:
         tags:
             - { name: tactician.handler, command: App\Application\Command\UserRegisterCommand }
+
+    App\Application\Listeners\JWTCreatedListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    App\Application\Listeners\JWTDecodedListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }
