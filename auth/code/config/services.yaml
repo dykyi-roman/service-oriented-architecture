@@ -32,6 +32,11 @@ services:
         tags:
             - { name: tactician.handler, command: App\Application\Command\UserRegisterCommand }
 
+    App\Application\Listeners\PreflightIgnoreOnNewRelicListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
     App\Application\Listeners\JWTCreatedListener:
         arguments: [ '@request_stack' ]
         tags:
