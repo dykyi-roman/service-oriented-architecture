@@ -32,6 +32,7 @@ final class UserRegisterHandler
     {
         try {
             $this->userRepository->createUser(
+                $command->getUuid(),
                 $command->getEmail(),
                 $command->getPassword(),
                 $command->getPhone(),

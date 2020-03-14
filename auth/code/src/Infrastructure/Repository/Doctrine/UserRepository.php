@@ -8,6 +8,7 @@ use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
@@ -36,10 +37,10 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(string $email, string $password, string $phone, string $fullName): void
+    public function createUser(UuidInterface $uuid, string $email, string $password, string $phone, string $fullName): void
     {
         $em = $this->getEntityManager();
-        $user = new User();
+        $user = new User($uuid);
         $user->setEmail($email);
         $user->setPhone($phone);
         $user->setFullName($fullName);

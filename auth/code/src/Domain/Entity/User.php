@@ -4,6 +4,8 @@ namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,10 +20,10 @@ class User implements UserInterface, JWTUserInterface
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
-    private string $id;
+    private UuidInterface $id;
 
     /**
      * @ORM\Column(type="string", length=80, unique=true)
@@ -54,8 +56,9 @@ class User implements UserInterface, JWTUserInterface
      */
     private bool $isActive;
 
-    public function __construct(?string $username = null, ?array $options = null)
+    public function __construct(UuidInterface $id, ?string $username = null, ?array $options = null)
     {
+        $this->id = $id;
         $this->isActive = true;
         if (null !== $username) {
             $this->setEmail($username);
@@ -71,12 +74,13 @@ class User implements UserInterface, JWTUserInterface
     public static function createFromPayload($username, array $payload)
     {
         return new self(
+            Uuid::uuid4(),
             $username,
             $payload
         );
     }
 
-    public function getId(): ?int
+    public function getId(): UuidInterface
     {
         return $this->id;
     }

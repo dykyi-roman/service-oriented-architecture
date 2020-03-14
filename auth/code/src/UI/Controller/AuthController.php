@@ -9,6 +9,7 @@ use App\Domain\VO\FullName;
 use App\Domain\VO\UserRegistrationRequest;
 use Immutable\Exception\ImmutableObjectException;
 use League\Tactician\CommandBus;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,8 +18,10 @@ class AuthController extends ApiController
     public function register(Request $request, CommandBus $commandBus): JsonResponse
     {
         try {
+            $uuid = Uuid::uuid4();
             $request = $this->transformJsonBody($request);
             $commandBus->handle(new UserRegisterCommand(
+                $uuid,
                 new UserRegistrationRequest(
                     $request->get('email'),
                     $request->get('password'),
@@ -37,6 +40,6 @@ class AuthController extends ApiController
             return $this->respondWithErrors($exception->getMessage(), [], 500);
         }
 
-        return $this->respondWithSuccess(['user' => 'User successfully created']);
+        return $this->respondCreated(['uuid' => $uuid->toString()]);
     }
 }
