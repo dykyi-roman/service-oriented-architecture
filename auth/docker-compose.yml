@@ -23,10 +23,10 @@ mysql:
     volumes:
       - ./database/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_PORT: 3306
     ports:
       - "3306:3306"

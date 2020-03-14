@@ -19,7 +19,6 @@ final class JWTDecodedListener
 
     public function onJWTDecoded(JWTDecodedEvent $event): void
     {
-//        dump('JWTDecodedListener'); die();
         $request = $this->requestStack->getCurrentRequest();
         if (null === $request) {
             throw new RuntimeException('Not found current request');

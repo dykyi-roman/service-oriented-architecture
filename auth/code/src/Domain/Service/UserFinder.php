@@ -9,9 +9,6 @@ use App\Domain\Repository\UserRepositoryInterface;
 
 final class UserFinder
 {
-    /**
-     * @var UserRepositoryInterface
-     */
     private UserRepositoryInterface $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository)
