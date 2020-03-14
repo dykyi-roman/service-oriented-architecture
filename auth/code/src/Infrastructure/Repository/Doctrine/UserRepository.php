@@ -32,12 +32,13 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(string $email, string $password, string $username): void
+    public function createUser(string $email, string $password, string $phone, string $fullName): void
     {
         $em = $this->getEntityManager();
         $user = new User();
         $user->setEmail($email);
-        $user->setUsername($username);
+        $user->setPhone($phone);
+        $user->setFullName($fullName);
         $user->setPassword($this->encoder->encodePassword($user, $password));
 
         $em->persist($user);

@@ -3,30 +3,25 @@
 namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\Doctrine\UserRepository")
+ * @UniqueEntity(fields={"email"})
  */
-class User implements UserInterface
+class User implements UserInterface, JWTUserInterface
 {
+    private const ROLE_USER = 'ROLE_USER';
+
     /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private int $id;
-
-    /**
-     * @ORM\Column(type="string", length=25)
-     */
-    private string $username;
-
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
-    private string $password;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", length=80, unique=true)
@@ -34,56 +29,147 @@ class User implements UserInterface
     private string $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @var string The hashed password
+     * @ORM\Column(type="string", length=500)
      */
-    private bool $isActive;
+    private string $password;
 
-    public function setUsername(string $username): void
+    /**
+     * @var string|null
+     */
+    private string $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", name="full_name", nullable=false)
+     */
+    private string $fullName;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private string $phone;
+
+    public function __construct(?string $username = null, ?array $options = null)
     {
-        $this->username = $username;
+        if (null !== $username) {
+            $this->setEmail($username);
+        }
+        if (isset($options['email']) && null !== $options['email']) {
+            $this->setEmail($options['email']);
+        }
+        if (isset($options['password']) && null !== $options['password']) {
+            $this->setPassword($options['password']);
+        }
     }
 
-    public function getUsername(): string
+    public static function createFromPayload($username, array $payload)
     {
-        return $this->username;
+        return new self(
+            $username,
+            $payload
+        );
     }
 
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    public function getRoles(): array
-    {
-        return array('ROLE_USER');
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function eraseCredentials(): void
+    public function getEmail(): ?string
     {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string)$this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string)$this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return [self::ROLE_USER];
     }
 }

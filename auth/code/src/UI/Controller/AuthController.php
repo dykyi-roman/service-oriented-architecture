@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\UI\Controller;
 
 use App\Application\Command\UserRegisterCommand;
+use App\Domain\VO\FullName;
 use App\Domain\VO\UserRegistrationRequest;
 use Immutable\Exception\ImmutableObjectException;
+use Immutable\ValueObject\Email;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,11 @@ class AuthController extends ApiController
                 new UserRegistrationRequest(
                     $request->get('email'),
                     $request->get('password'),
-                    $request->get('username')
+                    $request->get('phone'),
+                    new FullName(
+                        $request->get('firstName'),
+                        $request->get('lastName'),
+                    )
                 )
             ));
         } catch (ImmutableObjectException $exception) {

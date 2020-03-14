@@ -16,7 +16,7 @@ final class NotEmpty extends ValueObject
      */
     public function __construct(string $input)
     {
-        $this->withInput($input);
+        $this->withChanged($input);
         parent::__construct();
     }
 
@@ -27,7 +27,7 @@ final class NotEmpty extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function withInput(string $input) : ValueObject
+    public function withChanged(string $input): ValueObject
     {
         $this->assertValid($input);
         return $this->with([

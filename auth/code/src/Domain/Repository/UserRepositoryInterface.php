@@ -8,7 +8,7 @@ use App\Domain\Entity\User;
 
 interface UserRepositoryInterface
 {
-    public function createUser(string $email, string $password, string $username): void;
+    public function createUser(string $email, string $password, string $phone, string $firstName): void;
 
     public function findUserByEmail(string $email): ?User;
 

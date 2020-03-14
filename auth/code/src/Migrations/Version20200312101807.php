@@ -23,7 +23,8 @@ final class Version20200312101807 extends AbstractMigration
 
         $users = $schema->createTable('users');
         $users->addColumn('id', Types::INTEGER)->setAutoincrement(true);
-        $users->addColumn('username', Types::STRING, ['length' => 25]);
+        $users->addColumn('full_name', Types::STRING);
+        $users->addColumn('phone', Types::STRING, ['length' => 50]);
         $users->addColumn('password', Types::STRING, ['length' => 500]);
         $users->addColumn('email', Types::STRING, ['length' => 80]);
         $users->addColumn('is_active', Types::BOOLEAN);

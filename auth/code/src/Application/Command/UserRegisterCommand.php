@@ -29,8 +29,13 @@ final class UserRegisterCommand
         return $this->request->getPassword();
     }
 
-    public function getUsername(): string
+    public function getPhone(): string
     {
-        return $this->request->getUsername();
+        return $this->request->getPhone();
+    }
+
+    public function getFullName(): string
+    {
+        return $this->request->getFullName()->getValue();
     }
 }

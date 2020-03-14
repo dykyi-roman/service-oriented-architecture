@@ -31,7 +31,12 @@ final class UserRegisterHandler
     public function handle(UserRegisterCommand $command): void
     {
         try {
-            $this->userRepository->createUser($command->getEmail(), $command->getPassword(), $command->getUsername());
+            $this->userRepository->createUser(
+                $command->getEmail(),
+                $command->getPassword(),
+                $command->getPhone(),
+                $command->getFullName()
+            );
         } catch (Throwable $exception) {
             $this->logger->error('UserRegisterHandler::handle', [
                 'message' => $exception->getMessage()

@@ -21,6 +21,8 @@ final class JWTCreatedListener
         $request = $this->requestStack->getCurrentRequest();
         $payload = $event->getData();
 
+//        $payload['username'] = $event->getUser()->getEmail();
+        $payload['email'] = $event->getUser()->getEmail();
         $payload['ip'] = null === $request ? null : $request->getClientIp();
         $payload['id'] = $event->getUser()->getId();
 

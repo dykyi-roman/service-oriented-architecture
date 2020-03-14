@@ -11,17 +11,18 @@ use Immutable\ValueObject\ValueObject;
 final class UserRegistrationRequest extends ValueObject
 {
     protected string $email;
-    protected string $username;
     protected string $password;
+    protected string $phone;
+    protected FullName $fullName;
 
     /**
      * @inheritDoc
      *
      * @throws ImmutableObjectException
      */
-    public function __construct(string $email, string $password, string $username)
+    public function __construct(string $email, string $password, string $phone, FullName $fullName)
     {
-        $this->withChanged($email, $password, $username);
+        $this->withChanged($email, $password, $phone, $fullName);
         parent::__construct();
     }
 
@@ -34,20 +35,22 @@ final class UserRegistrationRequest extends ValueObject
     public function withChanged(
         string $email,
         string $password,
-        string $username
+        string $phone,
+        FullName $fullName
     ): ValueObject {
         try {
-            new NotEmpty($username);
-            new NotEmpty($password);
             new Email($email);
+            new NotEmpty($password);
+            new Phone($phone);
         } catch (\Throwable $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
 
         return $this->with([
             'email' => $email,
+            'phone' => $phone,
             'password' => $password,
-            'username' => $username,
+            'fullName' => $fullName,
         ]);
     }
 
@@ -56,9 +59,14 @@ final class UserRegistrationRequest extends ValueObject
         return $this->email;
     }
 
-    public function getUsername(): string
+    public function getPhone(): string
     {
-        return $this->username;
+        return $this->phone;
+    }
+
+    public function getFullName(): FullName
+    {
+        return $this->fullName;
     }
 
     public function getPassword(): string

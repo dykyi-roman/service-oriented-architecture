@@ -1,7 +1,11 @@
 register:
-    path: /api/register
+    path: /api/user/registration
     controller: App\UI\Controller\AuthController::register
     methods: POST
 
+gesdinet_jwt_refresh_token:
+    path:       /api/token/refresh
+    controller: gesdinet.jwtrefreshtoken::refresh
+
 api_login_check:
-    path: /api/login_check
+    path: /api/user/login
