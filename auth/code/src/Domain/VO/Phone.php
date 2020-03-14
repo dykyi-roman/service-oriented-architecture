@@ -28,6 +28,9 @@ final class Phone extends ValueObject
     {
         try {
             new NotEmpty($phone);
+            if (!$this->isValidateMobile($phone)) {
+                throw new \InvalidArgumentException('Phone number is not correct');
+            }
         } catch (\Throwable $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
@@ -35,5 +38,14 @@ final class Phone extends ValueObject
         return $this->with([
             'phone' => $phone,
         ]);
+    }
+
+    private function isValidateMobile(string $value): bool
+    {
+        $filteredPhoneNumber = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+        $phoneToCheck = str_replace('-', '', $filteredPhoneNumber);
+        $tmp = \strlen($phoneToCheck);
+
+        return !($tmp < 10 || $tmp > 14);
     }
 }
