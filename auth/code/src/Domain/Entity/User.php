@@ -49,8 +49,14 @@ class User implements UserInterface, JWTUserInterface
      */
     private string $phone;
 
+    /**
+     * @ORM\Column(type="boolean", name="is_active")
+     */
+    private bool $isActive;
+
     public function __construct(?string $username = null, ?array $options = null)
     {
+        $this->isActive = true;
         if (null !== $username) {
             $this->setEmail($username);
         }
@@ -165,10 +171,12 @@ class User implements UserInterface, JWTUserInterface
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getRoles()
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function getRoles(): array
     {
         return [self::ROLE_USER];
     }

@@ -8,7 +8,6 @@ use App\Application\Command\UserRegisterCommand;
 use App\Domain\VO\FullName;
 use App\Domain\VO\UserRegistrationRequest;
 use Immutable\Exception\ImmutableObjectException;
-use Immutable\ValueObject\Email;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +37,6 @@ class AuthController extends ApiController
             return $this->respondWithErrors($exception->getMessage(), [], 500);
         }
 
-        return $this->respondWithSuccess(sprintf('User successfully created'));
+        return $this->respondWithSuccess(['user' => 'User successfully created']);
     }
 }

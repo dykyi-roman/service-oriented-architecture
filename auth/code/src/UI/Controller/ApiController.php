@@ -41,11 +41,12 @@ abstract class ApiController extends AbstractController
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
 
-    public function respondWithSuccess(string $success, array $headers = []): JsonResponse
+    public function respondWithSuccess(array $data = [], array $headers = []): JsonResponse
     {
         $data = [
             'status' => $this->getStatusCode(),
-            'success' => $success,
+            'success' => true,
+            'data' => $data
         ];
 
         return new JsonResponse($data, $this->getStatusCode(), $headers);

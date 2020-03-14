@@ -12,5 +12,5 @@ interface UserRepositoryInterface
 
     public function findUserByEmail(string $email): ?User;
 
-    public function loadUserByUsername(string $usernameOrEmail = null);
+    public function findUserById(string $id): ?User;
 }

@@ -3,6 +3,11 @@ register:
     controller: App\UI\Controller\AuthController::register
     methods: POST
 
+user:
+    path: /api/user/{id}
+    controller: App\UI\Controller\UserController::user
+    methods: GET
+
 gesdinet_jwt_refresh_token:
     path:       /api/token/refresh
     controller: gesdinet.jwtrefreshtoken::refresh
