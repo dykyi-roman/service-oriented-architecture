@@ -40,6 +40,11 @@ final class Phone extends ValueObject
         ]);
     }
 
+    public function getValue(): string
+    {
+        return $this->phone;
+    }
+
     private function isValidateMobile(string $value): bool
     {
         $filteredPhoneNumber = filter_var($value, FILTER_SANITIZE_NUMBER_INT);

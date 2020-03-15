@@ -10,9 +10,9 @@ use Immutable\ValueObject\ValueObject;
 
 final class UserRegistrationRequest extends ValueObject
 {
-    protected string $email;
+    protected Email $email;
     protected string $password;
-    protected string $phone;
+    protected Phone $phone;
     protected FullName $fullName;
 
     /**
@@ -39,27 +39,25 @@ final class UserRegistrationRequest extends ValueObject
         FullName $fullName
     ): ValueObject {
         try {
-            new Email($email);
             new NotEmpty($password);
-            new Phone($phone);
+
+            return $this->with([
+                'email' => new Email($email),
+                'phone' => new Phone($phone),
+                'password' => $password,
+                'fullName' => $fullName,
+            ]);
         } catch (\Throwable $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
-
-        return $this->with([
-            'email' => $email,
-            'phone' => $phone,
-            'password' => $password,
-            'fullName' => $fullName,
-        ]);
     }
 
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
-    public function getPhone(): string
+    public function getPhone(): Phone
     {
         return $this->phone;
     }

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Application\Command;
 
 use App\Application\Handler\UserRegisterHandler;
+use App\Domain\VO\Phone;
 use App\Domain\VO\UserRegistrationRequest;
+use Immutable\ValueObject\Email;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -28,7 +30,7 @@ final class UserRegisterCommand
         return $this->uuid;
     }
 
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->request->getEmail();
     }
@@ -38,7 +40,7 @@ final class UserRegisterCommand
         return $this->request->getPassword();
     }
 
-    public function getPhone(): string
+    public function getPhone(): Phone
     {
         return $this->request->getPhone();
     }
