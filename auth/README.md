@@ -1,7 +1,7 @@
 Auth service
 =======
 
-![image](auth.png)
+![image](auth.jpeg)
 
 ## Overview
 

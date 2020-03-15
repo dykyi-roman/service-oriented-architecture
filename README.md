@@ -30,6 +30,10 @@ A client library is usually used to share this verification functionality with a
 # Application
 
 ...   
+
+# Performance Monitoring
+
+...
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
