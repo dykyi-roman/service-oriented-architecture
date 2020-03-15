@@ -15,6 +15,8 @@ A client library is usually used to share this verification functionality with a
 
 ![image](base.png)
 
+When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
+
 # Notification service
 
 ...
