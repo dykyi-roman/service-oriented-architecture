@@ -32,6 +32,9 @@ services:
         tags:
             - { name: tactician.handler, command: App\Application\Command\UserRegisterCommand }
 
+    App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
+        public: true
+
     App\Application\Listeners\PreflightIgnoreOnNewRelicListener:
         arguments: [ '@request_stack' ]
         tags:
