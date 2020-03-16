@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\UI\Controller;
 
 use App\Domain\Service\UserFinder;
-use App\Infrastructure\Repository\Doctrine\UserRepository;
 use App\Infrastructure\Repository\InMemory\InMemoryUserRepository;
 use App\UI\Controller\UserController;
 use Faker\Factory;
