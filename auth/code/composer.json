@@ -20,6 +20,7 @@
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9",
         "phpunit/phpunit": "^9",
         "symfony/maker-bundle": "^1.14"
     },

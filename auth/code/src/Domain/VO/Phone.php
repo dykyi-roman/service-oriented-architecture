@@ -40,7 +40,7 @@ final class Phone extends ValueObject
         ]);
     }
 
-    public function getValue(): string
+    public function toString(): string
     {
         return $this->phone;
     }

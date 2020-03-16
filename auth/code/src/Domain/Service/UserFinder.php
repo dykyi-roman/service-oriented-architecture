@@ -7,7 +7,7 @@ namespace App\Domain\Service;
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
 
-final class UserFinder
+class UserFinder
 {
     private UserRepositoryInterface $userRepository;
 

@@ -10,8 +10,8 @@ use Immutable\ValueObject\ValueObject;
 
 final class UserRegistrationRequest extends ValueObject
 {
-    protected Email $email;
     protected string $password;
+    protected Email $email;
     protected Phone $phone;
     protected FullName $fullName;
 

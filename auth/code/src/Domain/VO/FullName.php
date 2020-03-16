@@ -51,7 +51,7 @@ final class FullName extends ValueObject
         return $this->lastName;
     }
 
-    public function getValue(bool $lastFirst = true): string
+    public function toString(bool $lastFirst = true): string
     {
         $first = $lastFirst ? $this->lastName : $this->firstName;
         $second = $lastFirst ? $this->firstName : $this->lastName;

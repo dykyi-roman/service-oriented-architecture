@@ -47,6 +47,6 @@ final class UserRegisterCommand
 
     public function getFullName(): string
     {
-        return $this->request->getFullName()->getValue();
+        return $this->request->getFullName()->toString();
     }
 }

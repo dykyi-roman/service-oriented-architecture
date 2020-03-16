@@ -18,11 +18,6 @@ class InMemoryUserRepository implements UserRepositoryInterface
     private array $users = [];
     private UserPasswordEncoderInterface $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
     public function findUserByEmail(string $email): ?User
     {
         foreach ($this->users as $id => $user) {
@@ -60,7 +55,7 @@ class InMemoryUserRepository implements UserRepositoryInterface
         $user->setEmail($email);
         $user->setPhone($phone);
         $user->setFullName($fullName);
-        $user->setPassword($this->encoder->encodePassword($user, $password));
+        $user->setPassword($password);
 
         $this->users[$uuid->toString()] = $user;
     }

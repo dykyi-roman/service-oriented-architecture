@@ -41,7 +41,7 @@ final class UserRegisterHandler
                 $command->getUuid(),
                 $command->getEmail()->getAddress(),
                 $command->getPassword(),
-                $command->getPhone()->getValue(),
+                $command->getPhone()->toString(),
                 $command->getFullName()
             );
 

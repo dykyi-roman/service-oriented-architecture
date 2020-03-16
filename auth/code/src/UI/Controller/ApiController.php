@@ -75,6 +75,10 @@ abstract class ApiController extends AbstractController
     // since Symfony 4 doesn’t handle that automatically:
     protected function transformJsonBody(Request $request): Request
     {
+        if ('' === $request->getContent()) {
+            return $request;
+        }
+
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         if ($data === null) {
             return $request;
