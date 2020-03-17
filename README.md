@@ -36,6 +36,10 @@ When you take a JWT from the authorization server you can use it for communicati
 # Performance Monitoring
 
 ...
+
+#Useful links:
+
+[Create an SSL Certificate on Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

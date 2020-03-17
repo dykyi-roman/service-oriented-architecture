@@ -1,4 +1,6 @@
-web:
+version: '3.7'
+services:
+  web:
     image: nginx:latest
     ports:
         - "8080:80"
@@ -11,13 +13,13 @@ web:
         - ./site.conf:/etc/nginx/conf.d/site.conf
     links:
         - php
-php:
+  php:
     build: docker/php
     volumes:
         - ./code:/code
     links:
         - mysql
-mysql:
+  mysql:
     image: mysql
     restart: always
     volumes:
@@ -32,7 +34,7 @@ mysql:
       - "3306:3306"
     expose:
       - "3306"
-adminer:
+  adminer:
     image: adminer
     restart: always
     links:

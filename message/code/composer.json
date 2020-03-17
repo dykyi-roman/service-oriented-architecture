@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "immutablephp/immutable": "^1.0",
+        "nelmio/cors-bundle": "^2.0",
         "ramsey/uuid-doctrine": "^1.6",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
