@@ -4,7 +4,7 @@ Microservices architecture has been gaining a lot of ground as the preferred arc
 But since microservices are distributed the complexity of managing them increases.
 One of the key challenges is how to implement authentication and authorization in microservices so that we can manage security and access control.
 
-#Documentation
+# Documentation
 
 [Auth service](auth/README.md)
 

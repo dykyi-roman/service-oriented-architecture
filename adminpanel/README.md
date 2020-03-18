@@ -1,31 +1,31 @@
 Admin panel service
 =======
 
-## Overview
+# Overview
 
 Exist a lot of ways how you can organize architecture to work with the admin panel.
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
 
-## Approach-1 (Single admin panel)
+# Approach №1 (Single admin panel)
 
 ![image](docs/adminflow1.png)
 
 Simplest approach that uses in a lot legacy application. SRP broken, because the Admin panel knows about all service and his data. And do not matter you have a separate panel like microservice or your admin panel a part of your application.
 
-## Approach-2 (Self admin panel + Global enter point)
+# Approach №2 (Self admin panel + Global enter point)
 
 ![image](docs/adminflow2.png)
 
 Following this approach, we have an entry point (use a REST API) to all small admin panel services.
 The global admin panel has a role aggregator.
 
-## Approach-3 (Self admin panel + admin`s identity)
+# Approach №3 (Self admin panel + admin`s identity)
 
 ![image](docs/adminflow3.png)
 
 Following this approach, we still have an admin panel inside each service, but for easier enter, we should use the authentication service to entering in each service and remember all pairs (pass and login).
 
-## Approach-4 (Self admin panel + SAML)
+# Approach №4 (Self admin panel + SAML)
 
 ![image](docs/adminflow4.png)
 
@@ -43,7 +43,7 @@ Security Assertion Markup Language (SAML) is a standard for logging users into a
 
 ![image](docs/SAMLflow.png)
 
-## Endpoints
+# Endpoints
 
 | Path                    | Method | Scheme | Grant |
 | ----------------------  | ------ | ------ | ----- |
