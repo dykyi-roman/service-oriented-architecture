@@ -4,9 +4,15 @@ Microservices architecture has been gaining a lot of ground as the preferred arc
 But since microservices are distributed the complexity of managing them increases.
 One of the key challenges is how to implement authentication and authorization in microservices so that we can manage security and access control.
 
+#Documentation
 
+[Auth service](auth/README.md)
 
-# Auth service
+[Message service](message/README.md)
+
+[Admin panel service](adminpanel/README.md)
+
+## Auth service
 
 In this strategy, a microservice is created for the purpose of authentication. Authentication primarily involves issuing and verifying tokens. 
 JWT (JSON Web Tokens) can be used to verify tokens without having to hit a database or other persistent storage. 
@@ -17,23 +23,26 @@ A client library is usually used to share this verification functionality with a
 
 When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
 
-# Message service
+## Message service
 
 ...
 
-# Admin Panel service
+## Admin Panel service
 
-...
+![image](adminpanel/docs/adminflow2.png)
 
-# Verification service 
+Exist a lot of ways how you can organize architecture to work with the admin panel.
+I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
+
+## Verification service 
    
 ...
 
-# Application
+## Application
 
 ...   
 
-# Performance Monitoring
+## Performance Monitoring
 
 ...
 
