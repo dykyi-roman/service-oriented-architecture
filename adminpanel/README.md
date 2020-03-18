@@ -1,8 +1,6 @@
 Admin panel service
 =======
 
-# Overview
-
 Exist a lot of ways how you can organize architecture to work with the admin panel.
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
 

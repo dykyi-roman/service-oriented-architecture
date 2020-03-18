@@ -1,11 +1,9 @@
 Message service
 =======
 
-## Overview
-
 ...
 
-## Endpoints
+# Endpoints
 
 | Path                    | Method | Scheme | Grant |
 | ----------------------  | ------ | ------ | ----- |

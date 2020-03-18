@@ -3,8 +3,6 @@ Auth service
 
 ![image](auth.jpeg)
 
-## Overview
-
 This part of the tutorials covers how to perform Authentication and Authorization between microservices.
 
 Authentication: Refers to verify who you are, so you need to use username and password for authentication.
