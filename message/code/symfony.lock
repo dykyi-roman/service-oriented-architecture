@@ -183,6 +183,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.1.0"
     },
+    "phpmailer/phpmailer": {
+        "version": "v6.1.5"
+    },
     "phpspec/prophecy": {
         "version": "v1.10.3"
     },
@@ -485,6 +488,9 @@
     },
     "theseer/tokenizer": {
         "version": "1.1.3"
+    },
+    "twilio/sdk": {
+        "version": "6.0.1"
     },
     "webimpress/safe-writer": {
         "version": "2.0.0"

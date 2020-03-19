@@ -48,7 +48,7 @@ final class UserRegisterHandler
             $this->dispatcher->dispatch(new UserRegisteredEvent($command->getUuid(), $command->getEmail()));
         } catch (Throwable $exception) {
             $message = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($message, ['message' => $exception->getMessage()]);
+            $this->logger->error($message, ['error' => $exception->getMessage()]);
 
             throw UserException::createUser();
         }

@@ -21,7 +21,9 @@ Message service
 
 ## Useful links
 
-...
+[PHPMailer](https://github.com/PHPMailer/PHPMailer)
+
+[Sending sms reminders with symfony](https://www.twilio.com/blog/sending-sms-reminders-with-symfony-php-framework)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

@@ -2,11 +2,12 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "immutablephp/immutable": "^1.0",
         "nelmio/cors-bundle": "^2.0",
+        "phpmailer/phpmailer": "^6.1",
         "ramsey/uuid-doctrine": "^1.6",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
@@ -14,7 +15,8 @@
         "symfony/framework-bundle": "5.0.*",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1.0",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "twilio/sdk": "^6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9",

@@ -4,6 +4,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    SENDER_EMAIL_ADDRESS: '%env(resolve:SENDER_EMAIL_ADDRESS)%'
+    SENDER_PHONE_NUMBER: '%env(resolve:SENDER_PHONE_NUMBER)%'
+    TWILIO_TOKEN: '%env(resolve:TWILIO_TOKEN)%'
+    TWILIO_SID: '%env(resolve:TWILIO_SID)%'
+    SMTP_SERVER: '%env(resolve:SMTP_SERVER)%'
+    SMTP_USER_NAME: '%env(resolve:SMTP_USER_NAME)%'
+    SMTP_USER_PASSWORD: '%env(resolve:SMTP_USER_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,9 +26,25 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
+    App\Ui\Controller\:
         resource: '../src/UI/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Infrastructure\Service\PHPMailerClient:
+        public: true
+
+    App\Infrastructure\Service\TwilioClient:
+        public: true
+
+    twilio.client:
+        class: Twilio\Rest\Client
+        arguments: ['%env(resolve:TWILIO_SID)%', '%env(resolve:TWILIO_TOKEN)%']
+    Twilio\Rest\Client: '@twilio.client'
+
+    phpmailer.client:
+        class: PHPMailer\PHPMailer\PHPMailer
+        arguments: [true]
+    PHPMailer\PHPMailer\PHPMailer: '@phpmailer.client'

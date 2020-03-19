@@ -4,6 +4,20 @@ Microservices architecture has been gaining a lot of ground as the preferred arc
 But since microservices are distributed the complexity of managing them increases.
 One of the key challenges is how to implement authentication and authorization in microservices so that we can manage security and access control.
 
+Avoid extensive APIs. If the microservice is getting too complicated, then you are giving the service too much functionality.
+The goal is to have a series of services that can be strung together to meet the needs of future business problems.
+
+I clearly understand that this is a not silver bullet. Clean Architecture by Robert C. Martin has a good describe base problems.
+Here I want to added some plus from me:
+
+* Small and single in purpose
+
+* Communicate via technology agnostic protocols
+
+* Support continuous integration
+
+* Independently deployable.
+
 # Documentation
 
 [Auth service](auth/README.md)
@@ -33,6 +47,7 @@ When you take a JWT from the authorization server you can use it for communicati
 
 Exist a lot of ways how you can organize architecture to work with the admin panel.
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
+On the picture use a REST for data transfer between a service but this is a detail, request/response can easily be implemented by using messaging. 
 
 # Verification service 
    
@@ -42,11 +57,15 @@ I have experience working with four. Taking into consideration the first of the 
 
 ...   
 
-# Performance Monitoring
+# Performance and monitoring
 
 ...
 
 ## Useful links:
+
+[Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
+
+[REST vs Messaging for Microservices – Which One is Best?](https://solace.com/blog/experience-awesomeness-event-driven-microservices/)
 
 [Create an SSL Certificate on Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
     
