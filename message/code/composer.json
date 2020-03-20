@@ -5,6 +5,8 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/mongodb-odm": "^2.0",
+        "doctrine/mongodb-odm-bundle": "^4.1",
         "immutablephp/immutable": "^1.0",
         "nelmio/cors-bundle": "^2.0",
         "phpmailer/phpmailer": "^6.1",
@@ -67,7 +69,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": "true",
             "require": "5.0.*"
         }
     }

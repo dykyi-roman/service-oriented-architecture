@@ -10,12 +10,12 @@ class IndexController extends AbstractController
     public function index(Sender $sender)
     {
         $data = [
-            'id' => 's213424241424',
-            'to' => '+380938982443',
-            'type' => 'phone',
+            'id' => 'd4141414124',
+            'to' => ['+380938982443', 'alarmdemo@ukr.net'],
+            'lng' => 'ua', //!!!!!!!!!!!!!!!!!!!!!!!
             'template' => 'welcome'
         ];
-
+        // Transfromer for message (txt, html, ...)
         $sender->execute($data);
     }
 }

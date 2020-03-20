@@ -3,6 +3,7 @@
 namespace App\Domain\Service;
 
 use App\Domain\Event\SentEvent;
+use App\Domain\Repository\TemplateRepositoryInterface;
 use App\Domain\ValueObject\Message;
 use App\Domain\ValueObject\MessageType;
 use App\Domain\ValueObject\Template;
@@ -16,11 +17,19 @@ final class Sender
      * @var EventDispatcherInterface
      */
     private EventDispatcherInterface $dispatcher;
+    /**
+     * @var TemplateRepositoryInterface
+     */
+    private TemplateRepositoryInterface $templateRepository;
 
-    public function __construct(MessageSenderFactory $senderFactory, EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        MessageSenderFactory $senderFactory,
+        TemplateRepositoryInterface $templateRepository,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->dispatcher = $dispatcher;
         $this->senderFactory = $senderFactory;
+        $this->templateRepository = $templateRepository;
     }
 
     /**
@@ -32,12 +41,14 @@ final class Sender
      */
     public function execute(array $data): void
     {
-        $messageType = new MessageType($data['type']);
-        $template = new Template('1', '2');
-        $sender = $this->senderFactory->create($messageType);
-        $message = new Message($template, $messageType, $data['to']);
-        $sender->send($message);
-
-        $this->dispatcher->dispatch(new SentEvent($data['id'], $message));
+        foreach ($data['to'] as $recipient) {
+            $messageType = new MessageType($recipient);
+            $template = new Template('1', '2');
+            $sender = $this->senderFactory->create($messageType);
+            $message = new Message($template, $messageType, $recipient);
+            $sender->send($message);
+            $this->dispatcher->dispatch(new SentEvent($data['id'], $message));
+            dump('stop'); die();
+        }
     }
 }

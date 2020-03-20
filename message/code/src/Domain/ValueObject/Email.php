@@ -28,7 +28,7 @@ final class Email extends ValueObject
     {
         new \Immutable\ValueObject\Email($email);
         return $this->with([
-            'phone' => $email,
+            'email' => $email,
         ]);
     }
 

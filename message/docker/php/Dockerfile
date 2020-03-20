@@ -43,3 +43,6 @@ RUN docker-php-ext-install -j$(nproc) iconv \
 
 RUN pecl install memcached
 RUN docker-php-ext-enable memcached
+
+RUN pecl install mongodb
+RUN docker-php-ext-enable mongodb

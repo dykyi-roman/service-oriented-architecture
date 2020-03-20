@@ -21,9 +21,9 @@ final class MessageType extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function __construct(string $type)
+    public function __construct(string $contact)
     {
-        $this->withChanged($type);
+        $this->withChanged($contact);
         parent::__construct();
     }
 
@@ -34,9 +34,10 @@ final class MessageType extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function withChanged(string $type): ValueObject
+    public function withChanged(string $contact): ValueObject
     {
-        new NotEmpty($type);
+        new NotEmpty($contact);
+        $type = false !== strpos($contact, '@') ? self::TYPE_EMAIL : self::TYPE_PHONE;
         $this->assertAvailableType($type);
 
         return $this->with([

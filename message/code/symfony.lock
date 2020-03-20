@@ -72,6 +72,23 @@
     "doctrine/migrations": {
         "version": "2.2.1"
     },
+    "doctrine/mongodb-odm": {
+        "version": "2.0.5"
+    },
+    "doctrine/mongodb-odm-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "1fd8598bf42227a1c8905edd32f640e4c5d15eff"
+        },
+        "files": [
+            "config/packages/doctrine_mongodb.yaml",
+            "config/packages/prod/doctrine_mongodb.yaml",
+            "src/Document/.gitignore"
+        ]
+    },
     "doctrine/orm": {
         "version": "v2.7.1"
     },
@@ -113,6 +130,9 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.1"
+    },
+    "mongodb/mongodb": {
+        "version": "1.6.0"
     },
     "monolog/monolog": {
         "version": "2.0.2"

@@ -11,6 +11,8 @@ parameters:
     SMTP_SERVER: '%env(resolve:SMTP_SERVER)%'
     SMTP_USER_NAME: '%env(resolve:SMTP_USER_NAME)%'
     SMTP_USER_PASSWORD: '%env(resolve:SMTP_USER_PASSWORD)%'
+    env(MONGODB_URL): ''
+    env(MONGODB_DB): ''
 
 services:
     # default configuration for services in *this* file
@@ -30,8 +32,13 @@ services:
         resource: '../src/UI/Controller'
         tags: ['controller.service_arguments']
 
+    App\Infrastructure\Repository\Doctrine\:
+        resource: '%kernel.project_dir%/src/Infrastructure/Repository/Doctrine/*'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Domain\Repository\TemplateRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
 
     App\Infrastructure\Service\PHPMailerClient:
         public: true
