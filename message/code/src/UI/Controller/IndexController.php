@@ -15,9 +15,10 @@ class IndexController extends AbstractController
             'language' => 'en',
             'template' => 'welcome'
         ];
-        // Transfromer for message (txt, html, ...)
+
         $sender->execute($data);
 
-        dump('sent'); die();
+        dump('sent');
+        die();
     }
 }

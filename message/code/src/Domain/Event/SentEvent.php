@@ -7,6 +7,9 @@ namespace App\Domain\Event;
 use App\Domain\ValueObject\Template;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * @see PersistMessageSubscriber::class
+ */
 class SentEvent extends Event
 {
     private string $userId;
@@ -24,7 +27,7 @@ class SentEvent extends Event
         return $this->userId;
     }
 
-    public function getMessage(): Template
+    public function getTemplate(): Template
     {
         return $this->template;
     }

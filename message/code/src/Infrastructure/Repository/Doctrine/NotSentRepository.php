@@ -15,4 +15,10 @@ final class NotSentRepository extends ServiceDocumentRepository implements NotSe
     {
         parent::__construct($registry, NotSent::class);
     }
+
+    public function save(NotSent $notSent): void
+    {
+        $this->dm->persist($notSent);
+        $this->dm->flush();
+    }
 }

@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Domain\Document;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use App\Infrastructure\Repository\Doctrine\NotSentRepository;
+use App\Infrastructure\Repository\Doctrine\SentRepository;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @MongoDB\Document(collection="not_sent", repositoryClass=NotSentRepository::class)
+ * @MongoDB\Document(collection="sent", repositoryClass=SentRepository::class)
  */
-class NotSent
+class Sent
 {
     /**
-     * @MongoDB\Id
+     * @MongoDB\Id(strategy="NONE")
      */
     protected string $id;
 
@@ -23,11 +25,6 @@ class NotSent
      * @MongoDB\UniqueIndex()
      */
     protected string $userId;
-
-    /**
-     * @MongoDB\Field(type="error")
-     */
-    protected string $error;
 
     /**
      * @MongoDB\Field(type="string")
@@ -55,26 +52,19 @@ class NotSent
         return $this->userId;
     }
 
-    public function getError(): string
-    {
-        return $this->error;
-    }
-
     public function getTemplate(): string
     {
         return $this->template;
     }
 
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
     public function setUserId(string $userId): self
     {
         $this->userId = $userId;
-
-        return $this;
-    }
-
-    public function setError(string $error): self
-    {
-        $this->error = $error;
 
         return $this;
     }

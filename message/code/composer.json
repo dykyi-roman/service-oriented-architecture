@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.3",

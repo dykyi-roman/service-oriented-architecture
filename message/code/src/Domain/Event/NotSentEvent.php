@@ -7,6 +7,9 @@ namespace App\Domain\Event;
 use App\Domain\ValueObject\Template;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * @see PersistMessageSubscriber::class
+ */
 class NotSentEvent extends Event
 {
     private string $userId;

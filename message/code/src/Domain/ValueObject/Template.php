@@ -40,6 +40,14 @@ final class Template extends ValueObject
         ]);
     }
 
+    public function toJson(): string
+    {
+        return json_encode([
+            'subject' => $this->subject,
+            'body' => $this->body
+        ], JSON_THROW_ON_ERROR, 512);
+    }
+
     public function subject(): string
     {
         return $this->subject;
