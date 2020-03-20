@@ -8,7 +8,7 @@ use Exception;
 
 class MessageException extends Exception
 {
-    public static function notSupportMessageType(): MessageException
+    public static function notSupportMessageType(): self
     {
         return new static('Message type is not support');
     }

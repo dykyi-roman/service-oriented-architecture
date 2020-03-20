@@ -16,8 +16,18 @@ final class TemplateRepository extends ServiceDocumentRepository implements Temp
         parent::__construct($registry, Template::class);
     }
 
-    public function finaAddAllC(): array
+    /**
+     * @inheritDoc
+     * @return Template|null|object
+     */
+    public function findTemplate(string $name, string $type, string $language): ?Template
     {
-        return $this->findAll();
+        return $this->findOneBy(
+            [
+                'name' => $name,
+                'type' => $type,
+                'language' => $language
+            ]
+        );
     }
 }

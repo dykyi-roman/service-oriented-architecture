@@ -2,34 +2,58 @@
 
 namespace App\Domain\Service;
 
+use App\Domain\Event\NotSentEvent;
 use App\Domain\Event\SentEvent;
-use App\Domain\Repository\TemplateRepositoryInterface;
 use App\Domain\ValueObject\Message;
 use App\Domain\ValueObject\MessageType;
 use App\Domain\ValueObject\Template;
 use Immutable\Exception\ImmutableObjectException;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Throwable;
 
 final class Sender
 {
     private MessageSenderFactory $senderFactory;
-    /**
-     * @var EventDispatcherInterface
-     */
     private EventDispatcherInterface $dispatcher;
+    private TemplateFinder $templateFinder;
     /**
-     * @var TemplateRepositoryInterface
+     * @var LoggerInterface
      */
-    private TemplateRepositoryInterface $templateRepository;
+    private LoggerInterface $logger;
 
     public function __construct(
         MessageSenderFactory $senderFactory,
-        TemplateRepositoryInterface $templateRepository,
-        EventDispatcherInterface $dispatcher
+        TemplateFinder $templateFinder,
+        EventDispatcherInterface $dispatcher,
+        LoggerInterface $logger = null
     ) {
+        $this->logger = $logger ?? new NullLogger();
         $this->dispatcher = $dispatcher;
         $this->senderFactory = $senderFactory;
-        $this->templateRepository = $templateRepository;
+        $this->templateFinder = $templateFinder;
+    }
+
+    public function execute(array $data): void
+    {
+        try {
+            foreach ($data['to'] as $recipient) {
+                $template = $this->templateFinder->find(
+                    $data['template'],
+                    (new MessageType($recipient))->toString(),
+                    $data['language']
+                );
+
+                $this->sendTo($recipient, $template);
+                $this->dispatcher->dispatch(new SentEvent($data['id'], $template));
+            }
+        } catch (Throwable $exception) {
+            $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
+            $this->logger->error($msg, ['error' => $exception->getMessage()]);
+
+            $this->dispatcher->dispatch(new NotSentEvent($data['id'], $template, $exception->getMessage()));
+        }
     }
 
     /**
@@ -39,16 +63,11 @@ final class Sender
      * @throws \App\Domain\Exception\MessageException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function execute(array $data): void
+    private function sendTo(string $recipient, Template $template): void
     {
-        foreach ($data['to'] as $recipient) {
-            $messageType = new MessageType($recipient);
-            $template = new Template('1', '2');
-            $sender = $this->senderFactory->create($messageType);
-            $message = new Message($template, $messageType, $recipient);
-            $sender->send($message);
-            $this->dispatcher->dispatch(new SentEvent($data['id'], $message));
-            dump('stop'); die();
-        }
+        $messageType = new MessageType($recipient);
+        $message = new Message($template, $messageType, $recipient);
+        $sender = $this->senderFactory->create($messageType);
+        $sender->send($message);
     }
 }

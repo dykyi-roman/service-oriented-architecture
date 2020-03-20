@@ -7,6 +7,7 @@ namespace App\Infrastructure\Service;
 use App\Domain\Service\MessageSenderInterface;
 use App\Domain\ValueObject\MessageInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Throwable;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Rest\Client;
@@ -25,10 +26,10 @@ final class TwilioClient implements MessageSenderInterface
      *
      * @throws ConfigurationException
      */
-    public function __construct(Client $client, LoggerInterface $logger)
+    public function __construct(Client $client, LoggerInterface $logger = null)
     {
-        $this->logger = $logger;
         $this->client = $client;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function send(MessageInterface $message): void

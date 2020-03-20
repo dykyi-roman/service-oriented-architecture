@@ -12,10 +12,12 @@ class IndexController extends AbstractController
         $data = [
             'id' => 'd4141414124',
             'to' => ['+380938982443', 'alarmdemo@ukr.net'],
-            'lng' => 'ua', //!!!!!!!!!!!!!!!!!!!!!!!
+            'language' => 'en',
             'template' => 'welcome'
         ];
         // Transfromer for message (txt, html, ...)
         $sender->execute($data);
+
+        dump('sent'); die();
     }
 }
