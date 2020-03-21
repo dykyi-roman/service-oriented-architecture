@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "9a8058c9-c434-4561-a454-b0585af7fa6d",
+		"name": "messages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mq-send",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "rabbitmq",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "rabbitmq",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"properties\":{},\"routing_key\":\"test\",\"payload\":'{\"user_id\":\"d4141414124\",\"to\":[\"+380938982443\",\"mr.dukuy@gmail.com\"],\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variable\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
+				},
+				"url": {
+					"raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15672",
+					"path": [
+						"api",
+						"exchanges",
+						"%2F",
+						"amq.default",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -19,6 +19,7 @@ services:
             - ./code:/code
         links:
             - mongo
+            - rabbit
     mongo:
         image: mongo:latest
         restart: always
@@ -29,7 +30,7 @@ services:
         ports:
             - 27017:27017
         volumes:
-            - ./database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     mongo-express:
         image: mongo-express
         restart: always
@@ -40,3 +41,15 @@ services:
         environment:
             ME_CONFIG_MONGODB_ADMINUSERNAME: root
             ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+    rabbit:
+        image: "rabbitmq:3-management"
+        environment:
+            RABBITMQ_ERLANG_COOKIE: "${RABBITMQ_ERLANG_COOKIE}"
+            RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
+            RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
+            RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST}"
+        ports:
+            - 15672:15672
+            - 5672:5672
+        volumes:
+            - ./docker/rabbit/enabled_plugins:/etc/rabbitmq/enabled_plugins"

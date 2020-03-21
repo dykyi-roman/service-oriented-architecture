@@ -24,6 +24,17 @@ JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token form
 
 * PHP 7.4
 * Symfony 5.0
+* MySQL
+
+## Clients
+
+MySQL open [https://localhost:8081](https://localhost:8888) and use login and password:
+
+```
+    server: auth_mysql_1
+    user: root
+    password: root
+```
 
 ## Tests
 

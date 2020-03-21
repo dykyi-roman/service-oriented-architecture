@@ -10,7 +10,6 @@ use App\Domain\Event\NotSentEvent;
 use App\Domain\Event\SentEvent;
 use App\Domain\Repository\NotSentRepositoryInterface;
 use App\Domain\Repository\SentRepositoryInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PersistMessageSubscriber implements EventSubscriberInterface
@@ -34,18 +33,15 @@ class PersistMessageSubscriber implements EventSubscriberInterface
 
     public function sent(SentEvent $event): void
     {
-        $this->sentRepository->save((new Sent(Uuid::uuid4()))
-            ->setUserId($event->getUserId())
-            ->setTemplate($event->getTemplate()->toJson())
-        );
+        $sent = (new Sent($event->getUserId()))->setTemplate($event->getTemplate()->toJson());
+        $this->sentRepository->save($sent);
     }
 
     public function notSent(NotSentEvent $event): void
     {
-        $this->notSentRepository->save((new NotSent(Uuid::uuid4()))
-            ->setUserId($event->getUserId())
-            ->setError($event->getError())
-            ->setTemplate($event->getTemplate() ? $event->getTemplate()->toJson() : '')
-        );
+        $template = $event->getTemplate() ? $event->getTemplate()->toJson() : '';
+        $notSent = (new NotSent($event->getUserId()))->setError($event->getError())->setTemplate($template);
+
+        $this->notSentRepository->save($notSent);
     }
 }

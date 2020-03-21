@@ -13,6 +13,11 @@ parameters:
     SMTP_USER_PASSWORD: '%env(resolve:SMTP_USER_PASSWORD)%'
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
+    RABBITMQ_HOST: '%env(resolve:RABBITMQ_HOST)%'
+    RABBITMQ_PORT: '%env(resolve:RABBITMQ_POST)%'
+    RABBITMQ_USER: '%env(resolve:RABBITMQ_USER)%'
+    RABBITMQ_PASSWORD: '%env(resolve:RABBITMQ_PASS)%'
+    RABBITMQ_VHOST: '%env(resolve:RABBITMQ_VHOST)%'
 
 services:
     # default configuration for services in *this* file

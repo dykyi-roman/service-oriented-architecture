@@ -26,7 +26,7 @@ final class TemplateRepository extends ServiceDocumentRepository implements Temp
             [
                 'name' => $name,
                 'type' => $type,
-                'language' => $language
+                'lang' => $language
             ]
         );
     }

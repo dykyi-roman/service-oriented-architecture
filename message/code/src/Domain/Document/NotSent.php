@@ -6,7 +6,6 @@ namespace App\Domain\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use App\Infrastructure\Repository\Doctrine\NotSentRepository;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * @MongoDB\Document(collection="not_sent", repositoryClass=NotSentRepository::class)
@@ -14,18 +13,12 @@ use Ramsey\Uuid\UuidInterface;
 class NotSent
 {
     /**
-     * @MongoDB\Id
+     * @MongoDB\Id(strategy="NONE")
      */
     protected string $id;
 
     /**
-     * @MongoDB\Field(type="string", name="user_id")
-     * @MongoDB\UniqueIndex()
-     */
-    protected string $userId;
-
-    /**
-     * @MongoDB\Field(type="error")
+     * @MongoDB\Field(type="string")
      */
     protected string $error;
 
@@ -39,20 +32,15 @@ class NotSent
      */
     protected \DateTime $date;
 
-    public function __construct(UuidInterface $uuid)
+    public function __construct(string $id)
     {
-        $this->id = $uuid->toString();
+        $this->id = $id;
         $this->date = new \DateTime();
     }
 
     public function getId(): string
     {
         return $this->id;
-    }
-
-    public function getUserId(): string
-    {
-        return $this->userId;
     }
 
     public function getError(): string
@@ -63,13 +51,6 @@ class NotSent
     public function getTemplate(): string
     {
         return $this->template;
-    }
-
-    public function setUserId(string $userId): self
-    {
-        $this->userId = $userId;
-
-        return $this;
     }
 
     public function setError(string $error): self

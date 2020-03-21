@@ -6,16 +6,16 @@ use Immutable\ValueObject\ValueObject;
 
 final class NotEmpty extends ValueObject
 {
-    protected string $input = '';
+    protected string $value = '';
 
     /**
      * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function __construct(string $input)
+    public function __construct(string $value)
     {
-        $this->withChanged($input);
+        $this->withChanged($value);
         parent::__construct();
     }
 
@@ -24,17 +24,17 @@ final class NotEmpty extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function withChanged(string $input): ValueObject
+    public function withChanged(string $value): ValueObject
     {
-        $this->assertValid($input);
+        $this->assertValid($value);
         return $this->with([
-            'input' => $input,
+            'value' => $value,
         ]);
     }
 
-    public function getInput() : string
+    public function getValue() : string
     {
-        return $this->input;
+        return $this->value;
     }
 
     /**
@@ -45,7 +45,7 @@ final class NotEmpty extends ValueObject
     {
         if (empty($data)) {
             $this->throwInvalidValueException(
-                '$input',
+                '$value',
                 'is empty',
                 $data
             );

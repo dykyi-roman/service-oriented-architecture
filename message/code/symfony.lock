@@ -206,6 +206,9 @@
     "php": {
         "version": "7.4"
     },
+    "php-amqplib/php-amqplib": {
+        "version": "v2.11.0"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
@@ -220,6 +223,9 @@
     },
     "phpmailer/phpmailer": {
         "version": "v6.1.5"
+    },
+    "phpseclib/phpseclib": {
+        "version": "2.0.25"
     },
     "phpspec/prophecy": {
         "version": "v1.10.3"

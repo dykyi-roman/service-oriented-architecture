@@ -7,12 +7,30 @@ Message service
 
 | Path                    | Method | Scheme | Grant |
 | ----------------------  | ------ | ------ | ----- |
-| /api/message/send       | POST   | ANY    | ALL   |
+| /api/............       | POST   | ANY    | ALL   |
 
 ## Requirements
 
 * PHP 7.4
 * Symfony 5.0
+* RabbitMQ 3.7
+* MongoDB 4.2
+
+## Clients
+
+MongoDB open [https://localhost:8081](https://localhost:8081) and use login and password:
+
+```
+    user: root
+    password: secret
+```
+
+RabitMQ open [https://localhost:15672 ](https://localhost:15672) and use login and password:
+
+```
+    user: rabbitmq
+    password: rabbitmq
+```
 
 ## Tests
 

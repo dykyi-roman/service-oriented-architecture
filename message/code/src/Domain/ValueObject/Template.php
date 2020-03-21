@@ -8,8 +8,11 @@ use Immutable\ValueObject\ValueObject;
 
 final class Template extends ValueObject
 {
+    public const DEFAULT_LANGUAGE = 'en';
+
     protected string $subject;
     protected string $body;
+    protected array $variables;
 
     /**
      * @inheritDoc
@@ -36,15 +39,26 @@ final class Template extends ValueObject
 
         return $this->with([
             'subject' => $subject,
-            'body' => $body
+            'body' => $body,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     * @throws \Immutable\Exception\ImmutableObjectException
+     */
+    public function withVariables(Template $template, array $variables = []): Template
+    {
+        $body = empty($variables) ? $template : vsprintf($template->body(), $variables);
+        return new self($template->subject(), $body);
     }
 
     public function toJson(): string
     {
         return json_encode([
             'subject' => $this->subject,
-            'body' => $this->body
+            'body' => $this->body,
+            'variables' => $this->variables
         ], JSON_THROW_ON_ERROR, 512);
     }
 

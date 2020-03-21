@@ -12,6 +12,11 @@ final class MessageType extends ValueObject
     private const TYPE_PHONE = 'phone';
     private const TYPE_EMAIL = 'email';
 
+    public const ALLOW_MESSAGES_TYPE = [
+        self::TYPE_EMAIL,
+        self::TYPE_PHONE,
+    ];
+
     protected string $type;
 
     /**
@@ -67,7 +72,7 @@ final class MessageType extends ValueObject
      */
     private function assertAvailableType(string $type): void
     {
-        if (!\in_array($type, [self::TYPE_EMAIL, self::TYPE_PHONE], true)) {
+        if (!\in_array($type, self::ALLOW_MESSAGES_TYPE, true)) {
             throw MessageException::notSupportMessageType();
         }
     }
