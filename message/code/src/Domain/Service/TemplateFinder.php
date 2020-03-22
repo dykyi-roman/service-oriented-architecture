@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace App\Domain\Service;
 
 use App\Domain\Exception\TemplateException;
-use App\Domain\Repository\TemplateRepositoryInterface;
+use App\Domain\Repository\TemplateReadRepositoryInterface;
+use App\Domain\ValueObject\MessageType;
 use App\Domain\ValueObject\Template;
 use Psr\SimpleCache\CacheInterface;
 
 final class TemplateFinder
 {
-    private TemplateRepositoryInterface $templateRepository;
+    private const TTL = 360;
+
+    private TemplateReadRepositoryInterface $templateReadRepository;
     private CacheInterface $cache;
 
-    public function __construct(TemplateRepositoryInterface $templateRepository, CacheInterface $cache)
+    public function __construct(TemplateReadRepositoryInterface $templateReadRepository, CacheInterface $cache)
     {
         $this->cache = $cache;
-        $this->templateRepository = $templateRepository;
+        $this->templateReadRepository = $templateReadRepository;
     }
 
     /**
@@ -26,17 +29,21 @@ final class TemplateFinder
      * @throws TemplateException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function find(string $name, string $type, string $language): Template
+    public function find(\stdClass $data, MessageType $type): Template
     {
-        if (!$this->cache->has($name)) {
-            $template = $this->templateRepository->findTemplate($name, $type, $language);
-            if (null === $template) {
-                throw TemplateException::notFoundTemplate($name);
+        if (!$this->cache->has($data->name)) {
+            $lang = $data->lang ?? Template::DEFAULT_LANGUAGE;
+            $documentTemplate = $this->templateReadRepository->findTemplate($data->name, $type->toString(), $lang);
+            if (null === $documentTemplate) {
+                throw TemplateException::notFoundTemplate($data->name, $data->lang, $type->toString());
             }
 
-            $this->cache->set($name, new Template($template->getSubject(), $template->getContext()));
+            $template = new Template($documentTemplate->getSubject(), $documentTemplate->getContext());
+            $template = $template->withVariables($template, $data->variables);
+
+            $this->cache->set($data->name, $template, self::TTL);
         }
 
-        return $this->cache->get($name);
+        return $this->cache->get($data->name);
     }
 }

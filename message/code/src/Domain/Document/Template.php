@@ -13,7 +13,7 @@ use App\Infrastructure\Repository\Doctrine\TemplateRepository;
 class Template
 {
     /**
-     * @MongoDB\Id
+     * @MongoDB\Id(strategy="NONE")
      */
     protected string $id;
 
@@ -31,7 +31,7 @@ class Template
     /**
      * @MongoDB\Field(type="string")
      */
-    protected string $language;
+    protected string $lang;
 
     /**
      * @MongoDB\Field(type="string")
@@ -42,6 +42,11 @@ class Template
      * @MongoDB\Field(type="string")
      */
     protected string $context;
+
+    public function __construct(string $id)
+    {
+        $this->id = $id;
+    }
 
     public function getId(): string
     {
@@ -58,9 +63,9 @@ class Template
         return $this->type;
     }
 
-    public function getLanguage(): string
+    public function getLang(): string
     {
-        return $this->language;
+        return $this->lang;
     }
 
     public function getSubject(): string
@@ -83,9 +88,9 @@ class Template
         $this->type = $type;
     }
 
-    public function setLanguage(string $language): void
+    public function setLang(string $lang): void
     {
-        $this->language = $language;
+        $this->lang = $lang;
     }
 
     public function setSubject(string $subject): void

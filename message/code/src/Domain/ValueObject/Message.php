@@ -10,19 +10,17 @@ final class Message implements MessageInterface
 {
     private Recipients $recipients;
     private Template $template;
-    private MessageType $messageType;
 
     /**
      * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
-     * @throws \App\Domain\Exception\MessageException
+     * @throws \App\Domain\Exception\RecipientsException
      */
-    public function __construct(Template $template, string $recipient)
+    public function __construct(Template $template, MessageType $messageType, string $recipient)
     {
-        $this->messageType = new MessageType($recipient);
         $this->template = $template;
-        $this->recipients = (new RecipientsFactory(new MessageType($recipient)))->create($recipient);
+        $this->recipients = (new RecipientsFactory($messageType))->create($recipient);
     }
 
     public function recipients(): Recipients
@@ -33,10 +31,5 @@ final class Message implements MessageInterface
     public function template(): Template
     {
         return $this->template;
-    }
-
-    public function messageType(): MessageType
-    {
-        return $this->messageType;
     }
 }

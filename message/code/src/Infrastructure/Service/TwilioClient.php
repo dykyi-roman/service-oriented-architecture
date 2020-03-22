@@ -35,7 +35,8 @@ final class TwilioClient implements MessageSenderInterface
     public function send(MessageInterface $message): void
     {
         try {
-            $options = ['from' => $message->recipients()->sender(), 'body' => $message->template()->body()];
+            $options = ['from' => $message->recipients()->sender()->toString(), 'body' => $message->template()->body()];
+            
             $this->client->messages->create($message->recipients()->recipient()->toString(), $options);
         } catch (Throwable $exception) {
             $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);

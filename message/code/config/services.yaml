@@ -44,7 +44,8 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Psr\SimpleCache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
-    App\Domain\Repository\TemplateRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
     App\Domain\Repository\NotSentRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Repository\SentRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
 

@@ -25,8 +25,8 @@ final class ConsumerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Create a new message consumer')
-            ->setHelp('This command allows you to create a new message consumer')
+            ->setDescription('Create a new message sender')
+            ->setHelp('This command allows you to create a new message sender consumer')
             ->addArgument('queue', InputArgument::REQUIRED, 'Queue name');
     }
 

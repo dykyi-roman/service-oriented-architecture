@@ -2,6 +2,7 @@
 
 namespace App\Domain\Service;
 
+use App\Domain\Exception\MessageException;
 use App\Domain\ValueObject\MessageType;
 use App\Infrastructure\Service\PHPMailerClient;
 use App\Infrastructure\Service\TwilioClient;
@@ -16,12 +17,21 @@ final class MessageSenderFactory
         $this->container = $container;
     }
 
-    public function create(MessageType $messageType): MessageSenderInterface
+    /**
+     * @inheritDoc
+     * @return MessageSenderInterface
+     * @throws MessageException
+     */
+    public function create(MessageType $type): MessageSenderInterface
     {
-        if ($messageType->isPhone()) {
+        if ($type->isPhone()) {
             return $this->container->get(TwilioClient::class);
         }
 
-        return $this->container->get(PHPMailerClient::class);
+        if ($type->isEmail()) {
+            return $this->container->get(PHPMailerClient::class);
+        }
+
+        throw MessageException::messageSenderIsNotFound();
     }
 }

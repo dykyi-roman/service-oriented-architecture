@@ -25,7 +25,7 @@ MongoDB open [https://localhost:8081](https://localhost:8081) and use login and 
     password: secret
 ```
 
-RabitMQ open [https://localhost:15672 ](https://localhost:15672) and use login and password:
+RabitMQ open [https://localhost:15672](https://localhost:15672) and use login and password:
 
 ```
     user: rabbitmq

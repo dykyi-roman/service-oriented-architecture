@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"properties\":{},\"routing_key\":\"test\",\"payload\":'{\"user_id\":\"d4141414124\",\"to\":[\"+380938982443\",\"mr.dukuy@gmail.com\"],\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variable\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
+					"raw": "{\"properties\":{},\"routing_key\":\"test\",\"payload\":'{\"user_id\":\"d4141414124\",\"to\":{\"email\":\"mr.dukuy@gmail.com\", \"phone\":\"+380938982443\"},\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variables\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
 				},
 				"url": {
 					"raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish",
@@ -52,6 +52,173 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "template-create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae685841-d3b7-462b-9173-ae8552840da5",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response has uuid\", function(){",
+							"    pm.expect(pm.response.json().data.uuid).to.be.a('string');",
+							"});",
+							"",
+							"pm.collectionVariables.set('templateId', pm.response.json().data.id)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"welcome\",\n\t\"lang\": \"en\",\n\t\"type\":\"phone\",\n\t\"subject\":\"welcome!\",\n\t\"context\":\"welcome message\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/template/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"template",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "template-edit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f7b1477-2ff1-4e05-a401-4efc65140bb6",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"subject\":\"new welcome!\",\n\t\"context\":\"new welcome message\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/template/{{templateId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"template",
+						"{{templateId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "template-delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ef56eb9-9097-4928-8c07-2473988a8ad6",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/template/{{templateId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"template",
+						"{{templateId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "a14274bd-faaf-4505-9738-da262637aee5",
+			"key": "templateId",
+			"value": "",
+			"type": "string"
 		}
 	],
 	"protocolProfileBehavior": {}

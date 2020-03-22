@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class MessageConsumer
 {
+    private const MESSAGE_EXCHANGE = 'fanout_message_exchange';
+
     private Sender $sender;
     private ParameterBagInterface $bag;
 
@@ -22,7 +24,7 @@ final class MessageConsumer
 
     public function execute(string $queueName): void
     {
-        $exchange = 'fanout_message_exchange';
+        $exchange = self::MESSAGE_EXCHANGE;
         $queue = $queueName;
         $consumerTag = 'consumer' . getmypid();
 
@@ -47,7 +49,7 @@ final class MessageConsumer
 
     public function process_message($message): void
     {
-        $body = json_decode($message->body, true, 512, JSON_THROW_ON_ERROR);
+        $body = json_decode($message->body, false, 512, JSON_THROW_ON_ERROR);
         $this->sender->execute($body);
 
         $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);

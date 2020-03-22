@@ -1,3 +1,14 @@
-index:
-    path: /
-    controller: App\UI\Controller\IndexController::index
+admin.template.create:
+    path: /api/template/create
+    controller: App\UI\Controller\TemplateController::create
+    methods: POST
+
+admin.template.update:
+    path: /api/template/{id}
+    controller: App\UI\Controller\TemplateController::update
+    methods: PUT
+
+admin.template.delete:
+    path: /api/template/{id}
+    controller: App\UI\Controller\TemplateController::delete
+    methods: DELETE

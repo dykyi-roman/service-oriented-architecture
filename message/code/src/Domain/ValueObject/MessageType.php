@@ -26,9 +26,9 @@ final class MessageType extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function __construct(string $contact)
+    public function __construct(string $type)
     {
-        $this->withChanged($contact);
+        $this->withChanged($type);
         parent::__construct();
     }
 
@@ -39,10 +39,9 @@ final class MessageType extends ValueObject
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
-    public function withChanged(string $contact): ValueObject
+    public function withChanged(string $type): ValueObject
     {
-        new NotEmpty($contact);
-        $type = false !== strpos($contact, '@') ? self::TYPE_EMAIL : self::TYPE_PHONE;
+        new NotEmpty($type);
         $this->assertAvailableType($type);
 
         return $this->with([
@@ -73,7 +72,7 @@ final class MessageType extends ValueObject
     private function assertAvailableType(string $type): void
     {
         if (!\in_array($type, self::ALLOW_MESSAGES_TYPE, true)) {
-            throw MessageException::notSupportMessageType();
+            throw MessageException::messageTypeIsNotSupport();
         }
     }
 }
