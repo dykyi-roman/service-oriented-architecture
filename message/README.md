@@ -1,13 +1,15 @@
 Message service
 =======
 
-...
+![image](docs/message.png)
 
 # Endpoints
 
 | Path                    | Method | Scheme | Grant |
 | ----------------------  | ------ | ------ | ----- |
-| /api/............       | POST   | ANY    | ALL   |
+| /api/template/          | POST   | ANY    | ALL   |
+| /api/template/{id}      | PUT    | ANY    | ALL   |
+| /api/template/{id}      | DELETE | ANY    | ALL   |
 
 ## Requirements
 
@@ -38,6 +40,8 @@ RabitMQ open [https://localhost:15672](https://localhost:15672) and use login an
 * Functional(PHPUnit)
 
 ## Useful links
+
+[AMQP 0-9-1 Model Explained](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchange-fanout)
 
 [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 

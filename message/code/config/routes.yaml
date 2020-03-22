@@ -1,5 +1,5 @@
 admin.template.create:
-    path: /api/template/create
+    path: /api/template/
     controller: App\UI\Controller\TemplateController::create
     methods: POST
 

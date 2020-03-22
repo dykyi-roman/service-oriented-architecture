@@ -39,7 +39,7 @@ When you take a JWT from the authorization server you can use it for communicati
 
 # Message service
 
-...
+![image](message/docs/message.png)
 
 # Admin Panel service
 
