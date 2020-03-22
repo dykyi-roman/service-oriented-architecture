@@ -33,6 +33,8 @@ For us each type of message we have a next priority queue:
 
 ### Storage sent message
 
+When there is no more space in the collection ["sent"], the oldest documents are deleted and new data is added to the end.
+
 When storage a sent messages becomes a bottleneck in your architecture, you could to replace repository interface to queue interface 
 and push the data in the next queue ["sent", "notSent"]. I following YAGNI principle and do not stay do it this improvement now.
 
