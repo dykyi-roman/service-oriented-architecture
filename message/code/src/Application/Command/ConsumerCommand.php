@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ConsumerCommand extends Command
 {
-    protected static $defaultName = 'app:consumer:start';
+    protected static $defaultName = 'app:sender:run';
 
     private MessageConsumer $consumer;
 

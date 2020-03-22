@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Application\Consumer;
 
 use App\Application\Service\Sender;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class MessageConsumer
@@ -47,19 +49,18 @@ final class MessageConsumer
         }
     }
 
-    public function process_message($message): void
+    public function process_message(AMQPMessage $message): void
     {
         $body = json_decode($message->body, false, 512, JSON_THROW_ON_ERROR);
         $this->sender->execute($body);
 
         $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
-        // Send a message with the string "quit" to cancel the consumer.
         if ($message->body === 'quit') {
             $message->delivery_info['channel']->basic_cancel($message->delivery_info['consumer_tag']);
         }
     }
 
-    public function shutdown($channel, $connection): void
+    public function shutdown(AMQPChannel $channel, $connection): void
     {
         $channel->close();
         $connection->close();

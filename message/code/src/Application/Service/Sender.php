@@ -9,7 +9,7 @@ use App\Domain\Event\SentEvent;
 use App\Domain\Exception\MessageException;
 use App\Domain\Exception\TemplateException;
 use App\Domain\Service\MessageSenderFactory;
-use App\Domain\Service\TemplateFinder;
+use App\Domain\Service\TemplateLoader;
 use App\Domain\ValueObject\Message;
 use App\Domain\ValueObject\MessageType;
 use Immutable\Exception\ImmutableObjectException;
@@ -24,19 +24,19 @@ final class Sender
 {
     private MessageSenderFactory $senderFactory;
     private EventDispatcherInterface $dispatcher;
-    private TemplateFinder $templateFinder;
+    private TemplateLoader $templateLoader;
     private LoggerInterface $logger;
 
     public function __construct(
         MessageSenderFactory $senderFactory,
-        TemplateFinder $templateFinder,
+        TemplateLoader $templateLoader,
         EventDispatcherInterface $dispatcher,
         LoggerInterface $logger = null
     ) {
         $this->logger = $logger ?? new NullLogger();
         $this->dispatcher = $dispatcher;
         $this->senderFactory = $senderFactory;
-        $this->templateFinder = $templateFinder;
+        $this->templateLoader = $templateLoader;
     }
 
     public function execute(stdClass $data): void
@@ -44,7 +44,7 @@ final class Sender
         try {
             foreach ($data->to as $type => $recipient) {
                 $messageType = new MessageType($type);
-                $template = $this->templateFinder->find($data->template, $messageType);
+                $template = $this->templateLoader->load($data->template, $messageType);
 
                 $message = new Message($template, $messageType, $recipient);
                 $sender = $this->senderFactory->create($messageType);

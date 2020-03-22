@@ -12,6 +12,10 @@ use App\Domain\Repository\NotSentRepositoryInterface;
 use App\Domain\Repository\SentRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @todo When storage becomes a bottleneck, you always could to replace repository interface to queue interface /
+ *       and push the data in the next queue sent and not sent.
+ */
 class PersistMessageSubscriber implements EventSubscriberInterface
 {
     private SentRepositoryInterface $sentRepository;
