@@ -1,4 +1,7 @@
 {
+    "brick/math": {
+        "version": "0.8.14"
+    },
     "composer/semver": {
         "version": "1.5.1"
     },
@@ -276,6 +279,9 @@
         "version": "1.1.2"
     },
     "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "ramsey/collection": {
         "version": "1.0.1"
     },
     "ramsey/uuid": {

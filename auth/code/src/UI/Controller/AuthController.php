@@ -32,12 +32,8 @@ class AuthController extends ApiController
                     )
                 )
             ));
-        } catch (ImmutableObjectException $exception) {
-            return $this->respondWithErrors($exception->getMessage(), [], 500);
-        } catch (\InvalidArgumentException $exception) {
-            return $this->respondValidationError($exception->getMessage());
-        } catch (\Throwable $exception) {
-            return $this->respondWithErrors($exception->getMessage(), [], 500);
+        } catch (\Exception | \InvalidArgumentException | ImmutableObjectException $exception) {
+            return $this->respondWithErrors($exception->getMessage());
         }
 
         return $this->respondCreated(['uuid' => $uuid->toString()]);

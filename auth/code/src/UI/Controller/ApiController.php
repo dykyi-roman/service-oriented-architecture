@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-use function json_decode;
-
 abstract class ApiController extends AbstractController
 {
     protected int $statusCode = 200;
@@ -31,17 +29,17 @@ abstract class ApiController extends AbstractController
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
 
-    public function respondWithErrors(string $errors, array $headers = [], int $statusCode = null): JsonResponse
+    public function respondWithErrors(string $errors, int $statusCode = 500, array $headers = []): JsonResponse
     {
         $data = [
             'status' => 'error',
             'errors' => $errors,
         ];
 
-        return new JsonResponse($data, $this->getStatusCode(), $headers);
+        return new JsonResponse($data, $statusCode, $headers);
     }
 
-    public function respondWithSuccess(array $data = [], array $headers = [], int $statusCode = 200): JsonResponse
+    public function respondWithSuccess(array $data = [], int $statusCode = 200, array $headers = []): JsonResponse
     {
         $data = [
             'status' => 'success',
@@ -53,22 +51,22 @@ abstract class ApiController extends AbstractController
 
     public function respondUnauthorized(string $message = 'Not authorized!'): JsonResponse
     {
-        return $this->setStatusCode(401)->respondWithErrors($message);
+        return $this->respondWithErrors($message,  401);
     }
 
     public function respondValidationError(string $message = 'Validation errors'): JsonResponse
     {
-        return $this->setStatusCode(422)->respondWithErrors($message);
+        return $this->respondWithErrors($message,  422);
     }
 
     public function respondNotFound(string $message = 'Not found!'): JsonResponse
     {
-        return $this->setStatusCode(404)->respondWithErrors($message);
+        return $this->respondWithErrors($message,  404);
     }
 
     public function respondCreated(array $data = []): JsonResponse
     {
-        return $this->setStatusCode(201)->respondWithSuccess($data, [], 201);
+        return $this->respondWithSuccess($data,  201);
     }
 
     // this method allows us to accept JSON payloads in POST requests
