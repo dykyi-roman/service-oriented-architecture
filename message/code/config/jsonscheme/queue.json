@@ -1,0 +1,53 @@
+{
+	"type": "object",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "user_id": {"type":"string"},
+        "to": {
+            "type":"object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 1024
+                },
+                "phone": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 16
+                }
+            },
+            "anyOf": [
+                {"required": ["email"]},
+                {"required": ["phone"]}
+            ]
+        },
+        "template": {
+            "type":"object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 1024
+                },
+                "lang": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 4
+                },
+                "variables": {
+                    "type": "array"
+                }
+            },
+            "required": ["name", "lang"]
+        },
+        "headers": {
+            "type":"object"
+        },
+        "tags": {
+            "type": "array"
+        }
+    },
+    "required": ["user_id", "to", "template"],
+    "additionalProperties": false
+}

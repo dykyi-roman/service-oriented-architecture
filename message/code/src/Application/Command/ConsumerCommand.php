@@ -33,7 +33,6 @@ final class ConsumerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(['| Queue created |', '================', '',]);
-
         $this->consumer->execute($input->getArgument('queue'));
 
         return 0;

@@ -6,7 +6,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Document\Sent;
 
-interface SentRepositoryInterface
+interface SentPersistRepositoryInterface
 {
     public function save(Sent $sent): void;
 }

@@ -6,7 +6,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Document\NotSent;
 
-interface NotSentRepositoryInterface
+interface NotSentPersistRepositoryInterface
 {
     public function save(NotSent $notSent): void;
 }

@@ -13,11 +13,6 @@ class TemplateException extends Exception
         return new static(sprintf('Template "%s" with type %s is not found for language "%s"', $name, $type, $lang));
     }
 
-    public static function idIsInvalid(string $id): self
-    {
-        return new static(sprintf('uuid "%s" is invalid', $id));
-    }
-
     public static function createTemplateProblem(string $name): self
     {
         return new static(sprintf('Template "%s" is not created', $name));
