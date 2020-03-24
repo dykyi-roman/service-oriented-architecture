@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\Doctrine;
 
-use App\Domain\Document\NotSent;
-use App\Domain\Repository\NotSentPersistRepositoryInterface;
+use App\Domain\Sender\Document\NotSent;
+use App\Domain\Sender\Repository\NotSentPersistRepositoryInterface;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 

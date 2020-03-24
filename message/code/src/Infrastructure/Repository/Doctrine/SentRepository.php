@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\Doctrine;
 
-use App\Domain\Document\Sent;
-use App\Domain\Repository\SentPersistRepositoryInterface;
+use App\Domain\Sender\Document\Sent;
+use App\Domain\Sender\Repository\SentPersistRepositoryInterface;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 

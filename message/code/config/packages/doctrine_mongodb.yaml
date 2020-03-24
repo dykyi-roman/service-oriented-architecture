@@ -12,9 +12,15 @@ doctrine_mongodb:
         default:
             auto_mapping: true
             mappings:
-                App:
+                Sender:
                     is_bundle: false
                     type: annotation
-                    dir: '%kernel.project_dir%/src/Domain/Document'
-                    prefix: 'App\Domain\Document'
+                    dir: '%kernel.project_dir%/src/Domain/Sender/Document'
+                    prefix: 'App\Domain\Sender\Document'
+                    alias: App
+                Template:
+                    is_bundle: false
+                    type: annotation
+                    dir: '%kernel.project_dir%/src/Domain/Template/Document'
+                    prefix: 'App\Domain\Template\Document'
                     alias: App

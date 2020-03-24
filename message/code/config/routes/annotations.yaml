@@ -1,5 +1,5 @@
 controllers:
-    resource: ../../src/UI/Controller/
+    resource: ../../src/UI/Api/
     type: annotation
 
 kernel:

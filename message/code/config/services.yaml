@@ -35,12 +35,12 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Domain/ValueObject,Domain/Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Domain/Sender/ValueObject,Domain/Template/ValueObject,Domain/Template/Document,Domain/Sender/Document,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Ui\Controller\:
-        resource: '../src/UI/Controller'
+    App\UI\Api\:
+        resource: '../src/UI/Api'
         tags: ['controller.service_arguments']
 
     App\Infrastructure\Repository\Doctrine\:
@@ -50,15 +50,15 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Psr\SimpleCache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
-    App\Domain\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
-    App\Domain\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
-    App\Domain\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
-    App\Domain\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
+    App\Domain\Template\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
+    App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
 
-    App\Infrastructure\Service\PHPMailerClient:
+    App\Infrastructure\Sender\PHPMailerClient:
         public: true
 
-    App\Infrastructure\Service\TwilioClient:
+    App\Infrastructure\Sender\TwilioClient:
         public: true
 
     twilio.client:
