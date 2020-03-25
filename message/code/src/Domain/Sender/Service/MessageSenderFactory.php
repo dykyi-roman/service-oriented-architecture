@@ -5,11 +5,11 @@ namespace App\Domain\Sender\Service;
 use App\Domain\Sender\Exception\MessageException;
 use App\Domain\Sender\MessageSenderInterface;
 use App\Domain\Sender\ValueObject\MessageType;
-use App\Infrastructure\Sender\PHPMailerClient;
-use App\Infrastructure\Sender\TwilioClient;
+use App\Infrastructure\Clients\PHPMailerClient;
+use App\Infrastructure\Clients\TwilioClient;
 use Psr\Container\ContainerInterface;
 
-final class MessageSenderFactory
+class MessageSenderFactory
 {
     private ContainerInterface $container;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Sender;
+namespace App\Domain\Sender\Listener;
 
-use App\Domain\Sender\Document\Sent;
 use App\Domain\Sender\Event\NotSentEvent;
 use App\Domain\Sender\Event\SentEvent;
+use App\Domain\Sender\Document\Sent;
 use App\Domain\Sender\Document\NotSent;
 use App\Domain\Sender\Repository\NotSentPersistRepositoryInterface;
 use App\Domain\Sender\Repository\SentPersistRepositoryInterface;

@@ -23,7 +23,7 @@ parameters:
     RABBITMQ_PASSWORD: '%env(resolve:RABBITMQ_PASS)%'
     RABBITMQ_VHOST: '%env(resolve:RABBITMQ_VHOST)%'
     ###
-    JSON_SCHEME_PATH: '%kernel.project_dir%/config/jsonscheme/'
+    JSON_SCHEME_PATH: '%kernel.project_dir%/config/jsonschema/'
 
 services:
     # default configuration for services in *this* file
@@ -55,10 +55,10 @@ services:
     App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
 
-    App\Infrastructure\Sender\PHPMailerClient:
+    App\Infrastructure\Clients\PHPMailerClient:
         public: true
 
-    App\Infrastructure\Sender\TwilioClient:
+    App\Infrastructure\Clients\TwilioClient:
         public: true
 
     twilio.client:

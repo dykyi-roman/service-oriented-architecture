@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Sender;
 
 use App\Application\JsonSchemaValidator;
+use App\Domain\Sender\Service\SentToProvider;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -20,19 +21,19 @@ final class SenderConsumer
     private const MESSAGE_EXCHANGE = 'router';
     private const CONSUMER_TAG = 'consumer';
 
-    private SenderToProvicer $sender;
+    private SentToProvider $sentToProvider;
     private ParameterBagInterface $bag;
     private JsonSchemaValidator $schemaValidator;
     private LoggerInterface $logger;
 
     public function __construct(
-        SenderToProvicer $sender,
+        SentToProvider $sentToProvider,
         ParameterBagInterface $bag,
         JsonSchemaValidator $schemaValidator,
         LoggerInterface $logger = null
     ) {
         $this->bag = $bag;
-        $this->sender = $sender;
+        $this->sentToProvider = $sentToProvider;
         $this->schemaValidator = $schemaValidator;
         $this->logger = $logger ?? new NullLogger();
     }
@@ -64,7 +65,7 @@ final class SenderConsumer
         try {
             $content = json_decode($message->body, false, 512, JSON_THROW_ON_ERROR);
             $this->schemaValidator->validate($content, self::SCHEMA);
-            $this->sender->execute($content);
+            $this->sentToProvider->execute($content);
         } catch (\Throwable $exception) {
             $this->logger->error('Message::MessageConsumer', ['error' => $exception->getMessage()]);
         }

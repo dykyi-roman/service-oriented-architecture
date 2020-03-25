@@ -49,8 +49,11 @@ final class Template extends ValueObject
      */
     public function withVariables(Template $template, array $variables = []): Template
     {
-        $body = empty($variables) ? $template : vsprintf($template->body(), $variables);
-        return new self($template->subject(), $body);
+        if (empty($variables)) {
+            return $template;
+        }
+
+        return new self($template->subject(), vsprintf($template->body(), $variables));
     }
 
     public function toJson(): string
@@ -58,7 +61,7 @@ final class Template extends ValueObject
         return json_encode([
             'subject' => $this->subject,
             'body' => $this->body,
-            'variables' => $this->variables
+            'variables' => $this->variables ?? []
         ], JSON_THROW_ON_ERROR, 512);
     }
 

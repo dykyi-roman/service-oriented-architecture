@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Sender;
+namespace App\Infrastructure\Clients;
 
 use App\Domain\Sender\MessageSenderInterface;
 use App\Domain\Sender\MessageInterface;

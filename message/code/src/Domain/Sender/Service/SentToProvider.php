@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Sender;
+namespace App\Domain\Sender\Service;
 
 use App\Domain\Sender\Event\NotSentEvent;
 use App\Domain\Sender\Event\SentEvent;
 use App\Domain\Sender\Exception\MessageException;
-use App\Domain\Sender\Service\MessageSenderFactory;
 use App\Domain\Sender\ValueObject\Message;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\Exception\TemplateException;
@@ -20,7 +19,7 @@ use Psr\Log\NullLogger;
 use Psr\SimpleCache\InvalidArgumentException;
 use stdClass;
 
-final class SenderToProvicer
+final class SentToProvider
 {
     private MessageSenderFactory $senderFactory;
     private EventDispatcherInterface $dispatcher;

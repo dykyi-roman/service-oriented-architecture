@@ -8,7 +8,7 @@ use App\Domain\Template\ValueObject\Template;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * @see PersistSentMessageSubscriber::class
+ * @see PersistMessageSubscriber::calss
  */
 class SentEvent extends Event
 {

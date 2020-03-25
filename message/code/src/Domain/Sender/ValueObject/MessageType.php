@@ -9,8 +9,8 @@ use App\Domain\Sender\Exception\MessageException;
 
 final class MessageType extends ValueObject
 {
-    private const TYPE_PHONE = 'phone';
-    private const TYPE_EMAIL = 'email';
+    public const TYPE_PHONE = 'phone';
+    public const TYPE_EMAIL = 'email';
 
     public const ALLOW_MESSAGES_TYPE = [
         self::TYPE_EMAIL,
