@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Sender\Service;
 
-use App\Domain\Sender\MessageInterface;
-use App\Domain\Sender\MessageSenderInterface;
 use App\Domain\Sender\Service\MessageSenderFactory;
 use App\Domain\Sender\Service\SentToProvider;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\TemplateLoader;
 use App\Infrastructure\Cache\InMemoryCache;
+use App\Infrastructure\Clients\NullClient;
 use App\Infrastructure\Repository\InMemory\InMemoryTemplateRepository;
 use Faker\Factory;
 use Faker\Generator;
@@ -36,7 +35,7 @@ class SentToProviderTest extends WebTestCase
     public function testSentToProvider(): void
     {
         $senderFactory = $this->createMock(MessageSenderFactory::class);
-        $senderFactory->expects(self::once())->method('create')->willReturn(new MockSender());
+        $senderFactory->expects(self::once())->method('create')->willReturn(new NullClient());
 
         $templateLoaderRepository = new InMemoryTemplateRepository();
         $templateLoaderRepository->create(
@@ -76,13 +75,5 @@ class SentToProviderTest extends WebTestCase
         $data->user_id = $this->faker->uuid;
 
         return $data;
-    }
-}
-
-class MockSender implements MessageSenderInterface
-{
-    public function send(MessageInterface $message): void
-    {
-        // TODO: send mock
     }
 }
