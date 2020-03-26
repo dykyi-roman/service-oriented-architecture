@@ -6,18 +6,24 @@
 parameters:
     SENDER_EMAIL_ADDRESS: '%env(resolve:SENDER_EMAIL_ADDRESS)%'
     SENDER_PHONE_NUMBER: '%env(resolve:SENDER_PHONE_NUMBER)%'
+    ###
     TWILIO_TOKEN: '%env(resolve:TWILIO_TOKEN)%'
     TWILIO_SID: '%env(resolve:TWILIO_SID)%'
+    ###
     SMTP_SERVER: '%env(resolve:SMTP_SERVER)%'
     SMTP_USER_NAME: '%env(resolve:SMTP_USER_NAME)%'
     SMTP_USER_PASSWORD: '%env(resolve:SMTP_USER_PASSWORD)%'
+    ###
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
+    ###
     RABBITMQ_HOST: '%env(resolve:RABBITMQ_HOST)%'
     RABBITMQ_PORT: '%env(resolve:RABBITMQ_POST)%'
     RABBITMQ_USER: '%env(resolve:RABBITMQ_USER)%'
     RABBITMQ_PASSWORD: '%env(resolve:RABBITMQ_PASS)%'
     RABBITMQ_VHOST: '%env(resolve:RABBITMQ_VHOST)%'
+    ###
+    JSON_SCHEME_PATH: '%kernel.project_dir%/config/jsonschema/'
 
 services:
     # default configuration for services in *this* file
@@ -29,12 +35,12 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Domain/ValueObject,Domain/Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Domain/Sender/ValueObject,Domain/Template/ValueObject,Domain/Template/Document,Domain/Sender/Document,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Ui\Controller\:
-        resource: '../src/UI/Controller'
+    App\UI\Api\:
+        resource: '../src/UI/Api'
         tags: ['controller.service_arguments']
 
     App\Infrastructure\Repository\Doctrine\:
@@ -44,15 +50,15 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Psr\SimpleCache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
-    App\Domain\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
-    App\Domain\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
-    App\Domain\Repository\NotSentRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
-    App\Domain\Repository\SentRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
+    App\Domain\Template\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
+    App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
 
-    App\Infrastructure\Service\PHPMailerClient:
+    App\Infrastructure\Clients\PHPMailerClient:
         public: true
 
-    App\Infrastructure\Service\TwilioClient:
+    App\Infrastructure\Clients\TwilioClient:
         public: true
 
     twilio.client:

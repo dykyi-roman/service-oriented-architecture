@@ -8,7 +8,7 @@ use Psr\SimpleCache\CacheInterface;
 
 final class InMemoryCache implements CacheInterface
 {
-    private array $data = [];
+    public array $data = [];
 
     /**
      * @inheritDoc

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\Doctrine;
 
-use App\Domain\Document\Template;
-use App\Domain\Repository\TemplatePersistRepositoryInterface;
-use App\Domain\Repository\TemplateReadRepositoryInterface;
+use App\Domain\Template\Document\Template;
+use App\Domain\Template\Repository\TemplatePersistRepositoryInterface;
+use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 
@@ -54,7 +54,7 @@ final class TemplateRepository extends ServiceDocumentRepository implements Temp
     {
         /** @var Template $template */
         $template = $this->find($id);
-        if (!null === $template){
+        if (!null === $template) {
             return false;
         }
 
@@ -70,7 +70,7 @@ final class TemplateRepository extends ServiceDocumentRepository implements Temp
     public function remove(string $id): bool
     {
         $template = $this->find($id);
-        if (!null === $template){
+        if (!null === $template) {
             return false;
         }
 

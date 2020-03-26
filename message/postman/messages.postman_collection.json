@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"properties\":{},\"routing_key\":\"test\",\"payload\":'{\"user_id\":\"d4141414124\",\"to\":{\"email\":\"mr.dukuy@gmail.com\", \"phone\":\"+380938982443\"},\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variables\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
+					"raw": "{\n\t\"properties\":{},\n\t\"routing_key\":\"high\",\n\t\"payload\":'{\"user_id\":\"29ff7ec7-5bda-4f36-a503-78740805b275\",\"to\":{\"email\":\"mr.dukuy@gmail.com\", \"phone\":\"+380938982443\"},\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variables\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
 				},
 				"url": {
 					"raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish",
@@ -97,14 +97,14 @@
 					"raw": "{\n\t\"name\": \"welcome\",\n\t\"lang\": \"en\",\n\t\"type\":\"phone\",\n\t\"subject\":\"welcome!\",\n\t\"context\":\"welcome message\"\n}"
 				},
 				"url": {
-					"raw": "{{host}}/api/template/create",
+					"raw": "{{host}}/api/template/",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"template",
-						"create"
+						""
 					]
 				}
 			},
@@ -215,7 +215,7 @@
 	],
 	"variable": [
 		{
-			"id": "a14274bd-faaf-4505-9738-da262637aee5",
+			"id": "16108d10-137f-4f57-8561-884b0461285f",
 			"key": "templateId",
 			"value": "",
 			"type": "string"

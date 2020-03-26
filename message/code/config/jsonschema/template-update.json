@@ -1,0 +1,16 @@
+{
+	"type": "object",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "subject": {"type":"string"},
+        "context": {"type":"string"},
+        "headers": {
+            "type":"object"
+        },
+        "tags": {
+            "type": "array"
+        }
+    },
+    "required": ["subject", "context"],
+    "additionalProperties": false
+}

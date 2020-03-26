@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\Doctrine;
 
-use App\Domain\Document\NotSent;
-use App\Domain\Repository\NotSentRepositoryInterface;
+use App\Domain\Sender\Document\NotSent;
+use App\Domain\Sender\Repository\NotSentPersistRepositoryInterface;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 
-final class NotSentRepository extends ServiceDocumentRepository implements NotSentRepositoryInterface
+final class NotSentRepository extends ServiceDocumentRepository implements NotSentPersistRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

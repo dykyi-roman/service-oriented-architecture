@@ -10,6 +10,8 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
+        <server name="SENDER_PHONE_NUMBER" value="_380938982443" force="true" />
+        <server name="SENDER_EMAIL_ADDRESS" value="mr.dukuy@gmail.com" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
     </php>
 
