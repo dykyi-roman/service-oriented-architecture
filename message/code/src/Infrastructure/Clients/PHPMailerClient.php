@@ -10,7 +10,6 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Throwable;
 
 /**
@@ -21,10 +20,10 @@ final class PHPMailerClient implements MessageSenderInterface
     private PHPMailer $mailer;
     private LoggerInterface $logger;
 
-    public function __construct(PHPMailer $mailer, LoggerInterface $logger = null)
+    public function __construct(PHPMailer $mailer, LoggerInterface $logger)
     {
         $this->mailer = $mailer;
-        $this->logger = $logger ?? new NullLogger();
+        $this->logger = $logger;
     }
 
     public function send(MessageInterface $message): void
@@ -36,8 +35,7 @@ final class PHPMailerClient implements MessageSenderInterface
 
             $this->mailer->send();
         } catch (Throwable $exception) {
-            $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($msg, [
+            $this->logger->error('Message::PHPMailerClient', [
                 'error' => $exception->getMessage(),
                 'ErrorInfo' => $this->mailer->ErrorInfo,
             ]);

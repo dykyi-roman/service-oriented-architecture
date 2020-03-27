@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Sender\Service;
+namespace App\Tests\Application\Sender\Service;
 
 use App\Domain\Sender\Service\MessageSenderFactory;
-use App\Domain\Sender\Service\SentToProvider;
+use App\Application\Sender\Service\SentToProvider;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\TemplateLoader;
 use App\Infrastructure\Cache\InMemoryCache;
@@ -13,11 +13,11 @@ use App\Infrastructure\Clients\NullClient;
 use App\Infrastructure\Repository\InMemory\InMemoryTemplateRepository;
 use Faker\Factory;
 use Faker\Generator;
+use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * @coversDefaultClass \App\Domain\Sender\Service\SentToProvider
+ * @coversDefaultClass \App\Application\Sender\Service\SentToProvider
  */
 class SentToProviderTest extends WebTestCase
 {
@@ -34,6 +34,7 @@ class SentToProviderTest extends WebTestCase
      */
     public function testSentToProvider(): void
     {
+        $_ENV['SENDER_EMAIL_ADDRESS'] = 'test@gmail.com';
         $senderFactory = $this->createMock(MessageSenderFactory::class);
         $senderFactory->expects(self::once())->method('create')->willReturn(new NullClient());
 
@@ -50,13 +51,13 @@ class SentToProviderTest extends WebTestCase
         $cache = new InMemoryCache();
         $templateLoader = new TemplateLoader($templateLoaderRepository, $cache);
 
-        $dicpatcher = $this->createMock(EventDispatcher::class);
-        $dicpatcher->expects(self::once())->method('dispatch');
-
+        self::bootKernel();
+        $transport = self::$container->get('messenger.bus.default');
         $sender = new SentToProvider(
             $senderFactory,
             $templateLoader,
-            $dicpatcher,
+            $transport,
+            new NullLogger()
         );
 
         $sender->execute($this->createSendData());

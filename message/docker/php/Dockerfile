@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
         libicu-dev \
         libevent-dev \
         uuid-dev \
+        librabbitmq-dev \
+        libssh-dev \
         libgeoip-dev \
         libmemcached-dev \
         openssl \
@@ -46,3 +48,6 @@ RUN docker-php-ext-enable memcached
 
 RUN pecl install mongodb
 RUN docker-php-ext-enable mongodb
+
+RUN pecl install amqp
+RUN docker-php-ext-enable amqp

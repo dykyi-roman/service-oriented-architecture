@@ -9,7 +9,6 @@ use App\Domain\Template\Repository\TemplatePersistRepositoryInterface;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
@@ -18,9 +17,9 @@ final class TemplateEditor
     private TemplatePersistRepositoryInterface $persistRepository;
     private LoggerInterface $logger;
 
-    public function __construct(TemplatePersistRepositoryInterface $persistRepository, LoggerInterface $logger = null)
+    public function __construct(TemplatePersistRepositoryInterface $persistRepository, LoggerInterface $logger)
     {
-        $this->logger = $logger ?? new NullLogger();
+        $this->logger = $logger;
         $this->persistRepository = $persistRepository;
     }
 
@@ -39,8 +38,7 @@ final class TemplateEditor
                 $template->subject(),
                 $template->body());
         } catch (Throwable $exception) {
-            $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($msg, ['error' => $exception->getMessage(),]);
+            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::createTemplateProblem($name);
         }
     }
@@ -54,8 +52,7 @@ final class TemplateEditor
         try {
             $this->persistRepository->edit($id, $template->subject(), $template->body());
         } catch (Throwable $exception) {
-            $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($msg, ['error' => $exception->getMessage(),]);
+            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::updateTemplateProblem($id);
         }
     }
@@ -69,8 +66,7 @@ final class TemplateEditor
         try {
             $this->persistRepository->remove($id);
         } catch (Throwable $exception) {
-            $msg = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($msg, ['error' => $exception->getMessage(),]);
+            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::deleteTemplateProblem($id);
         }
     }

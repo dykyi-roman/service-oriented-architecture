@@ -11,6 +11,7 @@ use App\Infrastructure\Repository\InMemory\InMemoryTemplateRepository;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -34,7 +35,7 @@ class TemplateEditorTest extends TestCase
     public function testCreate(): InMemoryTemplateRepository
     {
         $repository = new InMemoryTemplateRepository();
-        $templateEditor = new TemplateEditor($repository);
+        $templateEditor = new TemplateEditor($repository, new NullLogger());
         $templateEditor->create(
             Uuid::fromString(self::UUID),
             new Template($this->faker->title, $this->faker->text),
@@ -53,7 +54,7 @@ class TemplateEditorTest extends TestCase
      */
     public function testUpdate(InMemoryTemplateRepository $repository): void
     {
-        $templateEditor = new TemplateEditor($repository);
+        $templateEditor = new TemplateEditor($repository, new NullLogger());
         $templateEditor->update(self::UUID, new Template('test-subject', 'test-context'));
 
         $this->assertCount(1, $repository->collection);
@@ -66,7 +67,7 @@ class TemplateEditorTest extends TestCase
      */
     public function testDelete(InMemoryTemplateRepository $repository): void
     {
-        $templateEditor = new TemplateEditor($repository);
+        $templateEditor = new TemplateEditor($repository, new NullLogger());
         $templateEditor->delete(self::UUID);
 
         $this->assertCount(0, $repository->collection);

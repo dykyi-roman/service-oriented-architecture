@@ -14,7 +14,9 @@ User notification playing a very important role in modern application. Basically
 To run a new consumer for message processing - use the command with parameter. Where parameter - this is a queue name. 
 
 ```
-    message:sender:run high
+    bin/console message:sender:run high
+    bin/console messenger:consume sent
+    bin/console messenger:consume notsent
 ```
 
 ### Cache

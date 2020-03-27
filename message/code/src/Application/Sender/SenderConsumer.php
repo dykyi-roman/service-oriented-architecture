@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Application\Sender;
 
 use App\Application\JsonSchemaValidator;
-use App\Domain\Sender\Service\SentToProvider;
+use App\Application\Sender\Service\SentToProvider;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Message\AMQPMessage;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class SenderConsumer
@@ -30,12 +29,12 @@ final class SenderConsumer
         SentToProvider $sentToProvider,
         ParameterBagInterface $bag,
         JsonSchemaValidator $schemaValidator,
-        LoggerInterface $logger = null
+        LoggerInterface $logger
     ) {
         $this->bag = $bag;
         $this->sentToProvider = $sentToProvider;
         $this->schemaValidator = $schemaValidator;
-        $this->logger = $logger ?? new NullLogger();
+        $this->logger = $logger;
     }
 
     public function execute(string $queue): void

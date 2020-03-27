@@ -1,0 +1,14 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+             sent: '%env(SENT_MESSENGER_TRANSPORT_DSN)%'
+             notsent: '%env(NOT_SENT_MESSENGER_TRANSPORT_DSN)%'
+            # failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+        routing:
+            # Route your messages to the transports
+             'App\Application\Sender\Message\MessageSent': sent
+             'App\Application\Sender\Message\MessageNotSent': notsent
