@@ -1,11 +1,33 @@
 framework:
     messenger:
+
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
+#        serializer:
+#            default_serializer: messenger.transport.symfony_serializer
+#            symfony_serializer:
+#                format: json
+#                context: { }
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-             sent: '%env(SENT_MESSENGER_TRANSPORT_DSN)%'
-             notsent: '%env(NOT_SENT_MESSENGER_TRANSPORT_DSN)%'
+             # https://symfony.com/doc/current/messenger.html#transport-configuration
+             message:
+                dsn: '%env(MESSAGE_TRANSPORT_DSN)%/message'
+             sent:
+                dsn: '%env(MESSAGE_TRANSPORT_DSN)%/sent'
+                options:
+                    exchange:
+                       name: low
+
+             notsent:
+                dsn: '%env(MESSAGE_TRANSPORT_DSN)%/notsent'
+                options:
+                    exchange:
+                        name: low
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 0
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
         routing:

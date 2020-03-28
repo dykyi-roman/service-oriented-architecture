@@ -12,9 +12,3 @@ admin.template.delete:
     path: /api/template/{id}
     controller: App\UI\Api\TemplateController::delete
     methods: DELETE
-
-
-admin.test:
-    path: /api/test
-    controller: App\UI\Api\TemplateController::test
-    methods: GET

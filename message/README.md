@@ -11,12 +11,19 @@ User notification playing a very important role in modern application. Basically
 
 ### Consumer
 
+On production, there are a few important things to think about:
+
+* Use Supervisor to keep your worker(s) running
+
+* Don't Let Workers Run Forever
+
+* Restart Workers on Deploy
+
 To run a new consumer for message processing - use the command with parameter. Where parameter - this is a queue name. 
 
 ```
     bin/console message:sender:run high
-    bin/console messenger:consume sent
-    bin/console messenger:consume notsent
+    bin/console messenger:consume notsent sent
 ```
 
 ### Cache
@@ -94,6 +101,8 @@ RabitMQ open [https://localhost:15672](https://localhost:15672) and use login an
 [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
 [Sending sms reminders with symfony](https://www.twilio.com/blog/sending-sms-reminders-with-symfony-php-framework)
+
+[Symfony messenger](https://symfony.com/doc/current/messenger.html)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

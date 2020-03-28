@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\UI\Api;
 
-use App\Application\Sender\Message\MessageNotSent;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Transport\Serialization\Serializer;
 use App\Application\Sender\Message\MessageSent;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
-use App\Domain\Sender\Document\Sent;
 use App\Domain\Sender\Exception\MessageException;
 use App\Domain\Sender\Repository\SentPersistRepositoryInterface;
 use App\Domain\Template\Exception\TemplateException;
@@ -20,7 +20,6 @@ use Exception;
 use Immutable\Exception\ImmutableObjectException;
 use Immutable\Exception\InvalidValueException;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -75,12 +74,5 @@ final class TemplateController extends ApiController
         } catch (InvalidArgumentException | TemplateException $exception) {
             return $this->respondWithErrors($exception->getMessage());
         }
-    }
-
-    public function test(MessageBusInterface $bus, SentPersistRepositoryInterface $sentPersistRepository): JsonResponse
-    {
-        $bus->dispatch(new MessageNotSent(Uuid::uuid4()->toString(), (new Template('1111', '33333'))->toJson(), 'errorr'));
-
-        return new JsonResponse();
     }
 }
