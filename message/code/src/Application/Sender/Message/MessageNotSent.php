@@ -14,7 +14,7 @@ final class MessageNotSent
     {
         $this->userId = $userId;
         $this->template = $template;
-        $this->error = $error ?? '';
+        $this->error = $error;
     }
 
     public function getUserId(): string

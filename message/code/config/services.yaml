@@ -54,6 +54,7 @@ services:
     App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
     App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
+    App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
 
     App\Infrastructure\Clients\PHPMailerClient:
         public: true

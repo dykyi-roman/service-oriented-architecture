@@ -36,7 +36,8 @@ final class TemplateEditor
                 $type->toString(),
                 $lang,
                 $template->subject(),
-                $template->body());
+                $template->body()
+            );
         } catch (Throwable $exception) {
             $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::createTemplateProblem($name);

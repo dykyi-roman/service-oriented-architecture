@@ -8,7 +8,8 @@ use App\Domain\Template\Exception\TemplateException;
 use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
-use Psr\SimpleCache\CacheInterface;
+use App\Infrastructure\Cache\CacheInterface;
+use Immutable\Exception\ImmutableObjectException;
 use stdClass;
 
 final class TemplateLoader
@@ -26,9 +27,8 @@ final class TemplateLoader
 
     /**
      * @inheritDoc
-     * @throws \Immutable\Exception\ImmutableObjectException
+     * @throws ImmutableObjectException
      * @throws TemplateException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function load(stdClass $data, MessageType $type): Template
     {

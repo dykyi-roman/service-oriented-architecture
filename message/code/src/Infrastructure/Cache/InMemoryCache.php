@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cache;
 
-use Psr\SimpleCache\CacheInterface;
-
 final class InMemoryCache implements CacheInterface
 {
     public array $data = [];
@@ -21,55 +19,65 @@ final class InMemoryCache implements CacheInterface
     /**
      * @inheritDoc
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         $this->data[$key] = $value;
+
+        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         unset($this->data[$key]);
+
+        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->data = [];
+
+        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null): iterable
     {
         // TODO: Implement getMultiple() method.
+
+        return new \ArrayIterator($this->data);
     }
 
     /**
      * @inheritDoc
      */
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         // TODO: Implement setMultiple() method.
+        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         // TODO: Implement deleteMultiple() method.
+        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function has($key)
+    public function has($key): bool
     {
         return isset($this->data[$key]);
     }

@@ -92,6 +92,14 @@ RabitMQ open [https://localhost:15672](https://localhost:15672) and use login an
 * Postman
 * Functional(PHPUnit)
 
+## Сode verification:
+
+```
+php vendor/bin/phpcs --standard=PSR2 /code/src/
+php vendor/bin/ecs check /code/src/	--set clean-code
+php vendor/bin/psalm
+```
+
 ## Useful links
 
 [Email Sending Architecture Using Messaging Queue](https://medium.com/naukri-engineering/email-sending-architecture-using-messaging-queue-314a18f8595c)

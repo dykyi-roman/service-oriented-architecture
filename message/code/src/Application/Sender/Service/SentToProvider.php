@@ -15,7 +15,6 @@ use App\Domain\Template\TemplateLoader;
 use Immutable\Exception\ImmutableObjectException;
 use Immutable\Exception\InvalidValueException;
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\InvalidArgumentException;
 use stdClass;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -51,7 +50,7 @@ final class SentToProvider
 
                 $this->messageBus->dispatch(new MessageSent($data->user_id, $template->toJson()));
             }
-        } catch (MessageException | TemplateException | ImmutableObjectException | InvalidValueException | InvalidArgumentException $exception) {
+        } catch (MessageException | TemplateException | ImmutableObjectException | InvalidValueException $exception) {
             $this->logger->error('Message::SentToProvider', ['error' => $exception->getMessage()]);
 
             $tmp = isset($template) ? $template->toJson() : '';

@@ -61,7 +61,7 @@ final class Template extends ValueObject
         return json_encode([
             'subject' => $this->subject,
             'body' => $this->body,
-            'variables' => $this->variables ?? []
+            'variables' => $this->variables
         ], JSON_THROW_ON_ERROR, 512);
     }
 

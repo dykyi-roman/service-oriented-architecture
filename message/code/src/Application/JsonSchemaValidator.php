@@ -9,7 +9,7 @@ use JsonSchema\Validator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-final  class JsonSchemaValidator
+final class JsonSchemaValidator
 {
     private string $jsonSchemaPatch;
 

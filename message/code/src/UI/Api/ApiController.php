@@ -51,22 +51,22 @@ abstract class ApiController extends AbstractController
 
     public function respondUnauthorized(string $message = 'Not authorized!'): JsonResponse
     {
-        return $this->respondWithErrors($message,  401);
+        return $this->respondWithErrors($message, 401);
     }
 
     public function respondValidationError(string $message = 'Validation errors'): JsonResponse
     {
-        return $this->respondWithErrors($message,  422);
+        return $this->respondWithErrors($message, 422);
     }
 
     public function respondNotFound(string $message = 'Not found!'): JsonResponse
     {
-        return $this->respondWithErrors($message,  404);
+        return $this->respondWithErrors($message, 404);
     }
 
     public function respondCreated(array $data = []): JsonResponse
     {
-        return $this->respondWithSuccess($data,  201);
+        return $this->respondWithSuccess($data, 201);
     }
 
     // this method allows us to accept JSON payloads in POST requests
