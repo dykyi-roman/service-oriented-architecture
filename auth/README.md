@@ -41,6 +41,14 @@ MySQL open [https://localhost:8081](https://localhost:8888) and use login and pa
 * Postman
 * Functional(PHPUnit)
 
+## Сode verification:
+
+```
+php vendor/bin/phpcs --standard=PSR2 /code/src/
+php vendor/bin/ecs check /code/src/	--set clean-code
+php vendor/bin/psalm
+```
+
 ## Useful links
 
 [Microservices Authentication and Authorization Solutions](https://medium.com/tech-tajawal/microservice-authentication-and-authorization-solutions-e0e5e74b248a)
