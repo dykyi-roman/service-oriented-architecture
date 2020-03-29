@@ -3,22 +3,26 @@ services:
   web:
     image: nginx:latest
     ports:
-        - "8080:80"
-        - "443:443"
+        - "5000:80"
+        - "5001:443"
     expose:
-        - "443"
+        - "5001"
     volumes:
         - ./code:/code
         - ./ssl:/etc/nginx/ssl
         - ./site.conf:/etc/nginx/conf.d/site.conf
     links:
         - php
+    networks:
+        - soa
   php:
     build: docker/php
     volumes:
         - ./code:/code
     links:
         - mysql
+    networks:
+        - soa
   mysql:
     image: mysql
     restart: always
@@ -29,15 +33,22 @@ services:
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 5003
     ports:
-      - "3306:3306"
+      - "5003:3306"
     expose:
-      - "3306"
+      - "5003"
+    networks:
+        - soa
   adminer:
     image: adminer
     restart: always
     links:
         - mysql
     ports:
-        - 8888:8080
+        - 5004:8080
+    networks:
+        - soa
+networks:
+    soa:
+        external: true

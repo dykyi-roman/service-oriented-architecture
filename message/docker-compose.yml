@@ -3,16 +3,18 @@ services:
     web:
         image: nginx:latest
         ports:
-            - "8080:80"
-            - "443:443"
+            - "4000:80"
+            - "4001:443"
         expose:
-            - "443"
+            - "4001"
         volumes:
             - ./code:/code
             - ./ssl:/etc/nginx/ssl
             - ./site.conf:/etc/nginx/conf.d/site.conf
         links:
             - php
+        networks:
+            - soa
     php:
         build: docker/php
         volumes:
@@ -20,6 +22,8 @@ services:
         links:
             - mongo
             - rabbit
+        networks:
+            - soa
     mongo:
         image: mongo:latest
         restart: always
@@ -28,19 +32,23 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASSWORD}'
             MONGO_INITDB_DATABASE: '${MONGO_DATABASE}'
         ports:
-            - 27017:27017
+            - 4002:27017
         volumes:
             - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        networks:
+            - soa
     mongo-express:
         image: mongo-express
         restart: always
         depends_on:
             - mongo
         ports:
-            - 8081:8081
+            - 4003:8081
         environment:
             ME_CONFIG_MONGODB_ADMINUSERNAME: root
             ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+        networks:
+            - soa
     rabbit:
         image: "rabbitmq:3-management"
         environment:
@@ -49,7 +57,12 @@ services:
             RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
             RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST}"
         ports:
-            - 15672:15672
-            - 5672:5672
+            - 4004:15672
+            - 4005:5672
         volumes:
             - ./docker/rabbit/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+        networks:
+            - soa
+networks:
+    soa:
+        external: true

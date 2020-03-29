@@ -100,7 +100,7 @@ php vendor/bin/ecs check /code/src/	--set clean-code
 php vendor/bin/psalm
 ```
 
-## Useful links
+## Resources
 
 [Email Sending Architecture Using Messaging Queue](https://medium.com/naukri-engineering/email-sending-architecture-using-messaging-queue-314a18f8595c)
 

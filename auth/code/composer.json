@@ -12,6 +12,7 @@
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/cors-bundle": "^2.0",
         "ramsey/uuid-doctrine": "^1.6",
+        "sentry/sentry-symfony": "^3.4",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
         "symfony/flex": "^1.3.1",
