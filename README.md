@@ -28,7 +28,7 @@ Here I want to added some plus from me:
 
 [Sentry](sentry/README.md)
 
-<a href="https://github.com/dykyi-roman/service-oriented-architecture#newman">Newman</a>
+<a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
 
 # Auth service
 
