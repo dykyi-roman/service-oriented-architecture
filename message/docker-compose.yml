@@ -63,6 +63,18 @@ services:
             - ./docker/rabbit/enabled_plugins:/etc/rabbitmq/enabled_plugins"
         networks:
             - soa
+    postman_checks:
+        build: docker/newman
+        command:
+            run test_postman_collection.json --insecure
+            -e test_postman_environment.json
+            -r cli
+        links:
+            - web
+        volumes:
+            - ./postman:/etc/newman
+        networks:
+            - soa
 networks:
     soa:
         external: true

@@ -26,6 +26,10 @@ Here I want to added some plus from me:
 
 [Admin panel service](adminpanel/README.md)
 
+[Sentry](sentry/README.md)
+
+<a href="https://github.com/dykyi-roman/service-oriented-architecture#newman">Newman</a>
+
 # Auth service
 
 In this strategy, a microservice is created for the purpose of authentication. Authentication primarily involves issuing and verifying tokens. 
@@ -55,13 +59,28 @@ On the picture use a REST for data transfer between a service but this is a deta
 
 # Application
 
-...   
+...
 
 # Performance and monitoring
 
-...
+## Sentry
 
-## Useful links:
+Sentry provides self-hosted and cloud-based error monitoring that helps all software teams discover, triage, and prioritize errors in real-time.
+
+## Newman
+
+<a href="https://github.com/postmanlabs/newman" target="_blank">Newman</a> is a command-line collection runner for
+<a href="https://getpostman.com" target="_blank">Postman</a>. It allows you to effortlessly run and test a
+<a href="https://www.getpostman.com/docs/collections" target="_blank">Postman Collections<a/> directly from the
+command-line. It is built with extensibility in mind so that you can easily integrate it with your continuous integration servers and build systems.
+
+Run a collection using the newman image:
+
+```
+docker-compose run postman_checks
+```
+
+## Ressources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
 
@@ -70,6 +89,8 @@ On the picture use a REST for data transfer between a service but this is a deta
 [Create an SSL Certificate on Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
 
 [json-schema](https://json-schema.org/understanding-json-schema/reference/object.html)
+
+[newman](https://github.com/postmanlabs/newman)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

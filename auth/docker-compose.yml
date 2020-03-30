@@ -1,54 +1,66 @@
 version: '3.7'
 services:
-  web:
-    image: nginx:latest
-    ports:
-        - "5000:80"
-        - "5001:443"
-    expose:
-        - "5001"
-    volumes:
-        - ./code:/code
-        - ./ssl:/etc/nginx/ssl
-        - ./site.conf:/etc/nginx/conf.d/site.conf
-    links:
-        - php
-    networks:
-        - soa
-  php:
-    build: docker/php
-    volumes:
-        - ./code:/code
-    links:
-        - mysql
-    networks:
-        - soa
-  mysql:
-    image: mysql
-    restart: always
-    volumes:
-      - ./database/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-      MYSQL_PORT: 5003
-    ports:
-      - "5003:3306"
-    expose:
-      - "5003"
-    networks:
-        - soa
-  adminer:
-    image: adminer
-    restart: always
-    links:
-        - mysql
-    ports:
-        - 5004:8080
-    networks:
-        - soa
+    web:
+        image: nginx:latest
+        ports:
+            - "5000:80"
+            - "5001:443"
+        expose:
+            - "5001"
+        volumes:
+            - ./code:/code
+            - ./ssl:/etc/nginx/ssl
+            - ./site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+        networks:
+            - soa
+    php:
+        build: docker/php
+        volumes:
+            - ./code:/code
+        links:
+            - mysql
+        networks:
+            - soa
+    mysql:
+        image: mysql
+        restart: always
+        volumes:
+            - ./database/mysql:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+            MYSQL_DATABASE: '${MYSQL_DATABASE}'
+            MYSQL_USER: '${MYSQL_USER}'
+            MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+            MYSQL_PORT: 5003
+        ports:
+            - "5003:3306"
+        expose:
+            - "5003"
+        networks:
+            - soa
+    adminer:
+        image: adminer
+        restart: always
+        links:
+            - mysql
+        ports:
+            - 5004:8080
+        networks:
+            - soa
+    postman_checks:
+        build: docker/newman
+        command:
+            run test_postman_collection.json --insecure
+            -e test_postman_environment.json
+            -r cli
+        links:
+            - web
+        volumes:
+            - ./postman:/etc/newman
+        networks:
+            - soa
 networks:
     soa:
         external: true

@@ -6,54 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "mq-send",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "rabbitmq",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "rabbitmq",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"properties\":{},\n\t\"routing_key\":\"high\",\n\t\"payload\":'{\"user_id\":\"29ff7ec7-5bda-4f36-a503-78740805b275\",\"to\":{\"email\":\"mr.dukuy@gmail.com\", \"phone\":\"+380938982443\"},\"template\":{\"name\":\"welcome\",\"lang\":\"en\",\"variables\":[\"roman\"]}}',\"payload_encoding\":\"string\"}"
-				},
-				"url": {
-					"raw": "http://localhost:15672/api/exchanges/%2F/amq.default/publish",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "15672",
-					"path": [
-						"api",
-						"exchanges",
-						"%2F",
-						"amq.default",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "template-create",
 			"event": [
 				{
@@ -69,8 +21,8 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"pm.test(\"Response has uuid\", function(){",
-							"    pm.expect(pm.response.json().data.uuid).to.be.a('string');",
+							"pm.test(\"Response has id\", function(){",
+							"    pm.expect(pm.response.json().data.id).to.be.a('string');",
 							"});",
 							"",
 							"pm.collectionVariables.set('templateId', pm.response.json().data.id)",
@@ -215,7 +167,7 @@
 	],
 	"variable": [
 		{
-			"id": "16108d10-137f-4f57-8561-884b0461285f",
+			"id": "46daf886-7739-4706-be79-f44192ef86df",
 			"key": "templateId",
 			"value": "",
 			"type": "string"
