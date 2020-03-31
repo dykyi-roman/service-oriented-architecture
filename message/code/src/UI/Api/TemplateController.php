@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\UI\Api;
 
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\Transport\Serialization\Serializer;
-use App\Application\Sender\Message\MessageSent;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
 use App\Domain\Sender\Exception\MessageException;
-use App\Domain\Sender\Repository\SentPersistRepositoryInterface;
 use App\Domain\Template\Exception\TemplateException;
 use App\Application\Template\TemplateEditor;
 use App\Domain\Sender\ValueObject\MessageType;
@@ -22,7 +18,6 @@ use Immutable\Exception\InvalidValueException;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class TemplateController extends ApiController
 {

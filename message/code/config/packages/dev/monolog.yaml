@@ -1,5 +1,10 @@
 monolog:
     handlers:
+        graylog:
+            type: service
+            id: monolog.gelf_handler
+            level: debug
+            channels: ["!event"]
         main:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"

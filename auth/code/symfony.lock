@@ -117,6 +117,9 @@
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v0.9.1"
     },
+    "graylog2/gelf-php": {
+        "version": "1.6.4"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
     },
@@ -239,6 +242,9 @@
     },
     "openlss/lib-array2xml": {
         "version": "1.0.0"
+    },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.3.0"
     },
     "phar-io/manifest": {
         "version": "1.0.3"

@@ -32,6 +32,9 @@
             ".php_cs.dist"
         ]
     },
+    "graylog2/gelf-php": {
+        "version": "1.6.4"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.2"
     },
@@ -73,6 +76,9 @@
     },
     "openlss/lib-array2xml": {
         "version": "1.0.0"
+    },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.3.0"
     },
     "php": {
         "version": "7.4"

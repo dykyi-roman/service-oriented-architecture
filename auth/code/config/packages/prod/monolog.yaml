@@ -22,3 +22,8 @@ monolog:
             handler: deprecation
             max_level: info
             channels: ["php"]
+        graylog:
+            type: service
+            id: monolog.gelf_handler
+            level: debug
+            channels: ["!event"]

@@ -9,6 +9,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "doctrine/mongodb-odm": "^2.0",
         "doctrine/mongodb-odm-bundle": "^4.1",
+        "graylog2/gelf-php": "^1.6",
         "immutablephp/immutable": "^1.0",
         "justinrainbow/json-schema": "^5.2",
         "nelmio/cors-bundle": "^2.0",

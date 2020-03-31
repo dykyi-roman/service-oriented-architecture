@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "cce836ee-7332-4826-962c-6d9b1b290815",
+		"name": "auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96a8d585-b13b-458b-8f00-e2975bfb46e7",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response has uuid\", function(){",
+							"    pm.expect(pm.response.json().data.uuid).to.be.a('string');",
+							"});",
+							"",
+							"pm.collectionVariables.set('uuid', pm.response.json().data.uuid)",
+							"pm.collectionVariables.set('test', pm.response.json().data.uuid)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "870d772d-7620-400d-af81-f453bd793cae",
+						"exec": [
+							"var my_timestamp = new Date();",
+							"postman.setEnvironmentVariable('randomInt',my_timestamp.getTime().toString().slice(0,10));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"test{{randomInt}}@gmail.com\",\n\t\"password\":\"test\",\n\t\"firstName\":\"Roman\",\n\t\"lastName\":\"Dikiy\",\n\t\"phone\":\"+380938982443\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/user/registration",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"registration"
+					]
+				},
+				"description": "Register user"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b7d60a9-6c8b-4b30-baf2-2cf9b646b4f9",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has a token\", function(){",
+							"    pm.expect(pm.response.json().token).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Response has a refresh_token\", function(){",
+							"    pm.expect(pm.response.json().token).to.be.a('string');",
+							"});",
+							"",
+							"pm.collectionVariables.set('access_token', pm.response.json().token)",
+							"pm.collectionVariables.set('refresh_token', pm.response.json().refresh_token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"test{{randomInt}}@gmail.com\",\n\t\"password\":\"test\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/user/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df2c3995-5a2f-4367-8c18-23cdc8ee7eeb",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has a token\", function(){",
+							"    pm.expect(pm.response.json().token).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"To have a refresh_token\", function(){",
+							"    pm.expect(pm.response.json().refresh_token).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/token/refresh?refresh_token={{refresh_token}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"token",
+						"refresh"
+					],
+					"query": [
+						{
+							"key": "refresh_token",
+							"value": "{{refresh_token}}"
+						}
+					]
+				},
+				"description": "refresh token"
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ede43ba1-0a06-4d77-8e0b-93c3bf31791d",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has email\", function(){",
+							"    pm.expect(pm.response.json().data.email).to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/user/{{uuid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"{{uuid}}"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "2ce3a5a7-ff4e-4ef7-88d5-ebb2acf0887d",
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "b81ee30f-23d7-4222-8f82-4d6400d573b2",
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "0c350713-6a0d-451c-ab6b-74907f540fe1",
+			"key": "uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "955b0fe5-fc77-4ed3-9dda-2699870e9ce5",
+			"key": "test",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
