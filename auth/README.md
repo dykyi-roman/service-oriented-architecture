@@ -1,7 +1,7 @@
 Auth service
 =======
 
-![image](auth.jpeg)
+![image](docs/auth.jpeg)
 
 This part of the tutorials covers how to perform Authentication and Authorization between microservices.
 

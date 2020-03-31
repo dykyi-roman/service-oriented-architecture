@@ -1,5 +1,8 @@
 Service oriented architecture
 =======
+
+![image](base.png)
+
 Microservices architecture has been gaining a lot of ground as the preferred architecture for implementing solutions, as it provides benefits like scalability, logical and physical separation, small teams managing a part of the functionality, flexibility in technology, etc. 
 But since microservices are distributed the complexity of managing them increases.
 One of the key challenges is how to implement authentication and authorization in microservices so that we can manage security and access control.
@@ -28,16 +31,18 @@ Here I want to added some plus from me:
 
 [Sentry](sentry/README.md)
 
+[Graylog](graylog/README.md)
+
 <a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
 
 # Auth service
+
+![image](auth/docs/main.png)
 
 In this strategy, a microservice is created for the purpose of authentication. Authentication primarily involves issuing and verifying tokens. 
 JWT (JSON Web Tokens) can be used to verify tokens without having to hit a database or other persistent storage. 
 This means each service can verify requests on their own. Token issuing is done in the auth service, while verification is handled in every service where it’s required. 
 A client library is usually used to share this verification functionality with all the services that need to perform authentication. 
-
-![image](base.png)
 
 When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
 
@@ -66,6 +71,10 @@ On the picture use a REST for data transfer between a service but this is a deta
 ## Sentry
 
 Sentry provides self-hosted and cloud-based error monitoring that helps all software teams discover, triage, and prioritize errors in real-time.
+
+## Graylog
+
+Graylog is a leading centralized log management solution built to open standards for capturing, storing, and enabling real-time analysis of terabytes of machine data.
 
 ## Newman
 
