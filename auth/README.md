@@ -49,7 +49,7 @@ php vendor/bin/ecs check /code/src/	--set clean-code
 php vendor/bin/psalm
 ```
 
-## Useful links
+## Resources
 
 [Microservices Authentication and Authorization Solutions](https://medium.com/tech-tajawal/microservice-authentication-and-authorization-solutions-e0e5e74b248a)
 

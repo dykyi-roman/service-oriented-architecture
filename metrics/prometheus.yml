@@ -1,0 +1,48 @@
+# prometheus.yml
+global:
+    scrape_interval: 5s
+    external_labels:
+        monitor: 'my-monitor'
+scrape_configs:
+#    -   job_name: 'prometheus'
+#        static_configs:
+#            -   targets: ['prometheus:9090']
+
+    -   job_name: 'prometheus'
+        dns_sd_configs:
+            -   names:
+                    - 'prometheus'
+                type: 'A'
+                port: 9090
+                refresh_interval: 10s
+
+    -   job_name: 'grafana'
+        dns_sd_configs:
+            -   names:
+                    - 'grafana'
+                type: 'A'
+                port: 3000
+                refresh_interval: 10s
+
+    -   job_name: 'loki'
+        dns_sd_configs:
+            -   names:
+                    - 'loki'
+                type: 'A'
+                port: 3100
+                refresh_interval: 10s
+
+    -   job_name: 'node-exporter'
+        dns_sd_configs:
+            -   names:
+                    - 'node-exporter'
+                type: 'A'
+                port: 9100
+                refresh_interval: 10s
+    -   job_name: 'cadvisor'
+        dns_sd_configs:
+            -   names:
+                    - 'cadvisor'
+                type: 'A'
+                port: 8080
+                refresh_interval: 10s

@@ -1,0 +1,93 @@
+version: '3.7'
+services:
+    prometheus:
+        container_name: prometheus
+        image: prom/prometheus
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+        ports:
+            - '9090:9090'
+        networks:
+            - soa
+    grafana:
+        container_name: grafana
+        image: grafana/grafana
+        volumes:
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning:/etc/grafana/provisioning
+            - ./grafana/datasources:/etc/grafana/datasources
+            - ./grafana/dashboards:/etc/grafana/dashboards
+        environment:
+            - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
+            - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+        depends_on:
+            - prometheus
+        ports:
+            - "3000:3000"
+        logging:
+            driver: "fluentd"
+            options:
+                tag: grafana
+        networks:
+            - soa
+    node-exporter:
+        container_name: node-exporter
+        image: prom/node-exporter
+        ports:
+            - '9100:9100'
+        networks:
+            - soa
+    cadvisor:
+        container_name: cadvisor
+        image: google/cadvisor
+        ports:
+            - "9200:8080"
+        volumes:
+            - "/:/rootfs:ro"
+            - "/var/run:/var/run:rw"
+            - "/sys:/sys:ro"
+            - "/var/lib/docker/:/var/lib/docker:ro"
+        restart: unless-stopped
+        networks:
+            - soa
+    alertmanager:
+        image: prom/alertmanager
+        container_name: alertmanager
+        #        volumes:
+        #            - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+        #        command:
+        #            - '--config.file=/etc/alertmanager/config.yml'
+        #            - '--storage.path=/alertmanager'
+        restart: unless-stopped
+        expose:
+            - 9093
+    loki:
+        container_name: loki
+        image: grafana/loki:master
+        ports:
+            - "3100:3100"
+        command: '--config.file=/etc/loki/local-config.yaml'
+        networks:
+            - soa
+    fluentd:
+        container_name: fluentd
+        image: grafana/fluent-plugin-loki:master
+        volumes:
+            - ./fluentd.conf:/fluentd/etc/fluentd.conf
+        links:
+            - loki
+        ports:
+            - "24224:24224"
+            - "24224:24224/udp"
+        networks:
+            - soa
+networks:
+    soa:
+        external: true
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+    alertmanager_data: {}
