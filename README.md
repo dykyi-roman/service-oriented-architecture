@@ -89,6 +89,14 @@ Run a collection using the newman image:
 docker-compose run postman_checks
 ```
 
+## Prometheus+Grafana+AlertManager+Node-exporter+Cadvisor
+
+![image](metrics/docs/monitoring-stack.png)
+
+Monitoring is the collection of metrics and the presentation of these metrics in a convenient form (tables, graphs, scales, notifications, reports).
+The more components in your system (microservices), the greater the load on it, the more expensive the downtime, the more important it is to have a good monitoring system.
+Prometheus is not a “set-up and works” solution. This is a platform, a set of tools that allows you to do the monitoring you need.
+
 ## Ressources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
