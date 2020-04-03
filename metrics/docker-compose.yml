@@ -63,6 +63,8 @@ services:
         restart: unless-stopped
         expose:
             - 9093
+        networks:
+            - soa
     loki:
         container_name: loki
         image: grafana/loki:master
@@ -85,7 +87,6 @@ services:
             - soa
 networks:
     soa:
-        external: true
 
 volumes:
     prometheus_data: {}

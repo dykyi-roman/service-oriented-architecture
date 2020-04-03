@@ -67,7 +67,7 @@ HTTP URL: http://prometheus:9090
 Next, go (Dashboards/Manage/Import) and import:
  
 * [Node exporter full](https://grafana.com/grafana/dashboards/1860) 
-* [Docker monitoring](https://grafana.com/grafana/dashboards/193) 
+* [Docker monitoring](https://grafana.com/grafana/dashboards/193) or [Docker and system monitoring](https://grafana.com/grafana/dashboards/893) 
 * [Docker Container & Host Metrics](https://grafana.com/grafana/dashboards/10619) 
 
 There are different kinds of dashboards with different data sources at grafana dashboard home page https://grafana.com/grafana/dashboards. 
