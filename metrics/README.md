@@ -3,13 +3,16 @@ Metrics
 
 ![image](docs/prometheus.svg)
 
+* [Prometheus](http://127.0.0.1:9090)
+* [Grafana](http://127.0.0.1:3000)
+* [cAdvisor](http://127.0.0.1:9200)
+* [Alertmanager](http://127.0.0.1:9093)
+
 # Prometheus
 
 Prometheus is an open-source software application used for event monitoring and alerting. 
 It records real-time metrics in a time series database with flexible queries and real-time alerting. 
 A simple user interface where you can visualize, query, and monitor all the metrics.
-
-Prometheus [open](http://127.0.0.1:9090) without login and password.
 
 #### Configure
 
@@ -22,6 +25,8 @@ Further down below the ‘Configuration’ on the status page you will find a se
 This corresponds to the scrape_configs setting by the same job_name and is a source of metrics provided by Prometheus.
  In other words, the Prometheus server comes with a metrics endpoint - or exporter, as we called it above - which 
  reports stats for the Prometheus server itself.
+
+To add a new scrape target, edit the scrape_configs section of /prometheus/prometheus.yml
 
 # Node Exporter
 
@@ -39,18 +44,21 @@ Runs to monitor containers running on the host on which the monitoring stack is 
 
 Next, we need to configure the Prometheus to retrieve metrics data. For that, we need to update a prometheus.yml file.
 
+If you feel the power of DevOps inside yourself - as an alternative, you can look to [https://github.com/containerd/containerd/blob/master/docs/ops.md](https://github.com/containerd/containerd/blob/master/docs/ops.md)
+
 # AlertManger
 
 Alertmanager manages the routing of alerts which Prometheus raises to various different channels like email, pagers, slack - and so on. 
 So while Prometheus collects stats and raises alerts it is completely agnostic of where these alerts should be displayed. 
 This is where the alertmanager picks up.
 
+To add a new alert, create or edit a `*.rules` file in the `prometheus/alerts` directory
+
 # Grafana
 
 Grafana is an open-source platform for data visualization, monitoring, and analysis. In Grafana, users can create dashboards with panels, each representing specific metrics over a set time-frame. Grafana supports graph, table, heatmap, and free text panels as well as integration with official and community-built plugins and apps that could be visualized too.
 
 Grafana [open](http://127.0.0.1:3000) and use login and password:
-
 
 ```
 user: admin
@@ -71,6 +79,14 @@ Next, go (Dashboards/Manage/Import) and import:
 * [Docker Container & Host Metrics](https://grafana.com/grafana/dashboards/10619) 
 
 There are different kinds of dashboards with different data sources at grafana dashboard home page https://grafana.com/grafana/dashboards. 
+ 
+## StatsD
+
+[statsd-php](https://github.com/domnikl/statsd-php) is a PHP client library for the statistics 
+daemon ([statsd](https://github.com/etsy/statsd)) intended to send metrics from PHP applications.    
+ 
+Alternatives way use a PushGateway and php client [prometheus_client_php](https://github.com/endclothing/prometheus_client_php)
+Disadvantages: depend from redis by default, and small functionality. 
  
 ## Resources
 

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
     mongo:
         image: mongo:3
@@ -29,8 +29,6 @@ services:
             # Password: admin
             - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
             - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
-        networks:
-            - soa
         depends_on:
             - mongo
             - elasticsearch
@@ -45,6 +43,8 @@ services:
             - 12201:12201
             # GELF UDP
             - 12201:12201/udp
+        networks:
+            - soa
 networks:
     soa:
         external: true

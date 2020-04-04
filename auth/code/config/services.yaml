@@ -27,6 +27,14 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Domain\Repository\UserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\UserRepository'
+    App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
+
+    App\Infrastructure\Metrics\StatsDMetrics:
+        arguments:
+            - '%env(METRICS_HOST)%'
+            - '%env(METRICS_PORT)%'
+            - '%env(METRICS_NAMESPACE)%'
+            - '%env(METRICS_TIMEOUT)%'
 
     App\Application\Handler\UserRegisterHandler:
         tags:

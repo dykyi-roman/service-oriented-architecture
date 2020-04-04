@@ -4,7 +4,7 @@ services:
         container_name: prometheus
         image: prom/prometheus
         volumes:
-            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
         command:
             - '--config.file=/etc/prometheus/prometheus.yml'
         ports:
@@ -16,9 +16,9 @@ services:
         image: grafana/grafana
         volumes:
             - grafana_data:/var/lib/grafana
-            - ./grafana/provisioning:/etc/grafana/provisioning
-            - ./grafana/datasources:/etc/grafana/datasources
-            - ./grafana/dashboards:/etc/grafana/dashboards
+            - ./data/grafana/provisioning:/etc/grafana/provisioning
+            - ./data/grafana/datasources:/etc/grafana/datasources
+            - ./data/grafana/dashboards:/etc/grafana/dashboards
         environment:
             - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
             - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
@@ -32,6 +32,7 @@ services:
                 tag: grafana
         networks:
             - soa
+    #Move to server which you want to monitoring
     node-exporter:
         container_name: node-exporter
         image: prom/node-exporter
@@ -52,15 +53,38 @@ services:
         restart: unless-stopped
         networks:
             - soa
+    statsd-exporter:
+        container_name: statsd-exporter
+        image: prom/statsd-exporter
+        command: "--statsd.mapping-config=/tmp/statsd_mapping.conf"
+        ports:
+            - "9102:9102"
+            - "9125:9125/udp"
+        volumes:
+            - "./statsd/statsd_mapping.conf:/tmp/statsd_mapping.conf"
+        networks:
+            - soa
+    statsd:
+        container_name: statsd
+        image: dockerana/statsd
+        ports:
+            - "8125:8125/udp"
+            - "8126:8126"
+        volumes:
+            - "./statsd/statsd_config.js:/src/statsd/config.js"
+        networks:
+            - soa
     alertmanager:
-        image: prom/alertmanager
         container_name: alertmanager
+        image: prom/alertmanager
         #        volumes:
-        #            - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+        #            - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
         #        command:
         #            - '--config.file=/etc/alertmanager/config.yml'
         #            - '--storage.path=/alertmanager'
         restart: unless-stopped
+        ports:
+            - "9093:9093"
         expose:
             - 9093
         networks:
@@ -77,7 +101,7 @@ services:
         container_name: fluentd
         image: grafana/fluent-plugin-loki:master
         volumes:
-            - ./fluentd.conf:/fluentd/etc/fluentd.conf
+            - ./fluentd/fluentd.conf:/fluentd/etc/fluentd.conf
         links:
             - loki
         ports:
@@ -87,6 +111,7 @@ services:
             - soa
 networks:
     soa:
+        external: true
 
 volumes:
     prometheus_data: {}

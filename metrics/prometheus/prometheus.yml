@@ -1,12 +1,28 @@
 # prometheus.yml
 global:
-    scrape_interval: 5s
+    scrape_interval: 15s
+    evaluation_interval: 15s
     external_labels:
         monitor: 'my-monitor'
+
+# Alerter configuration
+alerting:
+    alertmanagers:
+        -   static_configs:
+                -   targets:
+                        - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+
 scrape_configs:
-#    -   job_name: 'prometheus'
-#        static_configs:
-#            -   targets: ['prometheus:9090']
+    #    -   job_name: 'my-monitor'
+    #        static_configs:
+    #            -   targets:
+    #                -  'prometheus:9090'
+    #                -  'grafana:3000'
 
     -   job_name: 'prometheus'
         dns_sd_configs:
@@ -39,10 +55,27 @@ scrape_configs:
                 type: 'A'
                 port: 9100
                 refresh_interval: 10s
+
     -   job_name: 'cadvisor'
         dns_sd_configs:
             -   names:
                     - 'cadvisor'
                 type: 'A'
                 port: 8080
+                refresh_interval: 10s
+
+    -   job_name: 'alertmanager'
+        dns_sd_configs:
+            -   names:
+                    - 'alertmanager'
+                type: 'A'
+                port: 9093
+                refresh_interval: 10s
+
+    -   job_name: 'statsd-exporter'
+        dns_sd_configs:
+            -   names:
+                    - 'statsd-exporter'
+                type: 'A'
+                port: 9102
                 refresh_interval: 10s
