@@ -12,7 +12,7 @@ final class Template extends ValueObject
 
     protected string $subject;
     protected string $body;
-    protected array $variables;
+    protected array $variables = [];
 
     /**
      * @inheritDoc

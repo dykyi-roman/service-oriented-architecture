@@ -17,7 +17,6 @@ use Twilio\Rest\Client;
 final class TwilioClient implements MessageSenderInterface
 {
     private Client $client;
-
     private LoggerInterface $logger;
 
     /**
@@ -31,18 +30,21 @@ final class TwilioClient implements MessageSenderInterface
         $this->logger = $logger;
     }
 
-    public function send(MessageInterface $message): void
+    public function send(MessageInterface $message): bool
     {
         try {
             $options = ['from' => $message->recipients()->sender()->toString(), 'body' => $message->template()->body()];
-            
             $this->client->messages->create($message->recipients()->recipient()->toString(), $options);
+
+            return true;
         } catch (Throwable $exception) {
             $this->logger->error('Message::TwilioClient', [
                 'error' => $exception->getMessage(),
                 'number' => $message->recipients()->recipient()->toString(),
                 'message' => $message->template()->body()
             ]);
+
+            return false;
         }
     }
 }

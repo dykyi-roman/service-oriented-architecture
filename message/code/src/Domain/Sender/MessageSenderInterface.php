@@ -6,5 +6,5 @@ namespace App\Domain\Sender;
 
 interface MessageSenderInterface
 {
-    public function send(MessageInterface $message): void;
+    public function send(MessageInterface $message): bool;
 }

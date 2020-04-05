@@ -26,19 +26,22 @@ final class PHPMailerClient implements MessageSenderInterface
         $this->logger = $logger;
     }
 
-    public function send(MessageInterface $message): void
+    public function send(MessageInterface $message): bool
     {
         try {
             $this->setServerSetting();
             $this->seRecipients($message);
             $this->setContent($message);
-
             $this->mailer->send();
+
+            return true;
         } catch (Throwable $exception) {
             $this->logger->error('Message::PHPMailerClient', [
                 'error' => $exception->getMessage(),
                 'ErrorInfo' => $this->mailer->ErrorInfo,
             ]);
+
+            return false;
         }
     }
 

@@ -9,6 +9,7 @@ use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
 use App\Infrastructure\Cache\CacheInterface;
+use App\Infrastructure\Metrics\MetricsInterface;
 use Immutable\Exception\ImmutableObjectException;
 use stdClass;
 
@@ -17,11 +18,16 @@ final class TemplateLoader
     private const TTL = 360;
 
     private CacheInterface $cache;
+    private MetricsInterface $metrics;
     private TemplateReadRepositoryInterface $templateReadRepository;
 
-    public function __construct(TemplateReadRepositoryInterface $templateReadRepository, CacheInterface $cache)
-    {
+    public function __construct(
+        TemplateReadRepositoryInterface $templateReadRepository,
+        CacheInterface $cache,
+        MetricsInterface $metrics
+    ) {
         $this->cache = $cache;
+        $this->metrics = $metrics;
         $this->templateReadRepository = $templateReadRepository;
     }
 
@@ -32,6 +38,7 @@ final class TemplateLoader
      */
     public function load(stdClass $data, MessageType $type): Template
     {
+        $this->metrics->startTiming('template_load');
         $cacheKey = $this->generateCacheKey($data, $type);
         if (!$this->cache->has($cacheKey)) {
             $lang = $data->lang ?? Template::DEFAULT_LANGUAGE;
@@ -44,7 +51,9 @@ final class TemplateLoader
             $template = $template->withVariables($template, $data->variables);
 
             $this->cache->set($cacheKey, $template, self::TTL);
+            $this->metrics->inc('template_load');
         }
+        $this->metrics->endTiming('template_load', 1.0, ['type' => $type->toString()]);
 
         return $this->cache->get($cacheKey);
     }

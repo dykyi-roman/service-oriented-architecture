@@ -17,4 +17,9 @@ class MessageException extends Exception
     {
         return new static('Message sender is not found');
     }
+
+    public static function messageNotSent(): self
+    {
+        return new static('Message is not sent');
+    }
 }

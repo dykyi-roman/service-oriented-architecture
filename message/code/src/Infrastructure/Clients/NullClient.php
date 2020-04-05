@@ -9,8 +9,8 @@ use App\Domain\Sender\MessageSenderInterface;
 
 final class NullClient implements MessageSenderInterface
 {
-    public function send(MessageInterface $message): void
+    public function send(MessageInterface $message): bool
     {
-        // TODO: Mock
+        return true;
     }
 }

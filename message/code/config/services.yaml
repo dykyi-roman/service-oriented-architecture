@@ -55,6 +55,14 @@ services:
     App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
     App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
+    App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
+
+    App\Infrastructure\Metrics\StatsDMetrics:
+        arguments:
+            - '%env(METRICS_HOST)%'
+            - '%env(METRICS_PORT)%'
+            - '%env(METRICS_NAMESPACE)%'
+            - '%env(METRICS_TIMEOUT)%'
 
     App\Infrastructure\Clients\PHPMailerClient:
         public: true
