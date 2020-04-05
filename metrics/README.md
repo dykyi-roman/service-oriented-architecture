@@ -88,6 +88,10 @@ daemon ([statsd](https://github.com/etsy/statsd)) intended to send metrics from 
 Alternatives way use a PushGateway and php client [prometheus_client_php](https://github.com/endclothing/prometheus_client_php)
 Disadvantages: depend from redis by default, and small functionality. 
  
+Example: 
+ 
+![image](docs/example.png)
+ 
 ## Resources
 
 [Monitoring with Prometheus, Grafana & Docker](https://finestructure.co/blog/2016/5/16/monitoring-with-prometheus-grafana-docker-part-1)
