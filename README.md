@@ -33,6 +33,8 @@ Here I want to added some plus from me:
 
 [Graylog](graylog/README.md)
 
+[Metrics](metrics/README.md)
+
 <a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
 
 # Auth service
@@ -108,6 +110,8 @@ Prometheus is not a “set-up and works” solution. This is a platform, a set o
 [json-schema](https://json-schema.org/understanding-json-schema/reference/object.html)
 
 [newman](https://github.com/postmanlabs/newman)
+
+[Grafana](https://grafana.com/docs/grafana/latest/features/panels/panels/)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
