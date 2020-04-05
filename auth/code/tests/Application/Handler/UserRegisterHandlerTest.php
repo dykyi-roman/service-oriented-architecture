@@ -10,9 +10,11 @@ use App\Domain\Entity\User;
 use App\Domain\Exception\UserException;
 use App\Domain\VO\FullName;
 use App\Domain\VO\UserRegistrationRequest;
+use App\Infrastructure\Metrics\InMemoryMetrics;
 use App\Infrastructure\Repository\InMemory\InMemoryUserRepository;
 use Faker\Factory;
 use Faker\Generator;
+use Psr\Log\NullLogger;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -54,7 +56,12 @@ class UserRegisterHandlerTest extends WebTestCase
         $dispatcherMock->expects(self::once())->method('dispatch');
 
         $command = $this->getUserRegisterCommand();
-        (new UserRegisterHandler($this->inMemoryUserRepository, $dispatcherMock))->handle($command);
+        (new UserRegisterHandler(
+            $this->inMemoryUserRepository,
+            $dispatcherMock,
+            new InMemoryMetrics(),
+            new NullLogger())
+        )->handle($command);
 
         $user = $this->inMemoryUserRepository->findUserById($command->getUuid()->toString());
 
@@ -75,7 +82,12 @@ class UserRegisterHandlerTest extends WebTestCase
 
         $this->createUser($command->getUuid());
 
-        (new UserRegisterHandler($this->inMemoryUserRepository, $dispatcherMock))->handle($command);
+        (new UserRegisterHandler(
+            $this->inMemoryUserRepository,
+            $dispatcherMock,
+            new InMemoryMetrics(),
+            new NullLogger())
+        )->handle($command);
     }
 
     private function getUserRegisterCommand(): UserRegisterCommand

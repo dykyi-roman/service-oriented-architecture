@@ -9,6 +9,7 @@ use App\Domain\Template\Exception\TemplateException;
 use App\Domain\Template\TemplateLoader;
 use App\Domain\Template\ValueObject\Template;
 use App\Infrastructure\Cache\InMemoryCache;
+use App\Infrastructure\Metrics\InMemoryMetrics;
 use App\Infrastructure\Repository\InMemory\InMemoryTemplateRepository;
 use Faker\Factory;
 use Faker\Generator;
@@ -43,7 +44,7 @@ class TemplateLoaderTest extends WebTestCase
         );
 
         $cache = new InMemoryCache();
-        $templateLoader = new TemplateLoader($templateRepository, $cache);
+        $templateLoader = new TemplateLoader($templateRepository, $cache, new InMemoryMetrics());
         $template = $templateLoader->load($this->createTemplate(), new MessageType(MessageType::TYPE_PHONE));
 
         $this->assertCount(1, $cache->data);
@@ -68,7 +69,7 @@ class TemplateLoaderTest extends WebTestCase
         );
 
         $cache = new InMemoryCache();
-        $templateLoader = new TemplateLoader($templateRepository, $cache);
+        $templateLoader = new TemplateLoader($templateRepository, $cache, new InMemoryMetrics());
         $templateLoader->load($this->createTemplate(), new MessageType(MessageType::TYPE_PHONE));
 
         $this->assertCount(0, $cache->data);

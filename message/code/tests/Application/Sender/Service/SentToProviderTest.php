@@ -10,6 +10,7 @@ use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\TemplateLoader;
 use App\Infrastructure\Cache\InMemoryCache;
 use App\Infrastructure\Clients\NullClient;
+use App\Infrastructure\Metrics\InMemoryMetrics;
 use App\Infrastructure\Repository\InMemory\InMemoryTemplateRepository;
 use Faker\Factory;
 use Faker\Generator;
@@ -49,7 +50,7 @@ class SentToProviderTest extends WebTestCase
         );
 
         $cache = new InMemoryCache();
-        $templateLoader = new TemplateLoader($templateLoaderRepository, $cache);
+        $templateLoader = new TemplateLoader($templateLoaderRepository, $cache, new InMemoryMetrics());
 
         self::bootKernel();
         $transport = self::$container->get('messenger.bus.default');
@@ -57,6 +58,7 @@ class SentToProviderTest extends WebTestCase
             $senderFactory,
             $templateLoader,
             $transport,
+            new InMemoryMetrics(),
             new NullLogger()
         );
 
