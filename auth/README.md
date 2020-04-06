@@ -15,7 +15,7 @@ JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token form
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
-| /api/user/registeration | POST    | ANY    | ALL   |
+| /api/user/registration  | POST    | ANY    | ALL   |
 | /api/user/login         | POST    | ANY    | ALL   |
 | /api/user//current      | GET     | ANY    | ALL   |
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
