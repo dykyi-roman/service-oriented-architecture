@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "doctrine/annotations": "^1.10",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "doctrine/mongodb-odm": "^2.0",
         "doctrine/mongodb-odm-bundle": "^4.1",
@@ -27,7 +28,8 @@
         "symfony/orm-pack": "^1.0",
         "symfony/serializer": "5.0.*",
         "symfony/yaml": "5.0.*",
-        "twilio/sdk": "^6.0"
+        "twilio/sdk": "^6.0",
+        "zircote/swagger-php": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9",

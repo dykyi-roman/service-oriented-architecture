@@ -1,12 +1,10 @@
-register:
-    path: /api/user/registration
-    controller: App\UI\Controller\AuthController::register
-    methods: POST
+controllers:
+    resource: '../src/UI/Api/'
+    type: annotation
 
-user:
-    path: /api/user/{id}
-    controller: App\UI\Controller\UserController::user
-    methods: GET
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
 
 gesdinet_jwt_refresh_token:
     path:       /api/token/refresh

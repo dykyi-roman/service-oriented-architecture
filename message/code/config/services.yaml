@@ -23,6 +23,7 @@ parameters:
     RABBITMQ_PASSWORD: '%env(resolve:RABBITMQ_PASS)%'
     RABBITMQ_VHOST: '%env(resolve:RABBITMQ_VHOST)%'
     ###
+    PROJECT_DIR: '%kernel.project_dir%/src/UI/'
     JSON_SCHEME_PATH: '%kernel.project_dir%/config/jsonschema/'
 
 services:

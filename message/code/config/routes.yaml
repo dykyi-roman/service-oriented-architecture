@@ -1,14 +1,7 @@
-admin.template.create:
-    path: /api/template/
-    controller: App\UI\Api\TemplateController::create
-    methods: POST
+controllers:
+    resource: '../src/UI/Api/'
+    type: annotation
 
-admin.template.update:
-    path: /api/template/{id}
-    controller: App\UI\Api\TemplateController::update
-    methods: PUT
-
-admin.template.delete:
-    path: /api/template/{id}
-    controller: App\UI\Api\TemplateController::delete
-    methods: DELETE
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation

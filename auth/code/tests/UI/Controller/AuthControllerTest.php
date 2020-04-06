@@ -3,13 +3,13 @@
 namespace App\Tests\UI\Controller;
 
 use App\Tests\DBHelper;
-use App\UI\Controller\AuthController;
+use App\UI\Api\AuthController;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @coversDefaultClass \App\UI\Controller\AuthController
+ * @coversDefaultClass \App\UI\Api\AuthController
  */
 class AuthControllerTest extends WebTestCase
 {

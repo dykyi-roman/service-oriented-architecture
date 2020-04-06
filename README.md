@@ -13,13 +13,13 @@ The goal is to have a series of services that can be strung together to meet the
 I clearly understand that this is a not silver bullet. Clean Architecture by Robert C. Martin has a good describe base problems.
 Here I want to added some plus from me:
 
-* Small and single in purpose
+* small and single in purpose;
 
-* Communicate via technology agnostic protocols
+* communicate via technology agnostic protocols;
 
-* Support continuous integration
+* support continuous integration;
 
-* Independently deployable.
+* independently deployable.
 
 # Documentation
 
@@ -68,8 +68,6 @@ On the picture use a REST for data transfer between a service but this is a deta
 
 ...
 
-# Performance and monitoring
-
 ## Sentry
 
 Sentry provides self-hosted and cloud-based error monitoring that helps all software teams discover, triage, and prioritize errors in real-time.
@@ -91,7 +89,13 @@ Run a collection using the newman image:
 docker-compose run postman_checks
 ```
 
-## Prometheus+Grafana+AlertManager+Node-exporter+Cadvisor
+## Swagger
+
+Simplify API development for users, teams, and enterprises with the Swagger open source and professional toolset. Find out how Swagger can help you design and document your APIs at scale
+
+Link on the official documentation [here](https://swagger.io/).
+
+## Metrics(Prometheus+Grafana+AlertManager+Node-exporter+Cadvisor+...)
 
 ![image](metrics/docs/monitoring-stack.png)
 
@@ -109,9 +113,11 @@ Prometheus is not a “set-up and works” solution. This is a platform, a set o
 
 [json-schema](https://json-schema.org/understanding-json-schema/reference/object.html)
 
-[newman](https://github.com/postmanlabs/newman)
+[Newman](https://github.com/postmanlabs/newman)
 
 [Grafana](https://grafana.com/docs/grafana/latest/features/panels/panels/)
+
+[Swagger](https://medium.com/@nyllor/generate-openapi-documentation-for-your-php-api-45f526f3975c)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

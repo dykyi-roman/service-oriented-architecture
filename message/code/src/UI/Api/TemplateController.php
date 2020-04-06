@@ -18,7 +18,13 @@ use Immutable\Exception\InvalidValueException;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(title="Message API", version="1.0.2")
+ * @OA\Tag(name="Template")
+ */
 final class TemplateController extends ApiController
 {
     private TemplateEditor $templateEditor;
@@ -28,6 +34,49 @@ final class TemplateController extends ApiController
         $this->templateEditor = $templateEditor;
     }
 
+    /**
+     * @OA\Post(
+     *     tags={"Template"},
+     *     path="/api/template/",
+     *     summary="Create new template",
+     *     @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string",
+     *              ),
+     *              @OA\Property(
+     *                  property="lang",
+     *                  type="string",
+     *                  description="ua|en|ru|..."
+     *              ),
+     *              @OA\Property(
+     *                  property="type",
+     *                  type="string",
+     *                  description="phone|email"
+     *              ),
+     *              @OA\Property(
+     *                  property="subject",
+     *                  type="string"
+     *              ),
+     *              @OA\Property(
+     *                  property="context",
+     *                  type="string",
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route("/api/template/", methods={"POST"}, name="template_create")
+     */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
         try {
@@ -47,6 +96,35 @@ final class TemplateController extends ApiController
         }
     }
 
+    /**
+     * @OA\Put(
+     *     tags={"Template"},
+     *     path="/api/template/{id}",
+     *     summary="Update exist template by id",
+     *     @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="subject",
+     *                  type="string",
+     *              ),
+     *              @OA\Property(
+     *                  property="context",
+     *                  type="string",
+     *              ),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route("/api/template/{id}", methods={"PUT"}, name="template_update")
+     */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
         try {
@@ -60,6 +138,31 @@ final class TemplateController extends ApiController
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     tags={"Template"},
+     *     path="/api/template/{id}",
+     *     summary="Delete template by id",
+     *     @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="id",
+     *                  type="string",
+     *              ),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route("/api/template/{id}", methods={"DELETE"}, name="template_delete")
+     */
     public function delete(DeleteTemplateRequest $request): JsonResponse
     {
         try {

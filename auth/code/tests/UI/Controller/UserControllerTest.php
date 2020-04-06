@@ -6,14 +6,14 @@ namespace App\Tests\UI\Controller;
 
 use App\Domain\Service\UserFinder;
 use App\Infrastructure\Repository\InMemory\InMemoryUserRepository;
-use App\UI\Controller\UserController;
+use App\UI\Api\UserController;
 use Faker\Factory;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @coversDefaultClass \App\UI\Controller\UserController
+ * @coversDefaultClass \App\UI\Api\UserController
  */
 class UserControllerTest extends WebTestCase
 {

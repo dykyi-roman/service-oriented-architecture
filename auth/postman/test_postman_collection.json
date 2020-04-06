@@ -138,7 +138,7 @@
 			"response": []
 		},
 		{
-			"name": "refresh-token",
+			"name": "refresh",
 			"event": [
 				{
 					"listen": "test",
@@ -175,8 +175,18 @@
 						"value": "Bearer {{access_token}}"
 					}
 				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "{{refresh_token}}",
+							"type": "text"
+						}
+					]
+				},
 				"url": {
-					"raw": "{{host}}/api/token/refresh?refresh_token={{refresh_token}}",
+					"raw": "{{host}}/api/token/refresh",
 					"host": [
 						"{{host}}"
 					],
@@ -184,12 +194,6 @@
 						"api",
 						"token",
 						"refresh"
-					],
-					"query": [
-						{
-							"key": "refresh_token",
-							"value": "{{refresh_token}}"
-						}
 					]
 				},
 				"description": "refresh token"
@@ -232,14 +236,14 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/api/user/{{uuid}}",
+					"raw": "{{host}}/api/user/current",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"user",
-						"{{uuid}}"
+						"current"
 					]
 				},
 				"description": "get user data"
@@ -249,25 +253,25 @@
 	],
 	"variable": [
 		{
-			"id": "2ce3a5a7-ff4e-4ef7-88d5-ebb2acf0887d",
+			"id": "a4bc39b3-df1d-404d-8799-01fb6af38ba5",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "b81ee30f-23d7-4222-8f82-4d6400d573b2",
+			"id": "5970dd68-7aa8-4521-825d-e232b88792f1",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "0c350713-6a0d-451c-ab6b-74907f540fe1",
+			"id": "2cbd9bb0-6ff1-4740-a10a-5db9fdba46c1",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "955b0fe5-fc77-4ed3-9dda-2699870e9ce5",
+			"id": "e8740d78-b2d9-45ea-989e-a38ddeebb1c9",
 			"key": "test",
 			"value": "",
 			"type": "string"
