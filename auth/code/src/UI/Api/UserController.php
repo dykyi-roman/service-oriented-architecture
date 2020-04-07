@@ -171,6 +171,7 @@ class UserController extends ApiController
 
         /** @var User $user */
         $user = $token->getUser();
+
         if (null === $user) {
             return $this->respondNotFound();
         }
