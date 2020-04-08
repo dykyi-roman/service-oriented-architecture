@@ -7,15 +7,11 @@ namespace App\UI\Api;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
-use App\Domain\Sender\Exception\MessageException;
 use App\Domain\Template\Exception\TemplateException;
 use App\Application\Template\TemplateEditor;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
 use Exception;
-use Immutable\Exception\ImmutableObjectException;
-use Immutable\Exception\InvalidValueException;
-use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,22 +72,21 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/", methods={"POST"}, name="template_create")
+     * @inheritDoc
      */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
         try {
-            $content = json_decode($request->getContent(), false, 512, JSON_THROW_ON_ERROR);
-
             $id = Uuid::uuid4();
-            $lang = $content->lang ?? Template::DEFAULT_LANGUAGE;
-            $template = new Template($content->subject, $content->context);
-            $type = new MessageType($content->type);
-            $this->templateEditor->create($id, $template, $type, $content->name, $lang);
+            $lang = '' === $request->lang() ? Template::DEFAULT_LANGUAGE : $request->lang();
+            $template = new Template($request->subject(), $request->context());
+            $type = new MessageType($request->type());
+            $this->templateEditor->create($id, $template, $type, $request->name(), $lang);
 
             return $this->respondCreated(['id' => $id]);
         } catch (TemplateException $exception) {
             return $this->respondWithErrors($exception->getMessage());
-        } catch (Exception | ImmutableObjectException | MessageException | InvalidValueException $exception) {
+        } catch (Exception $exception) {
             return $this->respondValidationError($exception->getMessage());
         }
     }
@@ -124,16 +119,15 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/{id}", methods={"PUT"}, name="template_update")
+     * @inheritDoc
      */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
         try {
-            $content = json_decode($request->getContent(), false, 512, JSON_THROW_ON_ERROR);
-            $request->validate($request->getContent());
-            $this->templateEditor->update($request->getId(), new Template($content->subject, $content->context));
+            $this->templateEditor->update($request->id(), new Template($request->subject(), $request->context()));
 
             return $this->respondWithSuccess();
-        } catch (TemplateException | ImmutableObjectException| Exception $exception) {
+        } catch (TemplateException | Exception $exception) {
             return $this->respondWithErrors($exception->getMessage());
         }
     }
@@ -162,6 +156,7 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/{id}", methods={"DELETE"}, name="template_delete")
+     * @inheritDoc
      */
     public function delete(DeleteTemplateRequest $request): JsonResponse
     {
@@ -169,7 +164,7 @@ final class TemplateController extends ApiController
             $this->templateEditor->delete($request->getId());
 
             return $this->respondWithSuccess();
-        } catch (InvalidArgumentException | TemplateException $exception) {
+        } catch (TemplateException $exception) {
             return $this->respondWithErrors($exception->getMessage());
         }
     }

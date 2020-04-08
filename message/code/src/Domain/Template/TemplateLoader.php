@@ -50,12 +50,12 @@ final class TemplateLoader
             $template = new Template($documentTemplate->getSubject(), $documentTemplate->getContext());
             $template = $template->withVariables($template, $data->variables);
 
-            $this->cache->set($cacheKey, $template, self::TTL);
+            $this->cache->set($cacheKey, serialize($template), self::TTL);
             $this->metrics->inc('template_load');
         }
         $this->metrics->endTiming('template_load', 1.0, ['type' => $type->toString()]);
 
-        return $this->cache->get($cacheKey);
+        return unserialize($this->cache->get($cacheKey), []);
     }
 
     private function generateCacheKey(stdClass $stdClass, MessageType $type): string

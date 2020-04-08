@@ -51,9 +51,8 @@ final class TemplateRepository extends ServiceDocumentRepository implements pers
 
     public function edit(string $id, string $subject, string $context): bool
     {
-        /** @var Template $template */
         $template = $this->find($id);
-        if (!null === $template) {
+        if (null === $template) {
             return false;
         }
 
@@ -69,7 +68,7 @@ final class TemplateRepository extends ServiceDocumentRepository implements pers
     public function remove(string $id): bool
     {
         $template = $this->find($id);
-        if (!null === $template) {
+        if (null === $template) {
             return false;
         }
 

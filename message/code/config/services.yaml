@@ -55,7 +55,7 @@ services:
     App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
     App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
-    App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
+    App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\RedisCache'
     App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
 
     App\Infrastructure\Metrics\StatsDMetrics:
@@ -64,6 +64,11 @@ services:
             - '%env(METRICS_PORT)%'
             - '%env(METRICS_NAMESPACE)%'
             - '%env(METRICS_TIMEOUT)%'
+
+    App\Infrastructure\Cache\RedisCache:
+        arguments:
+            - '%env(REDIS_HOST)%'
+            - '%env(REDIS_PORT)%'
 
     App\Infrastructure\Clients\PHPMailerClient:
         public: true

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Api;
 
+use App\Application\Template\ResponseTemplateFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,22 +32,12 @@ abstract class ApiController extends AbstractController
 
     public function respondWithErrors(string $errors, int $statusCode = 500, array $headers = []): JsonResponse
     {
-        $data = [
-            'status' => 'error',
-            'errors' => $errors,
-        ];
-
-        return new JsonResponse($data, $statusCode, $headers);
+        return new JsonResponse(ResponseTemplateFactory::error($errors), $statusCode, $headers);
     }
 
     public function respondWithSuccess(array $data = [], int $statusCode = 200, array $headers = []): JsonResponse
     {
-        $data = [
-            'status' => 'success',
-            'data' => $data
-        ];
-
-        return new JsonResponse($data, $statusCode, $headers);
+        return new JsonResponse(ResponseTemplateFactory::success($data), $statusCode, $headers);
     }
 
     public function respondUnauthorized(string $message = 'Not authorized!'): JsonResponse

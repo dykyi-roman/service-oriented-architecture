@@ -4,35 +4,55 @@ declare(strict_types=1);
 
 namespace App\Application\Template\Request;
 
+use App\Application\Template\Exception\JsonSchemaException;
+use Exception;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use App\Application\JsonSchemaValidator;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class UpdateTemplateRequest
 {
     private const SCHEMA = 'template-update.json';
 
+    private object $content;
     private RequestStack $requestStack;
-    private JsonSchemaValidator $schemaValidator;
 
+    /**
+     * @inheritDoc
+     * @throws JsonSchemaException
+     */
     public function __construct(RequestStack $requestStack, JsonSchemaValidator $schemaValidator)
     {
         $this->requestStack = $requestStack;
-        $this->schemaValidator = $schemaValidator;
+
+        try {
+            $this->content = json_decode($this->getContent(), false, 512, JSON_THROW_ON_ERROR);
+            $schemaValidator->validate($this->content, self::SCHEMA);
+        } catch (BadRequestHttpException $exception) {
+            throw JsonSchemaException::validationProblem();
+        } catch (Exception $exception) {
+            throw JsonSchemaException::decodeProblem();
+        }
     }
 
-    public function validate(string $json): void
+    /**
+     * @return resource|string
+     */
+    private function getContent()
     {
-        $body = json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        $this->schemaValidator->validate($body, self::SCHEMA);
+        $request = $this->requestStack->getCurrentRequest();
+
+        return null === $request ? '' : $request->getContent();
     }
 
     /**
      * @return string
      * @throws InvalidArgumentException
      */
-    public function getId(): string
+    public function id(): string
     {
         $request = $this->requestStack->getCurrentRequest();
         if (null === $request) {
@@ -47,13 +67,13 @@ final class UpdateTemplateRequest
         return $id;
     }
 
-    /**
-     * @return resource|string
-     */
-    public function getContent()
+    public function subject(): string
     {
-        $request = $this->requestStack->getCurrentRequest();
+        return $this->content->subject;
+    }
 
-        return null === $request ? '' : $request->getContent();
+    public function context(): string
+    {
+        return $this->content->context;
     }
 }

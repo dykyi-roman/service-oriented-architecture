@@ -49,10 +49,10 @@ final class PHPMailerClient implements MessageSenderInterface
     {
         $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;
         $this->mailer->isSMTP();
-        $this->mailer->Host = getenv('SMTP_SERVER');
+        $this->mailer->Host = (string)getenv('SMTP_SERVER');
         $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = getenv('SMTP_USER_NAME');
-        $this->mailer->Password = getenv('SMTP_USER_PASSWORD');
+        $this->mailer->Username = (string)getenv('SMTP_USER_NAME');
+        $this->mailer->Password = (string)getenv('SMTP_USER_PASSWORD');
         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above

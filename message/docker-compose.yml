@@ -24,6 +24,13 @@ services:
             - rabbit
         networks:
             - soa
+    redis:
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"]
+        networks:
+            - soa
+        volumes:
+            - redis-data:/data
     mongo:
         image: mongo:latest
         restart: always
@@ -78,3 +85,6 @@ services:
 networks:
     soa:
         external: true
+
+volumes:
+    redis-data:

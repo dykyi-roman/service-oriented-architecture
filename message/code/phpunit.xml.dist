@@ -7,6 +7,9 @@
          colors="true"
          bootstrap="tests/bootstrap.php"
 >
+    <extensions>
+        <extension class="App\Tests\BypassFinalHook"/>
+    </extensions>
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />

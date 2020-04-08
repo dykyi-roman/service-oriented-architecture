@@ -11,7 +11,7 @@ final class InMemoryCache implements CacheInterface
     /**
      * @inheritDoc
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
@@ -19,19 +19,19 @@ final class InMemoryCache implements CacheInterface
     /**
      * @inheritDoc
      */
-    public function set($key, $value, $ttl = null): bool
+    public function set(string $key, $value, $ttl = null): void
     {
         $this->data[$key] = $value;
-
-        return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function delete($key): bool
+    public function delete(array $keys): bool
     {
-        unset($this->data[$key]);
+        foreach ($keys as $key) {
+            unset($this->data[$key]);
+        }
 
         return true;
     }
@@ -49,35 +49,7 @@ final class InMemoryCache implements CacheInterface
     /**
      * @inheritDoc
      */
-    public function getMultiple($keys, $default = null): iterable
-    {
-        // TODO: Implement getMultiple() method.
-
-        return new \ArrayIterator($this->data);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setMultiple($values, $ttl = null): bool
-    {
-        // TODO: Implement setMultiple() method.
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteMultiple($keys): bool
-    {
-        // TODO: Implement deleteMultiple() method.
-        return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return isset($this->data[$key]);
     }

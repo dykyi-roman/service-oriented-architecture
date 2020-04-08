@@ -54,7 +54,9 @@ final class SentToProvider
 
                 $message = new Message($template, $messageType, $recipient);
                 $sender = $this->senderFactory->create($messageType);
+
                 $sent = $this->sentMetricsWrapper($sender, $message, $messageType->toString());
+
                 if ($sent) {
                     $this->messageBus->dispatch(new MessageSent($data->user_id, $template->toJson()));
                 }
