@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "6000:80"
+            - "6001:443"
+        expose:
+            - "6001"
+        volumes:
+            - ./code:/code
+            - ./ssl:/etc/nginx/ssl
+            - ./site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+        networks:
+            - soa
+    php:
+        build: docker/php
+        volumes:
+            - ./code:/code
+        networks:
+            - soa
+    redis:
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"]
+        networks:
+            - soa
+        volumes:
+            - redis-data:/data
+networks:
+    soa:
+        external: true
+
+volumes:
+    redis-data:

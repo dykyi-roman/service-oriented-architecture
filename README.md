@@ -27,7 +27,11 @@ Here I want to added some plus from me:
 
 [Message service](message/README.md)
 
+[Cloud-storage service](cloud-storage/README.md)
+
 [Admin panel service](adminpanel/README.md)
+
+- - -
 
 [Sentry](sentry/README.md)
 
@@ -60,9 +64,9 @@ Exist a lot of ways how you can organize architecture to work with the admin pan
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
 On the picture use a REST for data transfer between a service but this is a detail, request/response can easily be implemented by using messaging. 
 
-# Verification service 
+# Cloud storage service 
    
-...
+![image](cloud-storage/docs/architecture.png)
 
 # Application
 
