@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-final class InMemoryAdapter extends AbstractAdapter implements StorageAdapterInterface
+final class FileSystemAdapter extends AbstractAdapter implements StorageAdapterInterface
 {
     public const ADAPTER = __CLASS__;
 

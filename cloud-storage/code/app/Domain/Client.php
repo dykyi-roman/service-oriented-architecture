@@ -6,16 +6,17 @@ namespace App\Domain;
 
 use App\Domain\Exception\FileStorageException;
 use App\Domain\Service\AdapterFactory;
+use App\Infrastructure\Adapters\StorageAdapterInterface;
 
 final class Client
 {
     private bool $state = false;
 
     /**
-     * @var FileStorageInterface[]|array
+     * @var StorageAdapterInterface[]|array
      */
     private iterable $adapters;
-    private FileStorageInterface $reserveAdapter;
+    private StorageAdapterInterface $reserveAdapter;
     private AdapterFactory $adapterFactory;
 
     public function __construct(AdapterFactory $adapterFactory)
@@ -43,12 +44,24 @@ final class Client
         $this->execute(__FUNCTION__, [$path]);
     }
 
-    public function execute(string $method, $params): void
+    public function upload(string $filePath, string $uploadFilePath): void
     {
+        $this->execute(__FUNCTION__, [$filePath, $uploadFilePath]);
+    }
+
+    public function download(string $filePath, ?string $downloadFilePath): array
+    {
+        return $this->execute(__FUNCTION__, [$filePath, $downloadFilePath]);
+    }
+
+    public function execute(string $method, $params): array
+    {
+        $response = [];
         $this->assertConnectStateCheck();
         foreach ($this->adapters as $adapter) {
-            $adapter->{$method}(...$params);
+            $response[$adapter->name()] = $adapter->{$method}(...$params);
         }
+        return $response;
     }
 
     private function assertConnectStateCheck(): void

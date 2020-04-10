@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Api;
+namespace App\UI\Http\Controllers;
 
 use App\Application\ResponseFactory;
 use Laravel\Lumen\Routing\Controller as BaseController;
