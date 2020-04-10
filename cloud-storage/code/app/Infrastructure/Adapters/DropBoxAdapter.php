@@ -72,7 +72,6 @@ final class DropBoxAdapter extends AbstractAdapter implements StorageAdapterInte
         try {
             $file = $this->client->download($filePath, $downloadFilePath);
 
-            dump($file); die();
             return $file->getContents();
         } catch (DropboxClientException $exception) {
             $error = $exception->getMessage();
