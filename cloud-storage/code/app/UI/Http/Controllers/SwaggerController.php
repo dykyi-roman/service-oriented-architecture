@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Laravel\Lumen\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use function OpenApi\scan;
 
-class SwaggerController extends BaseController
+class SwaggerController extends Controller
 {
     public function index()
     {

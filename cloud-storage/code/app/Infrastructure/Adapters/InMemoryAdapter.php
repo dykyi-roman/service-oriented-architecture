@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-final class InMemoryAdapter extends AbstractAdapter implements StorageAdapterInterface
+use App\Domain\StorageAdapterInterface;
+
+final class InMemoryAdapter implements StorageAdapterInterface
 {
-    public const ADAPTER = __CLASS__;
-
-    public function createFolder(string $name): void
+    public function createFolder(string $name): array
     {
-        // Mock this method
+        return [];
     }
 
-    public function upload(string $filePath, string $uploadFilePath): void
+    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
     {
-        // Mock this method
+        return [];
     }
 
-    public function delete(string $path): void
+    public function delete(string $path): array
     {
-        // Mock this method
+        return [];
     }
 
-    public function download(string $filePath, string $downloadFilePath = null): string
+    public function download(string $filePath, string $downloadFilePath = null): array
     {
-        return '';
+        return [];
     }
 }

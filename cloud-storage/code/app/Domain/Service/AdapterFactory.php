@@ -21,18 +21,25 @@ final class AdapterFactory
         $this->availableAdapters = $availableAdapters;
     }
 
-    public function create(string $adapters): iterable
+    /**
+     * @inheritDoc
+     * @throws AdapterException
+     */
+    public function create(string $adapters): array
     {
-        $names = explode(',', $adapters);
-
-        if (0 === count($names)) {
+        if ('' === $adapters) {
             throw AdapterException::adapterListIsEmpty($this->availableAdapters->supported());
         }
+        $names = explode(',', trim($adapters));
 
-        $handlers = new ArrayIterator();
+        $handlers = [];
+        $namespace = 'App\\Infrastructure\\Adapters';
         foreach ($names as $name) {
-            $className = sprintf('App\Infrastructure\\Adapters\\%sAdapter', $name);
-            $handlers[] = new $className($this->logger);
+            $class = sprintf('%s\%sAdapter', $namespace, $name);
+            if (!class_exists($class)) {
+                throw AdapterException::adapterIsNotSupport($name);
+            }
+            $handlers[$name] = new $class($this->logger);
         }
 
         return $handlers;

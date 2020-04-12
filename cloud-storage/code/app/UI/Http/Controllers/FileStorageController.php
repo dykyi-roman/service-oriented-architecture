@@ -2,8 +2,7 @@
 
 namespace App\UI\Http\Controllers;
 
-use App\Application\ResponseFactory;
-use App\Domain\Client;
+use App\Domain\Service\Client;
 use DomainException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,9 +12,13 @@ class FileStorageController extends ApiController
 {
     private Client $client;
 
+    /**
+     * @inheritDoc
+     * @throws \App\Domain\Exception\AdapterException
+     */
     public function __construct(Client $client)
     {
-        $client->init(env('APP_ADAPTERS'), env('APP_RESERVE_ADAPTER'));
+        $client->init(env('APP_ADAPTERS'));
         $this->client = $client;
     }
 
@@ -43,10 +46,10 @@ class FileStorageController extends ApiController
     public function createFolder(Request $request): JsonResponse
     {
         try {
-            $this->client->createFolder($request->get('name', ''));
-            return new JsonResponse(ResponseFactory::success());
+            $result = $this->client->createFolder($request->get('name', ''));
+            return $this->respondWithSuccess($result);
         } catch (DomainException $exception) {
-            return new JsonResponse(ResponseFactory::error($exception->getMessage()), 500);
+            return $this->respondWithErrors($exception->getMessage());
         }
     }
 
@@ -55,17 +58,23 @@ class FileStorageController extends ApiController
      *     tags={"Cloud-storage"},
      *     path="/api/storage/upload",
      *     summary="Upload file",
-     *     @OA\Parameter(
-     *          name="query",
-     *          in="query",
-     *          @OA\Schema(
-     *              @OA\Property(
-     *                  property="dir",
-     *                  type="string",
-     *                  description="file path to storage"
-     *              ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="file",
+     *                      type="string",
+     *                      format="binary"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="dir",
+     *                      type="string",
+     *                      description="file path to storage"
+     *                  ),
+     *              )
      *          )
-     *     ),
+     *      ),
      *     @OA\Response(
      *         response=200,
      *         description="Success",
@@ -77,12 +86,19 @@ class FileStorageController extends ApiController
         try {
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
-            $uploadFilePath = $request->get('dir', '') . '/' . $file->getClientOriginalName();
-            $this->client->upload((string)$file->getRealPath(), '/' . ltrim($uploadFilePath, '/'));
+            if (null === $file) {
+                return $this->respondWithErrors('File is empty');
+            }
 
-            return new JsonResponse(ResponseFactory::success());
+            $result = $this->client->upload(
+                (string)$file->getRealPath(),
+                $request->get('dir', ''),
+                $file->getClientOriginalExtension(),
+                );
+
+            return $this->respondWithSuccess($result);
         } catch (DomainException $exception) {
-            return new JsonResponse(ResponseFactory::error($exception->getMessage()), 500);
+            return $this->respondWithErrors($exception->getMessage());
         }
     }
 
@@ -118,9 +134,9 @@ class FileStorageController extends ApiController
         try {
             $data = $this->client->download($request->get('file'), $request->get('dir'));
 
-            return new JsonResponse(ResponseFactory::success($data));
+            return $this->respondWithSuccess($data);
         } catch (DomainException $exception) {
-            return new JsonResponse(ResponseFactory::error($exception->getMessage()), 500);
+            return $this->respondWithErrors($exception->getMessage());
         }
     }
 
@@ -150,9 +166,9 @@ class FileStorageController extends ApiController
         try {
             $this->client->delete($request->get('path'));
 
-            return new JsonResponse(ResponseFactory::success());
+            return $this->respondWithSuccess();
         } catch (DomainException $exception) {
-            return new JsonResponse(ResponseFactory::error($exception->getMessage()), 500);
+            return $this->respondWithErrors($exception->getMessage());
         }
     }
 }

@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\Exception\FileStorageException;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\DropboxFile;
-use Kunnu\Dropbox\Exceptions\DropboxClientException;
-use Psr\Log\LoggerInterface;
+use App\Domain\StorageAdapterInterface;
 
-final class DropBoxAdapter extends AbstractAdapter implements StorageAdapterInterface
+/**
+ * @see https://github.com/kunalvarma05/dropbox-php-sdk/wiki/Configuration
+ * @see https://www.dropbox.com/developers/documentation/http/documentation#sharing-get_shared_link_metadata
+ */
+final class DropBoxAdapter implements StorageAdapterInterface
 {
-    public const ADAPTER = __CLASS__;
+    private const USER_CONTENT = 'dl.dropboxusercontent.com';
 
     private Dropbox $client;
-    private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct()
     {
-        $this->logger = $logger;
         $this->client = new Dropbox(
             new DropboxApp(
                 env('DROPBOX_API_KEY'),
@@ -30,55 +30,75 @@ final class DropBoxAdapter extends AbstractAdapter implements StorageAdapterInte
         );
     }
 
-    public function createFolder(string $name): void
+    /**
+     * @inheritDoc
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    public function createFolder(string $name): array
     {
-        try {
-            $this->client->createFolder($this->addDelimiter($name));
-        } catch (DropboxClientException $exception) {
-            $error = $exception->getMessage();
-            $this->logger->error('CloudStorage:DropBoxAdapter', ['method' => __FUNCTION__, 'error' => $error]);
+        $folder = $this->client->createFolder($this->addDelimiter($name));
 
-            throw FileStorageException::createFolderProblem($name);
-        }
+        return ['id' => $folder->getId()];
     }
 
-    public function delete(string $path): void
+    /**
+     * @inheritDoc
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    public function delete(string $path): array
     {
-        try {
-            $this->client->delete($path);
-        } catch (DropboxClientException $exception) {
-            $error = $exception->getMessage();
-            $this->logger->error('CloudStorage:DropBoxAdapter', ['method' => __FUNCTION__, 'error' => $error]);
+        $this->client->delete($this->addDelimiter($path));
 
-            throw FileStorageException::deleteProblem($path);
-        }
+        return [];
     }
 
-    public function upload(string $filePath, string $uploadFilePath): void
+    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
     {
-        try {
-            $file = new DropboxFile($filePath);
-            $this->client->upload($file, $this->addDelimiter($uploadFilePath), ['autorename' => true]);
-        } catch (DropboxClientException $exception) {
-            $error = $exception->getMessage();
-            $this->logger->error('CloudStorage:DropBoxAdapter', ['method' => __FUNCTION__, 'error' => $error]);
+        $fileName = sprintf('%s.%s', uniqid('', true), $uploadFileExt);
+        $file = new DropboxFile($filePath);
+        $path = $this->addDelimiter($uploadFileDir) . '/' . $fileName;
+        $result = $this->client->upload($file, $path, ['autorename' => true]);
+        if ($result) {
+            $response = $this->client->postToAPI('/sharing/create_shared_link_with_settings', [
+                'path' => $path,
+                'settings' => [
+                    'requested_visibility' => 'public',
+                    'audience' => 'public',
+                    'access' => 'viewer'
+                ]
+            ]);
 
-            throw FileStorageException::uploadProblem($uploadFilePath);
+            $url = '';
+            $body = $response->getDecodedBody();
+            if (array_key_exists('url', $body)) {
+                $url = str_replace('dropbox.com', self::USER_CONTENT, $body['url']);
+            }
+
+            return [
+                'id' => $result->getId(),
+                'name' => $fileName,
+                'url' => $url
+            ];
         }
+
+        return [];
     }
 
-    public function download(string $filePath, string $downloadFilePath = null): string
+    /**
+     * @inheritDoc
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    public function download(string $filePath): array
     {
-        try {
-            $file = $this->client->download($filePath, $downloadFilePath);
-
-            return $file->getContents();
-        } catch (DropboxClientException $exception) {
-            $error = $exception->getMessage();
-            $this->logger->error('CloudStorage:DropBoxAdapter', ['method' => __FUNCTION__, 'error' => $error]);
-
-            throw FileStorageException::downloadProblem($filePath, $downloadFilePath);
+        $response = $this->client->postToAPI('/sharing/list_shared_links', ['path' => $filePath]);
+        $body = $response->getDecodedBody();
+        if (0 === count($body['links'])) {
+            return [];
         }
+
+        $url = rtrim($body['links'][0]['url'], '0') . 1;
+
+        return ['url' => $url];
     }
 
     private function addDelimiter(string $value): string

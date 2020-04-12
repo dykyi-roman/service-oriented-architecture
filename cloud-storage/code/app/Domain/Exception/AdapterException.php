@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception;
 
-use DomainException;
+use Exception;
 
-final class AdapterException extends DomainException
+final class AdapterException extends Exception
 {
     public static function adapterListIsEmpty(array $adapters): self
     {
@@ -15,6 +15,6 @@ final class AdapterException extends DomainException
 
     public static function adapterIsNotSupport(string $adapter): self
     {
-        return new self(sprintf('adapter "%s" is not supported', $adapter));
+        return new self(sprintf('Adapter "%s" is not supported', $adapter));
     }
 }
