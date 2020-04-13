@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
+use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\DropboxFile;
-use App\Domain\StorageAdapterInterface;
+use App\Domain\StorageInterface;
 
 /**
  * @see https://github.com/kunalvarma05/dropbox-php-sdk/wiki/Configuration
  * @see https://www.dropbox.com/developers/documentation/http/documentation#sharing-get_shared_link_metadata
  */
-final class DropBoxAdapter implements StorageAdapterInterface
+final class DropBoxAdapter implements StorageInterface
 {
     private const USER_CONTENT = 'dl.dropboxusercontent.com';
 
@@ -35,14 +36,14 @@ final class DropBoxAdapter implements StorageAdapterInterface
      * @inheritDoc
      * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function createFolder(string $name): array
+    public function createFolder(string $name): StorageResponse
     {
         $folder = $this->client->createFolder($this->addDelimiter($name));
 
-        return ['id' => $folder->getId()];
+        return StorageResponse::createById($folder->getId());
     }
 
-    public function upload(UploadFile $uploadFile): array
+    public function upload(UploadFile $uploadFile): StorageResponse
     {
         $file = new DropboxFile($uploadFile->file());
         $dir = $uploadFile->isRootUploadDir() ? '/' : $this->addDelimiter($uploadFile->fileDir()) . '/';
@@ -64,42 +65,38 @@ final class DropBoxAdapter implements StorageAdapterInterface
                 $url = str_replace('dropbox.com', self::USER_CONTENT, $body['url']);
             }
 
-            return [
-                'id' => $result->getId(),
-                'name' => $uploadFile->fileName(),
-                'url' => $url
-            ];
+            return StorageResponse::create($result->getId(), $uploadFile->fileName(), $url);
         }
 
-        return [];
+        return StorageResponse::empty();
     }
 
     /**
      * @inheritDoc
      * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function download(string $path): array
+    public function download(string $path): StorageResponse
     {
         $response = $this->client->postToAPI('/sharing/list_shared_links', ['path' => $path]);
         $body = $response->getDecodedBody();
         if (0 === count($body['links'])) {
-            return [];
+            return StorageResponse::empty();
         }
 
         $url = rtrim($body['links'][0]['url'], '0') . 1;
 
-        return ['url' => $url];
+        return StorageResponse::createByUrl($url);
     }
 
     /**
      * @inheritDoc
      * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function delete(string $path): array
+    public function delete(string $path): StorageResponse
     {
         $this->client->delete($this->addDelimiter($path));
 
-        return [];
+        return StorageResponse::empty();
     }
 
     private function addDelimiter(string $value): string

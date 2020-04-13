@@ -6,8 +6,10 @@ namespace App\Domain\Service;
 
 use App\Domain\Exception\AdapterException;
 use App\Domain\Exception\StorageConnectException;
-use App\Domain\StorageAdapterInterface;
+use App\Domain\StorageInterface;
+use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
+use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
 use DomainException;
 use Psr\Log\LoggerInterface;
@@ -16,17 +18,25 @@ use Throwable;
 final class Client
 {
     private bool $state = false;
-
     private array $adapters;
     private LoggerInterface $logger;
     private AdapterFactory $adapterFactory;
     private MetricsInterface $metrics;
+    /**
+     * @var CacheInterface
+     */
+    private CacheInterface $cache;
 
-    public function __construct(AdapterFactory $adapterFactory, MetricsInterface $metrics, LoggerInterface $logger)
-    {
+    public function __construct(
+        AdapterFactory $adapterFactory,
+        MetricsInterface $metrics,
+        CacheInterface $cache,
+        LoggerInterface $logger
+    ) {
         $this->logger = $logger;
         $this->adapterFactory = $adapterFactory;
         $this->metrics = $metrics;
+        $this->cache = $cache;
     }
 
     /**
@@ -57,35 +67,37 @@ final class Client
 
     public function download(string $filePath): array
     {
-        return $this->execute(__FUNCTION__, [$filePath]);
+        $key = base64_encode($filePath);
+        if (!$this->cache->has($key)) {
+            $result = $this->execute(__FUNCTION__, [$filePath]);
+            $this->cache->set($key, json_encode($result, JSON_THROW_ON_ERROR, 512), env('CACHE_TTL'));
+        }
+
+        return json_decode($this->cache->get($key), true, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function execute(string $method, array $params): array
+    public function execute(string $method, array $args): array
     {
         $this->assertConnectStateCheck();
 
         $response = [];
-        foreach ($this->adapters as $adapter => $object) {
+        foreach ($this->adapters as $adapter => $storage) {
             $this->metrics->startTiming('api_cloud_request');
-            $payload = $this->doExecute($object, $adapter, $method, $params);
+            $payload = $this->doExecute($storage, $adapter, $method, $args);
             $this->metrics->endTiming('api_cloud_request', 1.0, ['adapter' => $adapter, 'method' => $method]);
-            $response[] = ['adapter' => $adapter, 'payload' => $payload];
+            $response[] = ['adapter' => $adapter, 'payload' => $payload->toArray()];
         }
 
         return $response;
     }
 
-    private function doExecute(
-        StorageAdapterInterface $adapter,
-        string $adapterName,
-        string $method,
-        array $params
-    ): array {
+    private function doExecute(StorageInterface $storage, string $adapter, string $method, array $args): StorageResponse
+    {
         try {
-            return $adapter->{$method}(...$params);
+            return $storage->{$method}(...$args);
         } catch (Throwable $exception) {
             $this->logger->error('CloudStorage', [
-                'adapter' => $adapterName,
+                'adapter' => $adapter,
                 'method' => $method,
                 'error' => $exception->getMessage()
             ]);

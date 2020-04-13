@@ -4,49 +4,46 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\StorageAdapterInterface;
+use App\Domain\StorageInterface;
+use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
 use RuntimeException;
 
-final class FileSystemAdapter implements StorageAdapterInterface
+final class FileSystemAdapter implements StorageInterface
 {
-    public function createFolder(string $name): array
+    public function createFolder(string $name): StorageResponse
     {
         $path = sprintf('%s/app/%s', storage_path(), $name);
         if (!mkdir($concurrentDirectory = $path) && !is_dir($concurrentDirectory)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
-        return ['id' => $path];
+        return StorageResponse::createById($path);
     }
 
-    public function upload(UploadFile $uploadFile): array
+    public function upload(UploadFile $uploadFile): StorageResponse
     {
         $path = sprintf('%s/%s', $uploadFile->fileDir(), $uploadFile->fileName());
         $storage = sprintf('/storage/app/%s', ltrim($path, '/'));
         $result = move_uploaded_file($uploadFile->file(), '/code' . $storage);
         $url = sprintf('%s://%s/storage?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
 
-        return [
-            'id' => '',
-            'name' => $uploadFile->fileName(),
-            'url' => $result ? $url : ''
-        ];
+        return StorageResponse::create('', $uploadFile->fileName(), $result ? $url : '');
     }
 
-    public function download(string $path): array
+    public function download(string $path): StorageResponse
     {
         $url = sprintf('%s://%s/download?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
 
-        return ['url' => $url];
+        return StorageResponse::createByUrl($url);
     }
 
-    public function delete(string $path): array
+    public function delete(string $path): StorageResponse
     {
         $file = '/code/storage/app/' . $path;
         is_file($file) ? unlink($file) : $this->deleteDirectory($file);
 
-        return [];
+        return StorageResponse::empty();
     }
 
     private function deleteDirectory(string $dir) {

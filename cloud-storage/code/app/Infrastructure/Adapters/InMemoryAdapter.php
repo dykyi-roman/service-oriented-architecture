@@ -4,37 +4,34 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\StorageAdapterInterface;
+use App\Domain\ValueObject\StorageResponse;
+use App\Domain\StorageInterface;
 use App\Domain\ValueObject\UploadFile;
 
-final class InMemoryAdapter implements StorageAdapterInterface
+final class InMemoryAdapter implements StorageInterface
 {
-    public function createFolder(string $name): array
+    public function createFolder(string $name): StorageResponse
     {
-        return ['id' => $name];
+        return StorageResponse::createById($name);
     }
 
-    public function upload(UploadFile $uploadFile): array
+    public function upload(UploadFile $uploadFile): StorageResponse
     {
         if ('' === $uploadFile->file()) {
-            return [];
+            return StorageResponse::empty();
         }
 
         $dir = '' === $uploadFile->fileDir() ? '' : $uploadFile->fileDir() . '/';
-        return [
-            'id' => '',
-            'name' => $uploadFile->fileName(),
-            'url' => '/' . $dir . $uploadFile->fileName()
-        ];
+        return StorageResponse::create('', $uploadFile->fileName(), '/' . $dir . $uploadFile->fileName());
     }
 
-    public function download(string $path): array
+    public function download(string $path): StorageResponse
     {
-        return '' === $path ? [] : ['url' => $path];
+        return '' === $path ? StorageResponse::empty() : StorageResponse::createByUrl($path);
     }
 
-    public function delete(string $path): array
+    public function delete(string $path): StorageResponse
     {
-        return [];
+        return StorageResponse::empty();
     }
 }

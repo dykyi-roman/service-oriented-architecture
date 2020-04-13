@@ -102,7 +102,6 @@
 							"pm.test(\"Response has Success payload\", function(){",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.data[0].adapter).not.eq('');",
-							"    pm.expect(jsonData.data[0].payload.id).to.be.a('string');",
 							"    pm.expect(jsonData.data[0].payload.name).to.be.a('string');",
 							"    pm.expect(jsonData.data[0].payload.url).not.eq('');",
 							"});"
@@ -264,19 +263,19 @@
 	],
 	"variable": [
 		{
-			"id": "3f38c479-275a-4b6b-8e8a-91e4d0494953",
+			"id": "1f6b3e38-650f-47e2-8612-c3c80e60fca2",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "0102b1eb-f281-4221-a257-c52caff06aba",
+			"id": "f49c8611-46f5-43e7-b23e-0c99c133ca79",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c7a61f37-95d5-4998-9996-2a01cde6f4a3",
+			"id": "7849a455-066f-45ed-a22f-1211c55eea52",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

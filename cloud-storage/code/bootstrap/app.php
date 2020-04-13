@@ -1,5 +1,7 @@
 <?php
 
+use App\Infrastructure\Cache\CacheInterface;
+use App\Infrastructure\Cache\RedisCache;
 use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
 use Sentry\Laravel\ServiceProvider;
@@ -52,12 +54,19 @@ $app->singleton(
     App\UI\Console\Kernel::class
 );
 
-$app->singleton(MetricsInterface::class, static function ($app) {
+$app->singleton(MetricsInterface::class, static function () {
     return new StatsDMetrics(
       env('METRICS_HOST'),
       env('METRICS_PORT'),
       env('METRICS_NAMESPACE'),
       env('METRICS_TIMEOUT'),
+    );
+});
+
+$app->singleton(CacheInterface::class, static function() {
+    return new RedisCache(
+        env('REDIS_HOST'),
+        env('REDIS_PORT'),
     );
 });
 

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Http\Request;
 
-class FileStorageController extends ApiController
+class StorageController extends ApiController
 {
     private Client $client;
 
