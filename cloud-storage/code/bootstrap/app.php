@@ -1,5 +1,7 @@
 <?php
 
+use App\Infrastructure\Metrics\MetricsInterface;
+use App\Infrastructure\Metrics\StatsDMetrics;
 use Sentry\Laravel\ServiceProvider;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -49,6 +51,15 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\UI\Console\Kernel::class
 );
+
+$app->singleton(MetricsInterface::class, static function ($app) {
+    return new StatsDMetrics(
+      env('METRICS_HOST'),
+      env('METRICS_PORT'),
+      env('METRICS_NAMESPACE'),
+      env('METRICS_TIMEOUT'),
+    );
+});
 
 /*
 |--------------------------------------------------------------------------

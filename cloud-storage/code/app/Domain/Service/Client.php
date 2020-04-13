@@ -8,6 +8,7 @@ use App\Domain\Exception\AdapterException;
 use App\Domain\Exception\StorageConnectException;
 use App\Domain\StorageAdapterInterface;
 use App\Domain\ValueObject\UploadFile;
+use App\Infrastructure\Metrics\MetricsInterface;
 use DomainException;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -19,11 +20,13 @@ final class Client
     private array $adapters;
     private LoggerInterface $logger;
     private AdapterFactory $adapterFactory;
+    private MetricsInterface $metrics;
 
-    public function __construct(AdapterFactory $adapterFactory, LoggerInterface $logger)
+    public function __construct(AdapterFactory $adapterFactory, MetricsInterface $metrics, LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->adapterFactory = $adapterFactory;
+        $this->metrics = $metrics;
     }
 
     /**
@@ -62,18 +65,22 @@ final class Client
         $this->assertConnectStateCheck();
 
         $response = [];
-        foreach ($this->adapters as $adapterName => $adapterObject) {
-            $response[] = [
-                'adapter' => $adapterName,
-                'payload' => $this->doExecute($adapterObject, $adapterName, $method, $params)
-            ];
+        foreach ($this->adapters as $adapter => $object) {
+            $this->metrics->startTiming('api_cloud_request');
+            $payload = $this->doExecute($object, $adapter, $method, $params);
+            $this->metrics->endTiming('api_cloud_request', 1.0, ['adapter' => $adapter, 'method' => $method]);
+            $response[] = ['adapter' => $adapter, 'payload' => $payload];
         }
 
         return $response;
     }
 
-    private function doExecute(StorageAdapterInterface $adapter, string $adapterName, string $method, array $params)
-    {
+    private function doExecute(
+        StorageAdapterInterface $adapter,
+        string $adapterName,
+        string $method,
+        array $params
+    ): array {
         try {
             return $adapter->{$method}(...$params);
         } catch (Throwable $exception) {
