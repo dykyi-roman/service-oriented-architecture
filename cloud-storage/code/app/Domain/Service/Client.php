@@ -7,6 +7,7 @@ namespace App\Domain\Service;
 use App\Domain\Exception\AdapterException;
 use App\Domain\Exception\StorageConnectException;
 use App\Domain\StorageAdapterInterface;
+use App\Domain\ValueObject\UploadFile;
 use DomainException;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -46,14 +47,14 @@ final class Client
         return $this->execute(__FUNCTION__, [$path]);
     }
 
-    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
+    public function upload(UploadFile $uploadFile): array
     {
-        return $this->execute(__FUNCTION__, [$filePath, $uploadFileDir, $uploadFileExt]);
+        return $this->execute(__FUNCTION__, [$uploadFile]);
     }
 
-    public function download(string $filePath, ?string $downloadFilePath): array
+    public function download(string $filePath): array
     {
-        return $this->execute(__FUNCTION__, [$filePath, $downloadFilePath]);
+        return $this->execute(__FUNCTION__, [$filePath]);
     }
 
     public function execute(string $method, array $params): array

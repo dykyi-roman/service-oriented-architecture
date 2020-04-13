@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
+use App\Domain\ValueObject\UploadFile;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\DropboxFile;
@@ -41,22 +42,11 @@ final class DropBoxAdapter implements StorageAdapterInterface
         return ['id' => $folder->getId()];
     }
 
-    /**
-     * @inheritDoc
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
-     */
-    public function delete(string $path): array
+    public function upload(UploadFile $uploadFile): array
     {
-        $this->client->delete($this->addDelimiter($path));
-
-        return [];
-    }
-
-    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
-    {
-        $fileName = sprintf('%s.%s', uniqid('', true), $uploadFileExt);
-        $file = new DropboxFile($filePath);
-        $path = $this->addDelimiter($uploadFileDir) . '/' . $fileName;
+        $file = new DropboxFile($uploadFile->file());
+        $dir = $uploadFile->isRootUploadDir() ? '/' : $this->addDelimiter($uploadFile->fileDir()) . '/';
+        $path = $dir . $uploadFile->fileName();
         $result = $this->client->upload($file, $path, ['autorename' => true]);
         if ($result) {
             $response = $this->client->postToAPI('/sharing/create_shared_link_with_settings', [
@@ -76,7 +66,7 @@ final class DropBoxAdapter implements StorageAdapterInterface
 
             return [
                 'id' => $result->getId(),
-                'name' => $fileName,
+                'name' => $uploadFile->fileName(),
                 'url' => $url
             ];
         }
@@ -88,9 +78,9 @@ final class DropBoxAdapter implements StorageAdapterInterface
      * @inheritDoc
      * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function download(string $filePath): array
+    public function download(string $path): array
     {
-        $response = $this->client->postToAPI('/sharing/list_shared_links', ['path' => $filePath]);
+        $response = $this->client->postToAPI('/sharing/list_shared_links', ['path' => $path]);
         $body = $response->getDecodedBody();
         if (0 === count($body['links'])) {
             return [];
@@ -99,6 +89,17 @@ final class DropBoxAdapter implements StorageAdapterInterface
         $url = rtrim($body['links'][0]['url'], '0') . 1;
 
         return ['url' => $url];
+    }
+
+    /**
+     * @inheritDoc
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    public function delete(string $path): array
+    {
+        $this->client->delete($this->addDelimiter($path));
+
+        return [];
     }
 
     private function addDelimiter(string $value): string

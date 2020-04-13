@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Domain\StorageAdapterInterface;
+use App\Domain\ValueObject\UploadFile;
 use Google_Client;
 use Google_Exception;
 use Google_Service_Drive;
@@ -38,50 +39,47 @@ final class GoogleDriveAdapter implements StorageAdapterInterface
         return ['id' => $result->getId()];
     }
 
-    public function delete(string $path): array
+    public function upload(UploadFile $uploadFile): array
     {
-        $this->client->files->delete($path);
+        $fileMetadata = new Google_Service_Drive_DriveFile();
+        $fileMetadata->setName($uploadFile->fileName());
+        if (!$uploadFile->isRootUploadDir()) {
+            $fileMetadata->setParents([$uploadFile->fileDir()]);
+        }
+
+        $result = $this->client->files->create($fileMetadata, [
+            'data' => file_get_contents($uploadFile->file()),
+            'uploadType' => 'multipart',
+            'fields' => 'id, webContentLink, webViewLink'
+        ]);
+
+        if ($result->getId()) {
+            $permission = new Google_Service_Drive_Permission(['type' => 'anyone', 'role' => 'reader']);
+            $this->client->permissions->create($result->getId(), $permission, ['fields' => 'id']);
+
+            return [
+                'id' => $result->getId(),
+                'name' => $uploadFile->fileName(),
+                'url' => $this->prepareWebLink($result->getWebContentLink())
+            ];
+        }
 
         return [];
     }
 
-    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
+    public function download(string $path): array
     {
-        $fileName = sprintf('%s.%s', uniqid('', true), $uploadFileExt);
-        $fileMetadata = new Google_Service_Drive_DriveFile();
-        $fileMetadata->setName($fileName);
-
-        if ('' !== $uploadFileDir) {
-            $fileMetadata->setParents([$uploadFileDir]);
-        }
-
-        $result = $this->client->files->create($fileMetadata, [
-            'data' => file_get_contents($filePath),
-            'uploadType' => 'multipart',
-            'fields' => 'id'
-        ]);
-
-        $url = '';
-        if ($result->getId()) {
-            $permission = new Google_Service_Drive_Permission(['type' => 'anyone', 'role' => 'reader']);
-            $this->client->permissions->create($result->getId(), $permission, ['fields' => 'id']);
-            $response = $this->client->files->get($result->getId(), ['fields' => 'id, webContentLink, webViewLink']);
-            if ($response->getId()) {
-                $url = explode('&', $response->getWebContentLink());
-                array_pop($url);
-                $url = implode('&', $url);
-            }
-        }
-
-        return ['id' => $result->getId(), 'name' => $fileName, 'url' => $url];
-    }
-
-    public function download(string $filePath): array
-    {
-        $response = $this->client->files->get($filePath, ['fields' => 'id, webContentLink, webViewLink']);
+        $response = $this->client->files->get($path, ['fields' => 'id, webContentLink, webViewLink']);
         if ($response->getId()) {
             return ['url' => $response->getWebContentLink()];
         }
+
+        return [];
+    }
+
+    public function delete(string $path): array
+    {
+        $this->client->files->delete($path);
 
         return [];
     }
@@ -120,5 +118,13 @@ final class GoogleDriveAdapter implements StorageAdapterInterface
         }
 
         return $client;
+    }
+
+    private function prepareWebLink(string $webContentLink): string
+    {
+        $url = explode('&', $webContentLink);
+        array_pop($url);
+
+        return implode('&', $url);
     }
 }

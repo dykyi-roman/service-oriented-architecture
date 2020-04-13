@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Domain\StorageAdapterInterface;
+use App\Domain\ValueObject\UploadFile;
 use RuntimeException;
 
 final class FileSystemAdapter implements StorageAdapterInterface
@@ -19,20 +20,25 @@ final class FileSystemAdapter implements StorageAdapterInterface
         return ['id' => $path];
     }
 
-    public function upload(string $filePath, string $uploadFileDir, string $uploadFileExt): array
+    public function upload(UploadFile $uploadFile): array
     {
-        $fileName = sprintf('%s.%s', uniqid('', true), $uploadFileExt);
-        $path = sprintf('%s/%s', $uploadFileDir, $fileName);
-        $storage = sprintf('/storage/app/%s', $path);
-        $result = move_uploaded_file($filePath, '/code/' . $storage);
+        $path = sprintf('%s/%s', $uploadFile->fileDir(), $uploadFile->fileName());
+        $storage = sprintf('/storage/app/%s', ltrim($path, '/'));
+        $result = move_uploaded_file($uploadFile->file(), '/code' . $storage);
         $url = sprintf('%s://%s/storage?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
 
         return [
             'id' => '',
-            'name' => $fileName,
-            'path' => $path,
+            'name' => $uploadFile->fileName(),
             'url' => $result ? $url : ''
         ];
+    }
+
+    public function download(string $path): array
+    {
+        $url = sprintf('%s://%s/download?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
+
+        return ['url' => $url];
     }
 
     public function delete(string $path): array
@@ -41,12 +47,5 @@ final class FileSystemAdapter implements StorageAdapterInterface
         is_file($file) ? unlink($file) : rmdir($file);
 
         return [];
-    }
-
-    public function download(string $path): array
-    {
-        $url = sprintf('%s://%s/download?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
-
-        return ['url' => $url];
     }
 }

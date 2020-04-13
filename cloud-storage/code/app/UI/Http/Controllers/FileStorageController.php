@@ -3,6 +3,7 @@
 namespace App\UI\Http\Controllers;
 
 use App\Domain\Service\Client;
+use App\Domain\ValueObject\UploadFile;
 use DomainException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,6 +43,8 @@ class FileStorageController extends ApiController
      *         description="Success",
      *     ),
      * )
+     *
+     * @inheritDoc
      */
     public function createFolder(Request $request): JsonResponse
     {
@@ -80,6 +83,8 @@ class FileStorageController extends ApiController
      *         description="Success",
      *     ),
      * )
+     *
+     * @inheritDoc
      */
     public function uploadFile(Request $request): JsonResponse
     {
@@ -90,11 +95,11 @@ class FileStorageController extends ApiController
                 return $this->respondWithErrors('File is empty');
             }
 
-            $result = $this->client->upload(
+            $result = $this->client->upload(new UploadFile(
                 (string)$file->getRealPath(),
-                $request->get('dir', ''),
                 $file->getClientOriginalExtension(),
-                );
+                $request->get('dir', '')
+            ));
 
             return $this->respondWithSuccess($result);
         } catch (DomainException $exception) {
@@ -128,11 +133,13 @@ class FileStorageController extends ApiController
      *         description="Success",
      *     ),
      * )
+     *
+     * @inheritDoc
      */
     public function download(Request $request): JsonResponse
     {
         try {
-            $data = $this->client->download($request->get('file'), $request->get('dir'));
+            $data = $this->client->download($request->get('file'));
 
             return $this->respondWithSuccess($data);
         } catch (DomainException $exception) {
@@ -160,6 +167,8 @@ class FileStorageController extends ApiController
      *         description="Success",
      *     ),
      * )
+     *
+     * @inheritDoc
      */
     public function delete(Request $request): JsonResponse
     {
