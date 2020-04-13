@@ -9,6 +9,7 @@ Cloud storage service
 
 ```
 sudo chmod -R 777 ./code/resources
+sudo chmod -R 777 ./code/storage
 ```
 
 ## Ressources:

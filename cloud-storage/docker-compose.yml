@@ -19,8 +19,6 @@ services:
         build: docker/php
         volumes:
             - ./code:/code
-        links:
-            - mongo
         networks:
             - soa
     redis:
@@ -30,29 +28,16 @@ services:
             - soa
         volumes:
             - redis-data:/data
-    mongo:
-        image: mongo:latest
-        restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: '${MONGO_USERNAME}'
-            MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASSWORD}'
-            MONGO_INITDB_DATABASE: '${MONGO_DATABASE}'
-        ports:
-            - 6002:27017
+    postman_checks:
+        build: docker/newman
+        command:
+            run test_postman_collection.json --insecure
+            -e test_postman_environment.json
+            -r cli
+        links:
+            - web
         volumes:
-            - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-        networks:
-            - soa
-    mongo-express:
-        image: mongo-express
-        restart: always
-        depends_on:
-            - mongo
-        ports:
-            - 6003:8081
-        environment:
-            ME_CONFIG_MONGODB_ADMINUSERNAME: root
-            ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+            - ./postman:/etc/newman
         networks:
             - soa
 networks:

@@ -44,8 +44,31 @@ final class FileSystemAdapter implements StorageAdapterInterface
     public function delete(string $path): array
     {
         $file = '/code/storage/app/' . $path;
-        is_file($file) ? unlink($file) : rmdir($file);
+        is_file($file) ? unlink($file) : $this->deleteDirectory($file);
 
         return [];
+    }
+
+    private function deleteDirectory(string $dir) {
+        if (!file_exists($dir)) {
+            return true;
+        }
+
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+
+        foreach (scandir($dir) as $item) {
+            if ($item === '.' || $item === '..') {
+                continue;
+            }
+
+            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+
+        }
+
+        return rmdir($dir);
     }
 }

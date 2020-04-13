@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "57a8275a-8c06-44b2-844f-b1967fec2c1a",
+		"name": "Cloud-storage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-folder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5707d08-9474-4084-8066-cc798b6000bf",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has Success status\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.a('string');",
+							"    pm.expect(jsonData.status).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Response has Success payload\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data[0].adapter).to.be.a('string');",
+							"    pm.expect(jsonData.data[0].payload.id).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8f9137cb-b8fc-44ba-b1ec-2a172e197890",
+						"exec": [
+							"var reqBody = JSON.parse(request.data);",
+							"pm.collectionVariables.set('cloud-folder', reqBody.name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/storage/folder/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"storage",
+						"folder",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has Success status\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.a('string');",
+							"    pm.expect(jsonData.status).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Response has Success payload\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data[0].adapter).not.eq('');",
+							"    pm.expect(jsonData.data[0].payload.id).to.be.a('string');",
+							"    pm.expect(jsonData.data[0].payload.name).to.be.a('string');",
+							"    pm.expect(jsonData.data[0].payload.url).not.eq('');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/etc/newman/images.jpg"
+						},
+						{
+							"key": "dir",
+							"value": "{{cloud-folder}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/storage/upload",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"storage",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has status\", function(){",
+							"    pm.expect(pm.response.json().status).to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"file\":\"1xBIV7WybZxQmQ-ZEXc8WmjqRzBuRUKxk\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/storage/download",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"storage",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73fc3e49-82b4-40ea-8cac-2ae85e871aba",
+						"exec": [
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has Success status\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.a('string');",
+							"    pm.expect(jsonData.status).to.include(\"success\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"path\":\"{{cloud-folder}}\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/storage/delete",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"storage",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "3f38c479-275a-4b6b-8e8a-91e4d0494953",
+			"key": "test",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "0102b1eb-f281-4221-a257-c52caff06aba",
+			"key": "uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c7a61f37-95d5-4998-9996-2a01cde6f4a3",
+			"key": "cloud-folder",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
