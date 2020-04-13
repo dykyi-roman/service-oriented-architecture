@@ -9,6 +9,8 @@
         "dropbox-php/dropbox-php": "^1.0",
         "kunalvarma05/dropbox-php-sdk": "^0.2.1",
         "laravel/lumen-framework": "^7.0",
+        "laravelista/lumen-vendor-publish": "^7.0",
+        "sentry/sentry-laravel": "^1.7",
         "zircote/swagger-php": "^3.0"
     },
     "require-dev": {
