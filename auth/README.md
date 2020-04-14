@@ -11,6 +11,14 @@ Authorization: Refers to what you can do, for example access, edit or delete per
 
 JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token format, defines the Token content, encrypts it, and provides lib for various languages.
 
+## Configuration
+
+Run migrations:
+
+```
+php bin/console doctrine:migrations:migrate 
+```
+
 ## Endpoints
 
 | Path                    | Method  | Scheme | Grant |

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Api;
+namespace App\UI\Http\Rest;
 
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Info(title="Message API", version="1.0.2")
  * @OA\Tag(name="Template")
  */
 final class TemplateController extends ApiController

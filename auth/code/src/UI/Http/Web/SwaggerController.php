@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Api;
+namespace App\UI\Http\Web;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
