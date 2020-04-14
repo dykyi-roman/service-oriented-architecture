@@ -1,5 +1,5 @@
 /logs
-/docker/database
+/database
 /storage/*.key
 /storage/*
 /vendor
