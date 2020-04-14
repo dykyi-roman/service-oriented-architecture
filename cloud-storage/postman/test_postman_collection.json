@@ -174,9 +174,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -187,12 +184,8 @@
 						"value": "application/json"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"file\":\"1xBIV7WybZxQmQ-ZEXc8WmjqRzBuRUKxk\"\n}"
-				},
 				"url": {
-					"raw": "{{host}}/api/storage/download",
+					"raw": "{{host}}/api/storage/download?file=test/5e956606833e68.35220329.jpg",
 					"host": [
 						"{{host}}"
 					],
@@ -200,6 +193,12 @@
 						"api",
 						"storage",
 						"download"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "test/5e956606833e68.35220329.jpg"
+						}
 					]
 				}
 			},
@@ -263,19 +262,19 @@
 	],
 	"variable": [
 		{
-			"id": "1f6b3e38-650f-47e2-8612-c3c80e60fca2",
+			"id": "1e1b00b1-f76e-40ed-b466-d6a0cb88c899",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "f49c8611-46f5-43e7-b23e-0c99c133ca79",
+			"id": "7ab8c840-884c-4a1e-b30c-89f741025b2e",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7849a455-066f-45ed-a22f-1211c55eea52",
+			"id": "ce165f8a-2a0b-4d47-94a6-bf403f352662",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

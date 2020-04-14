@@ -26,14 +26,14 @@ final class FileSystemAdapter implements StorageInterface
         $path = sprintf('%s/%s', $uploadFile->fileDir(), $uploadFile->fileName());
         $storage = sprintf('/storage/app/%s', ltrim($path, '/'));
         $result = move_uploaded_file($uploadFile->file(), '/code' . $storage);
-        $url = sprintf('%s://%s/storage?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
+        $url = sprintf('%s/storage?path=%s', $_SERVER['APP_URL'], $path);
 
         return StorageResponse::create('', $uploadFile->fileName(), $result ? $url : '');
     }
 
     public function download(string $path): StorageResponse
     {
-        $url = sprintf('%s://%s/download?path=%s', $_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $path);
+        $url = sprintf('%s/download?path=%s', $_SERVER['APP_URL'], $path);
 
         return StorageResponse::createByUrl($url);
     }

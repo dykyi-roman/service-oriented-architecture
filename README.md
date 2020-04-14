@@ -122,6 +122,8 @@ Prometheus is not a “set-up and works” solution. This is a platform, a set o
 [Grafana](https://grafana.com/docs/grafana/latest/features/panels/panels/)
 
 [Swagger](https://medium.com/@nyllor/generate-openapi-documentation-for-your-php-api-45f526f3975c)
+
+[Super speed nginx](https://gnugat.github.io/2016/04/20/super-speed-sf-nginx.html)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

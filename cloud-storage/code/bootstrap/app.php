@@ -4,6 +4,7 @@ use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Cache\RedisCache;
 use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
+use App\UI\Http\Middleware\CacheControlMiddleware;
 use Sentry\Laravel\ServiceProvider;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -95,13 +96,13 @@ $app->configure('logging');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    CacheControlMiddleware::class
+]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'cache-control' => CacheControlMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------

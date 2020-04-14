@@ -21,6 +21,8 @@ sudo chmod -R 777 ./code/storage
 [Drive API > PHP Quickstart](https://developers.google.com/drive/api/v3/quickstart/php)
 
 [Laravel google drive demo](https://github.com/ivanvermeyen/laravel-google-drive-demo)
+
+[Nginx content caching](https://docs.nginx.com/nginx/admin-guide/content-cache/content-caching/)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
