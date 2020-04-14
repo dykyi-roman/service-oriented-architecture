@@ -9,8 +9,8 @@ services:
             - "5001"
         volumes:
             - ./code:/code
-            - ./ssl:/etc/nginx/ssl
-            - ./site.conf:/etc/nginx/conf.d/site.conf
+            - ./docker/nginx/ssl:/etc/nginx/ssl
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
         links:
             - php
         networks:
@@ -27,7 +27,7 @@ services:
         image: mysql
         restart: always
         volumes:
-            - ./database/mysql:/var/lib/mysql
+            - ./docker/mysql:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
             MYSQL_DATABASE: '${MYSQL_DATABASE}'
