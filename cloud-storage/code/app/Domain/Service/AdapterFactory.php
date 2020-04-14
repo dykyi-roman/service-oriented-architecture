@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Service;
 
 use App\Domain\Exception\AdapterException;
-use ArrayIterator;
 use Psr\Log\LoggerInterface;
 
 use function explode;

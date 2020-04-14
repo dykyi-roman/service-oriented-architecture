@@ -9,7 +9,7 @@ use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
 use RuntimeException;
 
-final class FileSystemAdapter implements StorageInterface
+final class FileStorageAdapter implements StorageInterface
 {
     public function createFolder(string $name): StorageResponse
     {

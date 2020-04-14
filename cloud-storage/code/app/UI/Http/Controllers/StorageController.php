@@ -2,7 +2,7 @@
 
 namespace App\UI\Http\Controllers;
 
-use App\Domain\Service\Client;
+use App\Application\Service\Client;
 use App\Domain\ValueObject\UploadFile;
 use DomainException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service;
+namespace App\Application\Service;
 
 use App\Domain\Exception\AdapterException;
 use App\Domain\Exception\StorageConnectException;
+use App\Domain\Service\AdapterFactory;
 use App\Domain\StorageInterface;
 use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;

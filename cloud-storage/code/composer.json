@@ -5,9 +5,12 @@
     "license": "MIT",
     "type": "project",
     "require": {
+        "ext-json": "*",
         "php": "^7.2.5",
+        "aws/aws-sdk-php": "^3.134",
         "domnikl/statsd": "^3.0",
         "dropbox-php/dropbox-php": "^1.0",
+        "google/apiclient": "^2.4",
         "hedii/laravel-gelf-logger": "^5.0",
         "kunalvarma05/dropbox-php-sdk": "^0.2.1",
         "laravel/lumen-framework": "^7.0",

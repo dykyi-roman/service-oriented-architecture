@@ -65,7 +65,7 @@ final class DropBoxAdapter implements StorageInterface
                 $url = str_replace('dropbox.com', self::USER_CONTENT, $body['url']);
             }
 
-            return StorageResponse::create($result->getId(), $uploadFile->fileName(), $url);
+            return StorageResponse::create($result->getId(), $path, $url);
         }
 
         return StorageResponse::empty();
