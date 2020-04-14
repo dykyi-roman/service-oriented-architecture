@@ -9,8 +9,8 @@ services:
             - "5001"
         volumes:
             - ./code:/code
-            - ./ssl:/etc/nginx/ssl
-            - ./site.conf:/etc/nginx/conf.d/site.conf
+            - ./docker/nginx/ssl:/etc/nginx/ssl
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
         links:
             - php
         networks:

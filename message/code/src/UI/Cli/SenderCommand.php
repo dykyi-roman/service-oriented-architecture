@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Terminal;
+namespace App\UI\Cli;
 
 use App\Application\Sender\SenderConsumer;
 use Symfony\Component\Console\Command\Command;

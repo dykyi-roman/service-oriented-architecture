@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Api;
+namespace App\UI\Http\Rest;
 
 use App\Application\Command\UserRegisterCommand;
 use App\Domain\Entity\User;
@@ -19,7 +19,6 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * @OA\Info(title="Auth API", version="1.0.3")
  * @OA\Tag(name="User")
  * @OA\SecurityScheme(
  *   securityScheme="bearerAuth",

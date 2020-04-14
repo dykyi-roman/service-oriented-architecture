@@ -40,8 +40,12 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\UI\Api\:
-        resource: '../src/UI/Api'
+    App\UI\Http\:
+        resource: '../src/UI/Http'
+        tags: ['controller.service_arguments']
+
+    App\UI\Cli\:
+        resource: '../src/UI/Cli'
         tags: ['controller.service_arguments']
 
     App\Infrastructure\Repository\Doctrine\:
