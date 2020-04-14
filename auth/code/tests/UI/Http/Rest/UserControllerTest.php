@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\UI\Controller;
+namespace App\Tests\UI\Http\Rest;
 
 use App\Domain\Entity\User;
 use App\Tests\DBHelper;
-use App\UI\Api\UserController;
+use App\UI\Http\Rest\UserController;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * @coversDefaultClass \App\UI\Api\UserController
+ * @coversDefaultClass UserController
  */
 class UserControllerTest extends WebTestCase
 {
