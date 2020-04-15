@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace App\Domain\Service;
 
 use App\Domain\Exception\AdapterException;
-use Psr\Log\LoggerInterface;
 
 use function explode;
 
 final class AdapterFactory
 {
-    private LoggerInterface $logger;
     private AvailableAdaptersFinder $availableAdapters;
 
-    public function __construct(AvailableAdaptersFinder $availableAdapters, LoggerInterface $logger)
+    public function __construct(AvailableAdaptersFinder $availableAdapters)
     {
-        $this->logger = $logger;
         $this->availableAdapters = $availableAdapters;
     }
 
@@ -34,11 +31,11 @@ final class AdapterFactory
         $handlers = [];
         $namespace = 'App\\Infrastructure\\Adapters';
         foreach ($names as $name) {
-            $class = sprintf('%s\%sAdapter', $namespace, $name);
+            $class = sprintf('%s\%sAdapter', $namespace, str_replace('-', '', ucwords($name, '-')));
             if (!class_exists($class)) {
                 throw AdapterException::adapterIsNotSupport($name);
             }
-            $handlers[$name] = new $class($this->logger);
+            $handlers[$name] = new $class();
         }
 
         return $handlers;

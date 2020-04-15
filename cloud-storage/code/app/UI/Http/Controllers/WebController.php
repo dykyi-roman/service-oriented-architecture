@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class WebController extends Controller

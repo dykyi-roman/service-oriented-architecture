@@ -6,12 +6,12 @@ namespace App\UI\Http\Controllers;
 
 use App\Application\ResponseFactory;
 use Laravel\Lumen\Routing\Controller as BaseController;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use OpenApi\Annotations as OA;
 
 /**
- * @OA\Info(title="Cloud-storage API", version="1.0.2")
+ * @OA\Info(title="Cloud-storage API", version="1.0.3")
  * @OA\Tag(name="Cloud-storage")
  */
 abstract class ApiController extends BaseController

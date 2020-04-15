@@ -11,7 +11,8 @@ final class AvailableAdaptersFinder
         $adapters = [];
         $files = $this->getFileListByPath(__DIR__ . '/../../Infrastructure/Adapters/');
         array_walk($files, static function ($item) use (&$adapters) {
-            $adapters[] = str_replace('Adapter.php', '', $item);
+            $tmp = str_replace('Adapter.php', '', $item);
+            $adapters[] = strtolower(preg_replace('/\B([A-Z])/', '-$1', $tmp));
         });
 
         return $adapters;
@@ -32,4 +33,3 @@ final class AvailableAdaptersFinder
         return $files;
     }
 }
-

@@ -13,7 +13,7 @@ use Aws\S3\S3Client;
  * @see https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html
  * @see https://aws.amazon.com/articles/getting-started-with-the-aws-sdk-for-php/?tag=articles%23keywords%23amazon-s3
  */
-final class AWSAdapter implements StorageInterface
+final class AwsAdapter implements StorageInterface
 {
     private S3Client $client;
 
@@ -28,12 +28,11 @@ final class AWSAdapter implements StorageInterface
     public function createFolder(string $name): StorageResponse
     {
         $this->client->putObject([
-                'Bucket' => env('AWS_BUCKET_NAME'),
-                'Key' => $this->addDelimiter($name),
-                'Body' => '',
-                'ACL' => 'public-read'
-            ]
-        );
+            'Bucket' => env('AWS_BUCKET_NAME'),
+            'Key' => $this->addDelimiter($name),
+            'Body' => '',
+            'ACL' => 'public-read'
+        ]);
 
         return StorageResponse::createById($name);
     }
@@ -44,12 +43,11 @@ final class AWSAdapter implements StorageInterface
         $path = $dir . $uploadFile->fileName();
 
         $this->client->putObject([
-                'Bucket' => env('AWS_BUCKET_NAME'),
-                'Key' => $path,
-                'Body' => file_get_contents($uploadFile->file()),
-                'ACL' => 'public-read'
-            ]
-        );
+            'Bucket' => env('AWS_BUCKET_NAME'),
+            'Key' => $path,
+            'Body' => file_get_contents($uploadFile->file()),
+            'ACL' => 'public-read'
+        ]);
 
         $url = sprintf('s3://%s/%s', env('AWS_BUCKET_NAME'), $path);
 

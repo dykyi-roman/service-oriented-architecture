@@ -63,15 +63,14 @@
 					"raw": "{\n\t\"name\":\"test\"\n}"
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/folder/create",
+					"raw": "{{host}}/api/storage/folder",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"storage",
-						"folder",
-						"create"
+						"folder"
 					]
 				}
 			},
@@ -102,7 +101,7 @@
 							"pm.test(\"Response has Success payload\", function(){",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.data[0].adapter).not.eq('');",
-							"    pm.expect(jsonData.data[0].payload.name).to.be.a('string');",
+							"    pm.expect(jsonData.data[0].payload.path).to.be.a('string');",
 							"    pm.expect(jsonData.data[0].payload.url).not.eq('');",
 							"});"
 						],
@@ -232,7 +231,7 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -254,6 +253,13 @@
 						"api",
 						"storage",
 						"delete"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -262,19 +268,19 @@
 	],
 	"variable": [
 		{
-			"id": "1e1b00b1-f76e-40ed-b466-d6a0cb88c899",
+			"id": "5111b7e8-dee5-454f-a83c-91bcc928ab29",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7ab8c840-884c-4a1e-b30c-89f741025b2e",
+			"id": "c40b6e67-e40a-4fe4-939b-aa4ac871280b",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ce165f8a-2a0b-4d47-94a6-bf403f352662",
+			"id": "f3cb4956-e52c-499a-b800-faec4089ae1d",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

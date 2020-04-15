@@ -5,9 +5,9 @@ namespace App\UI\Http\Controllers;
 use App\Application\Service\Client;
 use App\Domain\ValueObject\UploadFile;
 use DomainException;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Illuminate\Http\Request;
 
 class StorageController extends ApiController
 {
@@ -26,8 +26,8 @@ class StorageController extends ApiController
     /**
      * @OA\Post(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/folder/create",
-     *     summary="Create folder",
+     *     path="/api/storage/folder",
+     *     summary="Create new folder",
      *     @OA\Parameter(
      *          name="query",
      *          in="query",
@@ -148,7 +148,7 @@ class StorageController extends ApiController
     }
 
     /**
-     * @OA\Post(
+     * @OA\Delete(
      *     tags={"Cloud-storage"},
      *     path="/api/storage/delete",
      *     summary="Delete file or folder",

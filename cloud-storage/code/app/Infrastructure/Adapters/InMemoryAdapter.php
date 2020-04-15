@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\ValueObject\StorageResponse;
 use App\Domain\StorageInterface;
+use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
 
 final class InMemoryAdapter implements StorageInterface

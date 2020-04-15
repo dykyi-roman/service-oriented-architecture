@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
+use App\Domain\StorageInterface;
 use App\Domain\ValueObject\StorageResponse;
 use App\Domain\ValueObject\UploadFile;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\DropboxFile;
-use App\Domain\StorageInterface;
 
 /**
  * @see https://github.com/kunalvarma05/dropbox-php-sdk/wiki/Configuration

@@ -18,7 +18,7 @@ final class FileStorageAdapter implements StorageInterface
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
-        return StorageResponse::createById($path);
+        return StorageResponse::createById(sprintf('/app/%s', $name));
     }
 
     public function upload(UploadFile $uploadFile): StorageResponse
@@ -26,9 +26,13 @@ final class FileStorageAdapter implements StorageInterface
         $path = sprintf('%s/%s', $uploadFile->fileDir(), $uploadFile->fileName());
         $storage = sprintf('/storage/app/%s', ltrim($path, '/'));
         $result = move_uploaded_file($uploadFile->file(), '/code' . $storage);
+        if (!$result) {
+            return StorageResponse::empty();
+        }
+
         $url = sprintf('%s/storage?path=%s', $_SERVER['APP_URL'], $path);
 
-        return StorageResponse::create('', $uploadFile->fileName(), $result ? $url : '');
+        return StorageResponse::create('', $path, $result ? $url : '');
     }
 
     public function download(string $path): StorageResponse
@@ -46,7 +50,8 @@ final class FileStorageAdapter implements StorageInterface
         return StorageResponse::empty();
     }
 
-    private function deleteDirectory(string $dir) {
+    private function deleteDirectory(string $dir)
+    {
         if (!file_exists($dir)) {
             return true;
         }
@@ -63,7 +68,6 @@ final class FileStorageAdapter implements StorageInterface
             if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
                 return false;
             }
-
         }
 
         return rmdir($dir);
