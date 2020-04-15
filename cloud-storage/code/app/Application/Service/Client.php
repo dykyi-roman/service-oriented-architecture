@@ -23,9 +23,6 @@ final class Client
     private LoggerInterface $logger;
     private AdapterFactory $adapterFactory;
     private MetricsInterface $metrics;
-    /**
-     * @var CacheInterface
-     */
     private CacheInterface $cache;
 
     public function __construct(
@@ -77,7 +74,7 @@ final class Client
         return json_decode($this->cache->get($key), true, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function execute(string $method, array $args): array
+    private function execute(string $method, array $args): array
     {
         $this->assertConnectStateCheck();
 

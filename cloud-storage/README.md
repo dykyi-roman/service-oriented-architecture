@@ -7,10 +7,10 @@ Cloud storage service
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
-| /api//api/storage/folder| POST    | ANY    | ALL   |
-| /api/api/storage/upload | POST    | ANY    | ALL   |
+| /api/storage/folder     | POST    | ANY    | ALL   |
+| /api/storage/upload     | POST    | ANY    | ALL   |
 | /api/storage/download   | GET     | ANY    | ALL   |
-| //api/storage/delete    | DELETE  | ANY    | ALL   |
+| /api/storage/delete     | DELETE  | ANY    | ALL   |
 
 ## Requirements
 

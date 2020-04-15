@@ -10,11 +10,11 @@ use function explode;
 
 final class AdapterFactory
 {
-    private AvailableAdaptersFinder $availableAdapters;
+    private ExistAdaptersFinder $existAdapters;
 
-    public function __construct(AvailableAdaptersFinder $availableAdapters)
+    public function __construct(ExistAdaptersFinder $existAdapters)
     {
-        $this->availableAdapters = $availableAdapters;
+        $this->existAdapters = $existAdapters;
     }
 
     /**
@@ -24,10 +24,9 @@ final class AdapterFactory
     public function create(string $adapters): array
     {
         if ('' === $adapters) {
-            throw AdapterException::adapterListIsEmpty($this->availableAdapters->supported());
+            throw AdapterException::adapterListIsEmpty($this->existAdapters->supported());
         }
         $names = explode(',', trim($adapters));
-
         $handlers = [];
         $namespace = 'App\\Infrastructure\\Adapters';
         foreach ($names as $name) {

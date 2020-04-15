@@ -139,7 +139,7 @@ class StorageController extends ApiController
     public function download(Request $request): JsonResponse
     {
         try {
-            $data = $this->client->download($request->get('file'));
+            $data = $this->client->download($request->get('file', ''));
 
             return $this->respondWithSuccess($data);
         } catch (DomainException $exception) {
@@ -173,7 +173,7 @@ class StorageController extends ApiController
     public function delete(Request $request): JsonResponse
     {
         try {
-            $this->client->delete($request->get('path'));
+            $this->client->delete($request->get('path', ''));
 
             return $this->respondWithSuccess();
         } catch (DomainException $exception) {

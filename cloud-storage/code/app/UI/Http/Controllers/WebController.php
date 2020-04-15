@@ -15,7 +15,7 @@ class WebController extends Controller
 
     public function storage(Request $request): BinaryFileResponse
     {
-        $file = self::APP_STORAGE_DIR . $request->get('path');
+        $file = self::APP_STORAGE_DIR . $request->get('path', '');
 
         return new BinaryFileResponse($file);
     }
