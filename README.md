@@ -52,9 +52,13 @@ A client library is usually used to share this verification functionality with a
 
 When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
 
+For more information read [here](auth/README.md).
+
 # Message service
 
 ![image](message/docs/message.png)
+
+For more information read [here](message/README.md).
 
 # Admin Panel service
 
@@ -64,9 +68,17 @@ Exist a lot of ways how you can organize architecture to work with the admin pan
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
 On the picture use a REST for data transfer between a service but this is a detail, request/response can easily be implemented by using messaging. 
 
+For more information read [here](adminpanel/README.md).
+
 # Cloud storage service 
    
 ![image](cloud-storage/docs/architecture.png)
+
+Cloud storage is a service model in which data is transmitted and stored on remote storage systems, where it is maintained, managed.
+
+Service provide API for easy connect and use base methods cloud or file storage.
+
+For more information read [here](cloud-storage/README.md).
 
 # Application
 
