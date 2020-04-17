@@ -25,7 +25,8 @@ final class FileStorageAdapter implements StorageInterface
     {
         $path = sprintf('%s/%s', $uploadFile->fileDir(), $uploadFile->fileName());
         $storage = sprintf('/storage/app/%s', ltrim($path, '/'));
-        $result = move_uploaded_file($uploadFile->file(), '/code' . $storage);
+
+        $result = move_uploaded_file($uploadFile->file(), '..' . $storage);
         if (!$result) {
             return StorageResponse::empty();
         }

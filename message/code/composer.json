@@ -7,7 +7,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "doctrine/annotations": "^1.10",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "doctrine/mongodb-odm": "^2.0",
         "doctrine/mongodb-odm-bundle": "^4.1",
         "domnikl/statsd": "^3.0",

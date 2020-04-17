@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class WebController extends Controller
 {
-    private const APP_STORAGE_DIR = '/code/storage/app/';
+    private const APP_STORAGE_DIR = 'storage/app/';
 
     public function storage(Request $request): BinaryFileResponse
     {
