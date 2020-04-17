@@ -159,7 +159,6 @@ class UserController extends ApiController
 
     /**
      * @Route(path="/api/user/current", methods={"GET"}, name="user_current_info")
-     * @inheritDoc
      */
     public function user(Request $request, TokenStorageInterface $tokenStorage): JsonResponse
     {
@@ -168,10 +167,8 @@ class UserController extends ApiController
             return $this->respondNotFound();
         }
 
-        /** @var User $user */
         $user = $token->getUser();
-
-        if (null === $user) {
+        if (!$user instanceof User) {
             return $this->respondNotFound();
         }
 
