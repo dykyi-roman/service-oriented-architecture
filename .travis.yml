@@ -30,4 +30,5 @@ script:
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpcs --standard=PSR2 src/"
     - docker-compose exec php sh -c "cd code && php vendor/bin/psalm"
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpunit tests/"
+    - docker-compose up -d web
     - docker-compose run postman_checks
