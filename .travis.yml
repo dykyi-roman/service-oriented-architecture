@@ -1,8 +1,11 @@
 language: php
+
 php:
     - '7.4'
+
 services:
     - docker
+
 sudo: required
 
 before_install:
@@ -12,5 +15,4 @@ before_install:
     - sudo mv docker-compose /usr/local/bin
 
 install:
-    - docker-compose build
-    - docker-compose up -d
+    - cd auth/code && docker-compose up -d --build
