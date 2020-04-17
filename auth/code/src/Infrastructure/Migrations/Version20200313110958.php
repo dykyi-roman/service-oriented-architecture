@@ -19,11 +19,15 @@ final class Version20200313110958 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        if ($schema->hasTable('refresh_tokens')) {
+            return;
+        }
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'mysql',
             'Migration can only be executed safely on \'mysql\'.'
         );
+
 
         $this->addSql(<<<'TAG'
             CREATE TABLE refresh_tokens (
