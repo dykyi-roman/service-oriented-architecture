@@ -19,7 +19,7 @@ before_install:
 
 install:
     - cd auth/code
-    - docker-compose build
+    - docker-compose up --build
 
 before_script:
     - docker-compose exec php sh -c "cd ../../../code && php composer.phar install"
