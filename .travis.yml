@@ -12,7 +12,6 @@ env:
 sudo: required
 
 before_install:
-    - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - sudo rm /usr/local/bin/docker-compose
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
@@ -25,7 +24,7 @@ install:
     - docker-compose up -d php
 
 before_script:
-    - docker-compose exec php sh -c "cd ../../../code && php composer.phar install"
+    - docker-compose exec php sh -c "cd ../../../code && php COMPOSER_MEMORY_LIMIT=-1 composer.phar install"
 
 script:
     - docker-compose exec php sh -c "cd ../../../code && php vendor/bin/phpcs --standard=PSR2 /code/src/"
