@@ -22,12 +22,10 @@ final class Version20200313110958 extends AbstractMigration
         if ($schema->hasTable('refresh_tokens')) {
             return;
         }
-        // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
             $this->connection->getDatabasePlatform()->getName() !== 'mysql',
             'Migration can only be executed safely on \'mysql\'.'
         );
-
 
         $this->addSql(<<<'TAG'
             CREATE TABLE refresh_tokens (
@@ -40,8 +38,6 @@ final class Version20200313110958 extends AbstractMigration
             DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
             TAG
         );
-
-        $this->addSql('DROP TABLE test');
     }
 
     public function down(Schema $schema): void
