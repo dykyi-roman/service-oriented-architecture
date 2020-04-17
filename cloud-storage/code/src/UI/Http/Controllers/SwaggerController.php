@@ -17,7 +17,7 @@ class SwaggerController extends Controller
 
     public function update(): Response
     {
-        echo scan(sprintf('%s/app/UI/Http/Controllers', base_path()))->toYaml();
+        echo scan(sprintf('%s/src/UI/Http/Controllers', base_path()))->toYaml();
 
         return new Response();
     }

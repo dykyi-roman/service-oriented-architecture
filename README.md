@@ -3,7 +3,9 @@ Service oriented architecture
 
 ![image](base.png)
 
+- - -
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
+- - -
 
 Microservices architecture has been gaining a lot of ground as the preferred architecture for implementing solutions, as it provides benefits like scalability, logical and physical separation, small teams managing a part of the functionality, flexibility in technology, etc. 
 But since microservices are distributed the complexity of managing them increases.
