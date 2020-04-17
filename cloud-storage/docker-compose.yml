@@ -8,7 +8,7 @@ services:
         expose:
             - "6001"
         volumes:
-            - ./code:/code
+            - ./code:/var/www/html/code
             - ./docker/nginx/ssl:/etc/nginx/ssl
             - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
         links:
@@ -18,7 +18,7 @@ services:
     php:
         build: docker/php
         volumes:
-            - ./code:/code
+            - ./code:/var/www/html/code
         networks:
             - soa
     redis:

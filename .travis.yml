@@ -24,7 +24,8 @@ install:
     - docker-compose up -d php
 
 before_script:
-    - docker-compose exec php sh -c "cd ../../../code && php -d memory_limit=-1 composer.phar install -n"
+    - docker-compose exec php sh -c "cd code && php -d memory_limit=-1 composer.phar install -n"
 
 script:
-    - docker-compose exec php sh -c "cd ../../../code && php vendor/bin/phpcs --standard=PSR2 /code/src/"
+    - docker-compose exec php sh -c "cd code && php vendor/bin/phpcs --standard=PSR2 /code/src/"
+    - docker-compose exec php sh -c "cd code && php vendor/bin/psalm"
