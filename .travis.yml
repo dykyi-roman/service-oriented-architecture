@@ -15,4 +15,5 @@ before_install:
     - sudo mv docker-compose /usr/local/bin
 
 install:
-    - cd auth/code && docker-compose up -d --build
+    - cd auth/code
+    - docker-compose up -d --build
