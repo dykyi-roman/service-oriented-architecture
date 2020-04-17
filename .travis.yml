@@ -7,18 +7,19 @@ services:
     - docker
 
 env:
-    - DOCKER_COMPOSE_VERSION=1.24.1
+    - PROJECT=auth
+    - PROJECT=message
 
 sudo: required
 
 before_install:
     - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
 
 install:
-    - cd auth
+    - cd $PROJECT
     - docker network create -d bridge soa
     - docker-compose build
     - docker-compose up -d php
@@ -31,4 +32,4 @@ script:
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpcs --standard=PSR2 src/"
     - docker-compose exec php sh -c "cd code && php vendor/bin/psalm"
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpunit tests/"
-    - docker-compose run postman_checks
+#    - docker-compose run postman_checks
