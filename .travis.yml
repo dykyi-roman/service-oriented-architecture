@@ -21,8 +21,11 @@ install:
     - cd auth/code
     - docker network create -d bridge soa
     - docker-compose build
-    - docker-compose run php
+    - docker-compose up -d php
 
 before_script:
     - docker-compose exec php sh -c "cd ../../../code && php composer.phar install"
     - docker-compose exec php sh -c "cd ../../../code && php bin/console doctrine:migrations:migrate"
+
+script:
+    - docker-compose exec php sh -c "cd ../../../code && php composer.phar install"
