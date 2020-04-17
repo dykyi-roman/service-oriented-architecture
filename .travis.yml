@@ -24,3 +24,4 @@ install:
 
 before_script:
     - docker-compose exec php sh -c "cd ../../../code && php composer.phar install"
+    - docker-compose exec php sh -c "cd ../../../code && php bin/console doctrine:migrations:migrate"
