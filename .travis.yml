@@ -9,6 +9,7 @@ services:
 env:
     - PROJECT=auth
     - PROJECT=message
+    - PROJECT=cloud-storage
 
 sudo: required
 
@@ -26,8 +27,7 @@ install:
 
 before_script:
     - docker-compose exec php sh -c "cd code && php -d memory_limit=-1 composer.phar install -n"
-    - docker-compose exec php sh -c "cd code && php bin/console --no-interaction doctrine:migrations:migrate"
-    - docker-compose exec php sh -c "cd code && php bin/console --env=test --no-interaction doctrine:migrations:migrate"
+    - docker-compose exec php sh -c "cd code && sh post-install.sh"
 script:
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpcs --standard=PSR2 src/"
     - docker-compose exec php sh -c "cd code && php vendor/bin/psalm"
