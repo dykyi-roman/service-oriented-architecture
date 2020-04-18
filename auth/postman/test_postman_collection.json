@@ -13,6 +13,12 @@
 					"script": {
 						"id": "96a8d585-b13b-458b-8f00-e2975bfb46e7",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -86,13 +92,17 @@
 					"script": {
 						"id": "1b7d60a9-6c8b-4b30-baf2-2cf9b646b4f9",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().datap && pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.ok;",
 							"    pm.response.to.be.json;",
-							"    console.log(pm.response.json());",
 							"});",
 							"",
-							"    console.log(pm.response.json());",
 							"pm.test(\"Response status is 200\", function(){",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -147,6 +157,12 @@
 					"script": {
 						"id": "df2c3995-5a2f-4367-8c18-23cdc8ee7eeb",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().datap && pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.ok;",
 							"    pm.response.to.be.json;",
@@ -210,6 +226,12 @@
 					"script": {
 						"id": "ede43ba1-0a06-4d77-8e0b-93c3bf31791d",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.ok;",
 							"    pm.response.to.be.json;",
@@ -255,25 +277,25 @@
 	],
 	"variable": [
 		{
-			"id": "a4bc39b3-df1d-404d-8799-01fb6af38ba5",
+			"id": "2d4e710f-e794-49e7-980e-cfe7605b99ae",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "5970dd68-7aa8-4521-825d-e232b88792f1",
+			"id": "21d26010-3244-46fc-84b0-d26041667664",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2cbd9bb0-6ff1-4740-a10a-5db9fdba46c1",
+			"id": "21faa0fe-dc7c-40b1-ba75-dc4dabe24f01",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "e8740d78-b2d9-45ea-989e-a38ddeebb1c9",
+			"id": "2aa7a987-a4a5-41a5-9b80-077321643d33",
 			"key": "test",
 			"value": "",
 			"type": "string"

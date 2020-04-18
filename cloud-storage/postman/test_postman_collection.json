@@ -13,6 +13,12 @@
 					"script": {
 						"id": "c5707d08-9474-4084-8066-cc798b6000bf",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -84,6 +90,12 @@
 					"script": {
 						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -156,6 +168,12 @@
 					"script": {
 						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -211,6 +229,12 @@
 					"script": {
 						"id": "73fc3e49-82b4-40ea-8cac-2ae85e871aba",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -268,19 +292,19 @@
 	],
 	"variable": [
 		{
-			"id": "5111b7e8-dee5-454f-a83c-91bcc928ab29",
+			"id": "dc458139-66eb-47c2-9e56-b0014920025f",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c40b6e67-e40a-4fe4-939b-aa4ac871280b",
+			"id": "641a49bf-e22c-4fc7-9098-cef3d9e6638e",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "f3cb4956-e52c-499a-b800-faec4089ae1d",
+			"id": "83b43226-0b9a-4be8-b164-71ccd406cea2",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

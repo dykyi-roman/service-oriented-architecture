@@ -13,6 +13,12 @@
 					"script": {
 						"id": "ae685841-d3b7-462b-9173-ae8552840da5",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -70,12 +76,16 @@
 					"script": {
 						"id": "5f7b1477-2ff1-4e05-a401-4efc65140bb6",
 						"exec": [
-							"pm.test(\"Response must be valid and have a body\", function () {",
-							"    pm.response.to.be.json;",
-							"    console.log(pm.response.json());",
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
 							"});",
 							"",
-							"    console.log(pm.response.json());",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
 							"pm.test(\"Status is 200\", function(){",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -123,6 +133,12 @@
 					"script": {
 						"id": "0ef56eb9-9097-4928-8c07-2473988a8ad6",
 						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
 							"});",
@@ -169,7 +185,7 @@
 	],
 	"variable": [
 		{
-			"id": "46daf886-7739-4706-be79-f44192ef86df",
+			"id": "fcd01e96-cd2a-4853-84f9-c7a25869ca70",
 			"key": "templateId",
 			"value": "",
 			"type": "string"

@@ -25,7 +25,7 @@ class ResponseFactoryTest extends TestCase
      */
     public function testErrorResponse(): void
     {
-        $this->assertSame(['status' => 'error', 'errors' => ''], ResponseFactory::error(''));
-        $this->assertSame(['status' => 'error', 'errors' => 'test'], ResponseFactory::error('test'));
+        $this->assertSame(['status' => 'error', 'error' => ''], ResponseFactory::error(''));
+        $this->assertSame(['status' => 'error', 'error' => 'test'], ResponseFactory::error('test'));
     }
 }

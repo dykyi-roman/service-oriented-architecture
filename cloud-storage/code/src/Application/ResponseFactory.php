@@ -14,11 +14,11 @@ final class ResponseFactory
         ];
     }
 
-    public static function error(string $errors): array
+    public static function error(string $error): array
     {
         return [
             'status' => 'error',
-            'errors' => $errors,
+            'error' => $error,
         ];
     }
 }

@@ -32,11 +32,11 @@ abstract class ApiController extends AbstractController
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
 
-    public function respondWithErrors(string $errors, int $statusCode = 500, array $headers = []): JsonResponse
+    public function respondWithErrors(string $error, int $statusCode = 500, array $headers = []): JsonResponse
     {
         $data = [
             'status' => 'error',
-            'errors' => $errors,
+            'error' => $error,
         ];
 
         return new JsonResponse($data, $statusCode, $headers);
