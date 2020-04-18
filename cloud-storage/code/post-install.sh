@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod -R 777 ./storage/app/
+chown -R www-data:www-data ./storage/app
