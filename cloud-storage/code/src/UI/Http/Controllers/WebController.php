@@ -11,17 +11,16 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class WebController extends Controller
 {
-    private const APP_STORAGE_DIR = '../storage/app/';
-
     public function storage(Request $request): BinaryFileResponse
     {
-        $file = self::APP_STORAGE_DIR . $request->get('path', '');
+        $file = storage_path() . '/app/' . $request->get('path', '');
+
         return new BinaryFileResponse($file);
     }
 
     public function download(Request $request): BinaryFileResponse
     {
-        $file = self::APP_STORAGE_DIR . $request->get('path');
+        $file = storage_path() . '/app/' . $request->get('path');
         $response = new BinaryFileResponse($file);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 

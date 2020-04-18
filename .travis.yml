@@ -6,6 +6,8 @@ php:
 services:
     - docker
 
+#cache: bundler
+
 env:
     - PROJECT=auth
     - PROJECT=message
