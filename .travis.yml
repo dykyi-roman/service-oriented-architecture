@@ -9,7 +9,7 @@ services:
 #cache: bundler
 
 env:
-    - PROJECT=auth
+#    - PROJECT=auth
     - PROJECT=message
     - PROJECT=cloud-storage
 
