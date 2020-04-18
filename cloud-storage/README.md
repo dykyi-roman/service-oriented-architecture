@@ -80,8 +80,8 @@ To start working with the Dropbox API, you'll need an App. You can create a new 
 ## Сode verification:
 
 ```
-php vendor/bin/phpcs --standard=PSR2 /code/app/
-php vendor/bin/ecs check /code/app/	--set clean-code
+php vendor/bin/phpcs --standard=PSR2 ./src/
+php vendor/bin/ecs check ./src/	--set clean-code
 php vendor/bin/psalm
 ``` 
  

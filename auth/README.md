@@ -52,8 +52,8 @@ MySQL open [https://localhost:8081](https://localhost:8888) and use login and pa
 ## Сode verification:
 
 ```
-php vendor/bin/phpcs --standard=PSR2 /code/src/
-php vendor/bin/ecs check /code/src/	--set clean-code
+php vendor/bin/phpcs --standard=PSR2 ./src/
+php vendor/bin/ecs check ./src/	--set clean-code
 php vendor/bin/psalm
 ```
 
