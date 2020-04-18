@@ -19,6 +19,8 @@ services:
         build: docker/php
         volumes:
             - ./code:/var/www/html/code
+        links:
+            - redis
         networks:
             - soa
     redis:
