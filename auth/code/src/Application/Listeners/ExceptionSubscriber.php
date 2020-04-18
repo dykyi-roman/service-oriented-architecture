@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Listeners;
 
 use App\Application\ResponseFactory;
-use App\Application\Template\ResponseTemplateFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

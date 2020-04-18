@@ -72,8 +72,10 @@
 						"exec": [
 							"pm.test(\"Response must be valid and have a body\", function () {",
 							"    pm.response.to.be.json;",
+							"    console.log(pm.response.json());",
 							"});",
 							"",
+							"    console.log(pm.response.json());",
 							"pm.test(\"Status is 200\", function(){",
 							"    pm.response.to.have.status(200);",
 							"});",

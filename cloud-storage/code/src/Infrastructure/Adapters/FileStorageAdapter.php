@@ -17,6 +17,7 @@ final class FileStorageAdapter implements StorageInterface
         if (!mkdir($concurrentDirectory = $path) && !is_dir($concurrentDirectory)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
+        chmod($path, 0755);
 
         return StorageResponse::createById(sprintf('/app/%s', $name));
     }
@@ -30,7 +31,6 @@ final class FileStorageAdapter implements StorageInterface
         if (!$result) {
             return StorageResponse::empty();
         }
-
         $url = sprintf('%s/storage?path=%s', $_SERVER['APP_URL'], $path);
 
         return StorageResponse::create('', $path, $result ? $url : '');
@@ -45,7 +45,7 @@ final class FileStorageAdapter implements StorageInterface
 
     public function delete(string $path): StorageResponse
     {
-        $file = '/code/storage/app/' . $path;
+        $file = '../storage/app/' . $path;
         is_file($file) ? unlink($file) : $this->deleteDirectory($file);
 
         return StorageResponse::empty();
