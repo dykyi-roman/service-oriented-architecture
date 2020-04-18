@@ -2,12 +2,11 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "doctrine/annotations": "^1.10",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "doctrine/mongodb-odm": "^2.0",
         "doctrine/mongodb-odm-bundle": "^4.1",
         "domnikl/statsd": "^3.0",
@@ -33,6 +32,7 @@
         "zircote/swagger-php": "^3.0"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "dg/bypass-finals": "^1.1",
         "fzaninotto/faker": "^1.9",
         "phpunit/phpunit": "^9.0",
