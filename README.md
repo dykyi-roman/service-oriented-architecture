@@ -42,9 +42,11 @@ Here I want to added some plus from me:
 
 [Graylog](graylog/README.md)
 
+<a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
+
 [Metrics](metrics/README.md)
 
-<a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
+[Travis CI](https://api.travis-ci.org/dykyi-roman)
 
 # Auth service
 
@@ -123,6 +125,10 @@ Link on the official documentation [here](https://swagger.io/).
 Monitoring is the collection of metrics and the presentation of these metrics in a convenient form (tables, graphs, scales, notifications, reports).
 The more components in your system (microservices), the greater the load on it, the more expensive the downtime, the more important it is to have a good monitoring system.
 Prometheus is not a “set-up and works” solution. This is a platform, a set of tools that allows you to do the monitoring you need.
+
+## Travis CI
+
+
 
 ## Ressources:
 

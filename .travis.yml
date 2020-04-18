@@ -9,21 +9,24 @@ services:
 cache: bundler
 
 env:
-    - PROJECT=auth
-    - PROJECT=message
-    - PROJECT=cloud-storage
+    global:
+        - DOCKER_COMPOSER=1.24.1
+    matrix:
+        - PROJECT=auth
+        - PROJECT=message
+        - PROJECT=cloud-storage
 
 sudo: required
 
 before_install:
     - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSER}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
 install:
     - cd $PROJECT
     - docker network create -d bridge soa
-    - docker-compose build
+    - docker-compose build --cache-from
     - docker-compose up -d php
 
 before_script:
