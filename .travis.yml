@@ -33,4 +33,4 @@ script:
     - docker-compose exec php sh -c "cd code && php vendor/bin/ecs check ./src/ --set clean-code"
     - docker-compose exec php sh -c "cd code && php vendor/bin/psalm"
     - docker-compose exec php sh -c "cd code && php vendor/bin/phpunit tests/"
-#    - docker-compose run postman_checks
+    - docker-compose run postman_checks
