@@ -10,7 +10,7 @@ services:
 
 env:
 #    - PROJECT=auth
-    - PROJECT=message
+#    - PROJECT=message
     - PROJECT=cloud-storage
 
 sudo: required
