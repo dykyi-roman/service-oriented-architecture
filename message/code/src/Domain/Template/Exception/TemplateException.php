@@ -20,7 +20,8 @@ class TemplateException extends Exception
 
     public static function updateTemplateProblem(string $name): self
     {
-        return new static(sprintf('Template "%s" is not updated', $name));
+        return new static(sprintf('"%s"', $name));
+//        return new static(sprintf('Template "%s" is not updated', $name));
     }
 
     public static function deleteTemplateProblem(string $name): self
