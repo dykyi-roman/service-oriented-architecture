@@ -23,7 +23,7 @@
         "sentry/sentry-symfony": "^3.4",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1.0",
-        "zircote/swagger-php": "^3.0",
+        "zircote/swagger-php": "^3.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
