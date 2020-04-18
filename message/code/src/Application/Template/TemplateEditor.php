@@ -54,7 +54,7 @@ final class TemplateEditor
             $this->persistRepository->edit($id, $template->subject(), $template->body());
         } catch (Throwable $exception) {
             $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
-            throw TemplateException::updateTemplateProblem($exception->getMessage());
+            throw TemplateException::updateTemplateProblem($id);
         }
     }
 

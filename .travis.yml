@@ -6,12 +6,12 @@ php:
 services:
     - docker
 
-#cache: bundler
+cache: bundler
 
 env:
-#    - PROJECT=auth
+    - PROJECT=auth
     - PROJECT=message
-#    - PROJECT=cloud-storage
+    - PROJECT=cloud-storage
 
 sudo: required
 
