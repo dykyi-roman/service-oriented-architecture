@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use stdClass;
 use JsonSchema\Validator;
+use stdClass;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 

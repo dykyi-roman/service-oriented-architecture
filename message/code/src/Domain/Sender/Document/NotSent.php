@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Sender\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use App\Infrastructure\Repository\Doctrine\NotSentRepository;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * @MongoDB\Document(collection="not_sent", repositoryClass=NotSentRepository::class)

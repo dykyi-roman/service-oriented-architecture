@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Clients;
 
-use App\Domain\Sender\MessageSenderInterface;
 use App\Domain\Sender\MessageInterface;
+use App\Domain\Sender\MessageSenderInterface;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

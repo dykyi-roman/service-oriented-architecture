@@ -11,11 +11,11 @@ use App\Domain\VO\FullName;
 use App\Domain\VO\UserRegistrationRequest;
 use Immutable\Exception\ImmutableObjectException;
 use League\Tactician\CommandBus;
+use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations as OA;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**

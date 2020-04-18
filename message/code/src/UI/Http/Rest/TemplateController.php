@@ -7,15 +7,15 @@ namespace App\UI\Http\Rest;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
-use App\Domain\Template\Exception\TemplateException;
 use App\Application\Template\TemplateEditor;
 use App\Domain\Sender\ValueObject\MessageType;
+use App\Domain\Template\Exception\TemplateException;
 use App\Domain\Template\ValueObject\Template;
 use Exception;
+use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations as OA;
 
 /**
  * @OA\Tag(name="Template")

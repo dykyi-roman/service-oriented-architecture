@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\InMemory;
 
-use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Entity\User;
+use App\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\ORMException;
 use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class InMemoryUserRepository implements UserRepositoryInterface
 {
@@ -16,13 +15,12 @@ class InMemoryUserRepository implements UserRepositoryInterface
      * @var User[]
      */
     private array $users = [];
-    private UserPasswordEncoderInterface $encoder;
 
     public function findUserByEmail(string $email): ?User
     {
         foreach ($this->users as $id => $user) {
             if ($user->getEmail() === $email) {
-                return $user;
+                return $this->users[$id];
             }
         }
 

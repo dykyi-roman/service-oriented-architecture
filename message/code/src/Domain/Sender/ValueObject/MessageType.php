@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Sender\ValueObject;
 
-use Immutable\ValueObject\ValueObject;
 use App\Domain\Sender\Exception\MessageException;
+use Immutable\ValueObject\ValueObject;
 
 final class MessageType extends ValueObject
 {

@@ -16,7 +16,7 @@ class InMemoryTemplateRepository implements TemplateReadRepositoryInterface, Tem
     {
         foreach ($this->collection as $id => $data) {
             if ($data['name'] === $name && $data['type'] === $type) {
-                return $data['template'];
+                return $this->collection[$id]['template'];
             }
         }
 

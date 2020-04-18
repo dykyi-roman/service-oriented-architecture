@@ -17,7 +17,7 @@ final class UserRegisterCommand
 {
     private UuidInterface $uuid;
 
-    protected UserRegistrationRequest $request;
+    private UserRegistrationRequest $request;
 
     public function __construct(UuidInterface $uuid, UserRegistrationRequest $request)
     {

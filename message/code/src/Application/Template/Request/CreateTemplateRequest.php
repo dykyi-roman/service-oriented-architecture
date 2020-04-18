@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Template\Request;
 
+use App\Application\JsonSchemaValidator;
+use App\Application\Template\Exception\JsonSchemaException;
 use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use App\Application\Template\Exception\JsonSchemaException;
-use App\Application\JsonSchemaValidator;
 
 final class CreateTemplateRequest
 {

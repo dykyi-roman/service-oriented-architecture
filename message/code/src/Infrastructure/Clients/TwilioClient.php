@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Clients;
 
-use App\Domain\Sender\MessageSenderInterface;
 use App\Domain\Sender\MessageInterface;
+use App\Domain\Sender\MessageSenderInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 use Twilio\Exceptions\ConfigurationException;

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Template\Request;
 
+use App\Application\JsonSchemaValidator;
 use App\Application\Template\Exception\JsonSchemaException;
 use Exception;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use App\Application\JsonSchemaValidator;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class UpdateTemplateRequest

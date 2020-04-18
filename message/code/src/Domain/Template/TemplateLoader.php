@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Template;
 
+use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\Exception\TemplateException;
 use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
-use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
 use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Metrics\MetricsInterface;

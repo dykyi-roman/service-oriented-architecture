@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\Doctrine;
 
-use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Entity\User;
+use App\Domain\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\UuidInterface;

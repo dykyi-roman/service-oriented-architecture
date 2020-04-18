@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Template;
 
+use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\Exception\TemplateException;
 use App\Domain\Template\Repository\TemplatePersistRepositoryInterface;
-use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\ValueObject\Template;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\UuidInterface;

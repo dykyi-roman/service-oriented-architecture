@@ -7,8 +7,8 @@ namespace App\Infrastructure\Repository\Doctrine;
 use App\Domain\Template\Document\Template;
 use App\Domain\Template\Repository\TemplatePersistRepositoryInterface as persistTemplate;
 use App\Domain\Template\Repository\TemplateReadRepositoryInterface as readTemplate;
-use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
+use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 
 final class TemplateRepository extends ServiceDocumentRepository implements persistTemplate, readTemplate
 {
