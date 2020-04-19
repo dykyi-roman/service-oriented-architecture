@@ -1,13 +1,10 @@
-Service oriented architecture
+Sentry
 =======
-
-# Sentry
 
 Sentry provides self-hosted and cloud-based error monitoring that helps all software
 teams discover, triage, and prioritize errors in real-time.
 
-
-# Instalation
+# Installation
 
 Give execute permission to your script:
 
@@ -23,7 +20,7 @@ And to run script:
 # Configuration
 
 1) After installation (or durring insatll process) - create a sentry account
-2) Go to the Auth Tokens section and generate a API Token
+2) Go to the Auth Tokens section and generate an API Token
 3) go to the Sentry SDK settings for copy dsn path. This key will be needed for send request from your APP.
 
 

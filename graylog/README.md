@@ -1,11 +1,11 @@
-Service oriented architecture
+Graylog
 =======
 
 # Graylog
 
 Graylog is a leading centralized log management solution built to open standards for capturing, storing, and enabling real-time analysis of terabytes of machine data.
 
-# Instalation
+# Installation
 
 Start all services with exposed data directories:
 
