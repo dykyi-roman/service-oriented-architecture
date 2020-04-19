@@ -4,11 +4,12 @@ Service oriented architecture
 ![image](base.png)
 
 - - -
-[![Build Status](https://api.travis-ci.org/dykyi-roman/service-oriented-architecture.svg?branch=master)](https://api.travis-ci.org/dykyi-roman)
+[![Build Status](https://api.travis-ci.org/dykyi-roman/service-oriented-architecture.svg?branch=master)](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
 - - -
 
-Microservices architecture has been gaining a lot of ground as the preferred architecture for implementing solutions, as it provides benefits like scalability, logical and physical separation, small teams managing a part of the functionality, flexibility in technology, etc. 
+Microservices architecture has been gaining a lot of ground as the preferred architecture for implementing solutions, 
+as it provides benefits like scalability, logical and physical separation, small teams managing a part of the functionality, flexibility in technology, etc. 
 But since microservices are distributed the complexity of managing them increases.
 One of the key challenges is how to implement authentication and authorization in microservices so that we can manage security and access control.
 
@@ -16,14 +17,10 @@ Avoid extensive APIs. If the microservice is getting too complicated, then you a
 The goal is to have a series of services that can be strung together to meet the needs of future business problems.
 
 I clearly understand that this is a not silver bullet. Clean Architecture by Robert C. Martin has a good describe base problems.
-Here I want to added some plus from me:
-
+Here I want to add some plus from me:
 * small and single in purpose;
-
 * communicate via technology agnostic protocols;
-
 * support continuous integration;
-
 * independently deployable.
 
 # Documentation
@@ -46,7 +43,7 @@ Here I want to added some plus from me:
 
 [Metrics](metrics/README.md)
 
-[Travis CI](https://api.travis-ci.org/dykyi-roman)
+[Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 
 # Auth service
 
@@ -59,7 +56,7 @@ A client library is usually used to share this verification functionality with a
 
 When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
 
-For more information read [here](auth/README.md).
+For more information, click [here](auth/README.md).
 
 # Message service
 
@@ -75,14 +72,13 @@ Exist a lot of ways how you can organize architecture to work with the admin pan
 I have experience working with four. Taking into consideration the first of the SOLID principles (Single Responsibility Principle) on the modules level I would take for realization approach №2.
 On the picture use a REST for data transfer between a service but this is a detail, request/response can easily be implemented by using messaging. 
 
-For more information read [here](adminpanel/README.md).
+For more information, click [here](adminpanel/README.md).
 
 # Cloud storage service 
    
 ![image](cloud-storage/docs/architecture.png)
 
 Cloud storage is a service model in which data is transmitted and stored on remote storage systems, where it is maintained, managed.
-
 Service provide API for easy connect and use base methods cloud or file storage.
 
 For more information read [here](cloud-storage/README.md).
@@ -114,23 +110,24 @@ docker-compose run postman_checks
 
 ## Swagger
 
-Simplify API development for users, teams, and enterprises with the Swagger open source and professional toolset. Find out how Swagger can help you design and document your APIs at scale
-
-Link on the official documentation [here](https://swagger.io/).
+Swagger provides more benefits than just helping create clear API documentation for users, teams, and enterprises with the Swagger open source and professional toolset. 
+Find out how Swagger can help you design and document your APIs at scale. Link on the official documentation you find [here](https://swagger.io/).
 
 ## Metrics(Prometheus+Grafana+AlertManager+Node-exporter+Cadvisor+...)
 
 ![image](metrics/docs/monitoring-stack.png)
 
-Monitoring is the collection of metrics and the presentation of these metrics in a convenient form (tables, graphs, scales, notifications, reports).
-The more components in your system (microservices), the greater the load on it, the more expensive the downtime, the more important it is to have a good monitoring system.
+Monitoring helps me ensure that all my services in good health. For that, I use a collection of metrics, and the presentation of these metrics in a convenient form (tables, graphs, scales, notifications, reports).
+The more components in my system (microservices), the greater the load on it, the more expensive the downtime, the more important it is to have a good monitoring system.
 Prometheus is not a “set-up and works” solution. This is a platform, a set of tools that allows you to do the monitoring you need.
 
 ## Travis CI
 
+I host the source code for almost all of my projects on GitHub and have Travis CI run automated tests as soon as the code there is updated. 
+This help me ensure the quality of our code and simplifies the automation of related tasks, such as releasing new versions of my software. 
+Another advantage for me with Travis CI is that the service is free for open source projects, and most of my code is open source.
 
-
-## Ressources:
+## Resources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
 

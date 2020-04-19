@@ -49,7 +49,7 @@ MySQL open [https://localhost:8081](https://localhost:8888) and use login and pa
 * Postman
 * Functional(PHPUnit)
 
-## Сode verification:
+## Code verification:
 
 ```
 php vendor/bin/phpcs --standard=PSR2 ./src/
