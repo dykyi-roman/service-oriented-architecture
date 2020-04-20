@@ -127,6 +127,15 @@ I host the source code for almost all of my projects on GitHub and have Travis C
 This help me ensure the quality of our code and simplifies the automation of related tasks, such as releasing new versions of my software. 
 Another advantage for me with Travis CI is that the service is free for open source projects, and most of my code is open source.
 
+## Vault
+
+One of the most difficult things in any kind of application (not just web applications) is how to protect "secret" values. 
+These values might be API keys, database passwords or even special bypass codes. 
+Ideally, you're not having to define these directly in the application and can have them loaded from another source.
+
+In PHP applications there's a common pattern to keep configuration values and access details in a `.env` file that resides in a place where the PHP application can reach it.
+
+!!! Before using this technology, you need to remember about a network communication and php specification work (PHP born to die. And each request for the server will be like a new).
 ## Resources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)

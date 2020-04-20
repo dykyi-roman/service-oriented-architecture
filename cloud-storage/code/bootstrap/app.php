@@ -4,7 +4,9 @@ use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Cache\RedisCache;
 use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
+use App\Infrastructure\Secret\VaultClient;
 use App\UI\Http\Middleware\CacheControlMiddleware;
+use GuzzleHttp\Client;
 use Sentry\Laravel\ServiceProvider;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -12,6 +14,21 @@ require_once __DIR__ . '/../vendor/autoload.php';
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
 ))->bootstrap();
+
+/*
+|--------------------------------------------------------------------------
+| Secrets
+|--------------------------------------------------------------------------
+*/
+if (env('APP_ENV') !== 'local') {
+    $secretClient = new VaultClient(new Client(), env('VAULT_HOST'), env('VAULT_TOKEN'));
+    $secrets = $secretClient->read(sprintf('%s/%s', env('APP_ENV'), env('APP_NAME')));
+    foreach ($secrets as $key => $value) {
+        if (array_key_exists($key, $_ENV)) {
+            $_ENV[$key] = $value;
+        }
+    }
+}
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
@@ -57,14 +74,14 @@ $app->singleton(
 
 $app->singleton(MetricsInterface::class, static function () {
     return new StatsDMetrics(
-      env('METRICS_HOST'),
-      env('METRICS_PORT'),
-      env('METRICS_NAMESPACE'),
-      env('METRICS_TIMEOUT'),
+        env('METRICS_HOST'),
+        env('METRICS_PORT'),
+        env('METRICS_NAMESPACE'),
+        env('METRICS_TIMEOUT'),
     );
 });
 
-$app->singleton(CacheInterface::class, static function() {
+$app->singleton(CacheInterface::class, static function () {
     return new RedisCache(
         env('REDIS_HOST'),
         env('REDIS_PORT'),

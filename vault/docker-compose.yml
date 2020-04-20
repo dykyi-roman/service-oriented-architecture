@@ -1,25 +1,25 @@
 version: '3.7'
 services:
-  vault:
-    image: vault:latest
-    environment:
-      - VAULT_ADDR=http://localhost:8200
-      - VAULT_API_ADDR=http://0.0.0.0:8200
-      - SKIP_SETCAP=true
-      - SKIP_CHOWN=true
-    ports:
-      - 8200:8200
-    command: server
-    volumes:
-      - ./volumes/logs:/vault/logs
-      - ./volumes/file:/vault/file
-      - ./volumes/config:/vault/config
-    cap_add:
-      - IPC_LOCK
-    entrypoint: vault server -config=/vault/config/vault.json
-    networks:
-      - soa
-
+    vault:
+        image: vault:latest
+        container_name: vault
+        command: server
+        entrypoint: vault server -config=/vault/config/vault.json
+        environment:
+            - VAULT_ADDR=http://localhost:8200
+            - VAULT_API_ADDR=http://0.0.0.0:8200
+            - SKIP_SETCAP=false #dev->true
+            - SKIP_CHOWN=false #dev->true
+        ports:
+            - 8200:8200
+        volumes:
+            - ./volumes/logs:/vault/logs
+            - ./volumes/file:/vault/file
+            - ./volumes/config:/vault/config
+        cap_add:
+            - IPC_LOCK
+        networks:
+            - soa
 networks:
     soa:
         external: true
