@@ -45,6 +45,8 @@ Here I want to add some plus from me:
 
 [Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 
+[Vault](vault/README.md)
+
 # Auth service
 
 ![image](auth/docs/main.png)
@@ -62,7 +64,7 @@ For more information, click [here](auth/README.md).
 
 ![image](message/docs/message.png)
 
-For more information read [here](message/README.md).
+For more information, click [here](message/README.md).
 
 # Admin Panel service
 
@@ -136,6 +138,9 @@ Ideally, you're not having to define these directly in the application and can h
 In PHP applications there's a common pattern to keep configuration values and access details in a `.env` file that resides in a place where the PHP application can reach it.
 
 !!! Before using this technology, you need to remember about a network communication and php specification work (PHP born to die. And each request for the server will be like a new).
+
+For more information, click [here](vault/README.md).
+
 ## Resources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
