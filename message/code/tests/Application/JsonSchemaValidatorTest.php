@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 class JsonSchemaValidatorTest extends WebTestCase
 {
-    private const JSON_TEMPLATE = '{"user_id":"%s","to":{"email":"%s", "phone":"%s"},"template":{"name":"%s","lang":"en","variables":["roman"]}}';
+    private const JSON_TEMPLATE = '{"userId":"%s","recipients":{"email":"%s", "phone":"%s"},"template":{"name":"%s","lang":"en","variables":["roman"]}}';
 
     /**
      * @covers ::validate

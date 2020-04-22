@@ -2,8 +2,8 @@
 	"type": "object",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
-        "user_id": {"type":"string"},
-        "to": {
+        "userId": {"type":"string"},
+        "recipients": {
             "type":"object",
             "properties": {
                 "email": {
@@ -48,6 +48,6 @@
             "type": "array"
         }
     },
-    "required": ["user_id", "to", "template"],
+    "required": ["userId", "recipients", "template"],
     "additionalProperties": false
 }

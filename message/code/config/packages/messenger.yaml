@@ -17,7 +17,6 @@ framework:
                 options:
                     exchange:
                        name: low
-
              notsent:
                 dsn: '%env(MESSAGE_TRANSPORT_DSN)%/notsent'
                 options:
@@ -32,5 +31,6 @@ framework:
             # sync: 'sync://'
         routing:
             # Route your messages to the transports
+             'App\Application\Sender\Message\Message': message
              'App\Application\Sender\Message\MessageSent': sent
              'App\Application\Sender\Message\MessageNotSent': notsent

@@ -20,15 +20,12 @@ use Psr\Log\LoggerInterface;
 use stdClass;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class SentToProvider
+final class ProviderSender
 {
     private MessageSenderFactory $senderFactory;
     private TemplateLoader $templateLoader;
     private LoggerInterface $logger;
     private MessageBusInterface $messageBus;
-    /**
-     * @var MetricsInterface
-     */
     private MetricsInterface $metrics;
 
     public function __construct(
@@ -45,10 +42,10 @@ final class SentToProvider
         $this->metrics = $metrics;
     }
 
-    public function execute(stdClass $data): void
+    public function send(stdClass $data): void
     {
         try {
-            foreach ($data->to as $type => $recipient) {
+            foreach ($data->recipients as $type => $recipient) {
                 $messageType = new MessageType($type);
                 $template = $this->templateLoader->load($data->template, $messageType);
 
@@ -58,7 +55,7 @@ final class SentToProvider
                 $sent = $this->sentMetricsWrapper($sender, $message, $messageType->toString());
 
                 if ($sent) {
-                    $this->messageBus->dispatch(new MessageSent($data->user_id, $template->toJson()));
+                    $this->messageBus->dispatch(new MessageSent($data->userId, $template->toJson()));
                 }
 
                 throw MessageException::messageNotSent();
@@ -67,7 +64,7 @@ final class SentToProvider
             $this->logger->error('Message::SentToProvider', ['error' => $exception->getMessage()]);
 
             $tmp = isset($template) ? $template->toJson() : '';
-            $event = new MessageNotSent($data->user_id, $tmp, $exception->getMessage());
+            $event = new MessageNotSent($data->userId, $tmp, $exception->getMessage());
             $this->messageBus->dispatch($event);
         }
     }

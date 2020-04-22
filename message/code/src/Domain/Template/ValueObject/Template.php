@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Template\ValueObject;
 
 use Immutable\ValueObject\ValueObject;
+use InvalidArgumentException;
+use function json_encode;
+use Throwable;
 
 final class Template extends ValueObject
 {
@@ -33,8 +36,8 @@ final class Template extends ValueObject
         try {
             new NotEmpty($subject);
             new NotEmpty($body);
-        } catch (\Throwable $exception) {
-            throw new \InvalidArgumentException($exception->getMessage());
+        } catch (Throwable $exception) {
+            throw new InvalidArgumentException($exception->getMessage());
         }
 
         return $this->with([

@@ -22,8 +22,7 @@ On production, there are a few important things to think about:
 To run a new consumer for message processing - use the command with parameter. Where parameter - this is a queue name. 
 
 ```
-    bin/console message:sender:run high
-    bin/console messenger:consume notsent sent
+    bin/console messenger:consume message sent notsent
 ```
 
 ### Cache
@@ -32,7 +31,7 @@ Cache usage gives us an available template without load from DB. Thanks for that
 
 ### Priority
 
-For us each type of message we have a next priority queue:
+For us each type of message we could have a next priority queue:
  
  * high -  use for message that have a limited time fife (password restore, confirm registration...)
  

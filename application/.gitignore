@@ -1,0 +1,8 @@
+/logs
+/database
+/storage/*.key
+/storage/*
+/vendor
+/.idea
+/code/symfony.lock
+/code/composer.lock

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Sender\Service;
 
+use App\Application\Sender\Service\ProviderSender;
 use App\Domain\Sender\Service\MessageSenderFactory;
-use App\Application\Sender\Service\SentToProvider;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\TemplateLoader;
 use App\Infrastructure\Cache\InMemoryCache;
@@ -18,9 +18,9 @@ use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * @coversDefaultClass \App\Application\Sender\Service\SentToProvider
+ * @coversDefaultClass \App\Application\Sender\Service\ProviderSender
  */
-class SentToProviderTest extends WebTestCase
+class ProviderSenderTest extends WebTestCase
 {
     private Generator $faker;
 
@@ -31,7 +31,7 @@ class SentToProviderTest extends WebTestCase
     }
 
     /**
-     * @covers ::execute
+     * @covers ::send
      */
     public function testSentToProvider(): void
     {
@@ -54,7 +54,7 @@ class SentToProviderTest extends WebTestCase
 
         self::bootKernel();
         $transport = self::$container->get('messenger.bus.default');
-        $sender = new SentToProvider(
+        $sender = new ProviderSender(
             $senderFactory,
             $templateLoader,
             $transport,
@@ -62,7 +62,7 @@ class SentToProviderTest extends WebTestCase
             new NullLogger()
         );
 
-        $sender->execute($this->createSendData());
+        $sender->send($this->createSendData());
     }
 
     private function createSendData(): \stdClass
@@ -73,9 +73,9 @@ class SentToProviderTest extends WebTestCase
         $template->variables = [];
 
         $data = new \stdClass();
-        $data->to = ['email' => $this->faker->email];
+        $data->recipients = ['email' => $this->faker->email];
         $data->template = $template;
-        $data->user_id = $this->faker->uuid;
+        $data->userId = $this->faker->uuid;
 
         return $data;
     }

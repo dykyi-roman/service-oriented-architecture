@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use JsonException;
 use JsonSchema\Validator;
 use stdClass;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class JsonSchemaValidator
 {
@@ -18,6 +18,12 @@ final class JsonSchemaValidator
         $this->jsonSchemaPatch = $bag->get('JSON_SCHEME_PATH');
     }
 
+    /**
+     * @param stdClass $json
+     * @param string   $schema
+     *
+     * @throws JsonException
+     */
     public function validate(stdClass $json, string $schema): void
     {
         $validator = new Validator();
@@ -31,6 +37,6 @@ final class JsonSchemaValidator
             $errors .= \sprintf("[%s] %s\n", $error['property'], $error['message']);
         }
 
-        throw new BadRequestHttpException('JSON does not validate. Violations: ' . $errors);
+        throw new JsonException('JSON does not validate. Violations: ' . $errors);
     }
 }

@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "1000:80"
+            - "1001:443"
+        expose:
+            - "1001"
+        volumes:
+            - ./code:/var/www/html/code
+            - ./docker/nginx/ssl:/etc/nginx/ssl
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+        networks:
+            - soa
+    php:
+        build: docker/php
+        volumes:
+            - ./code:/var/www/html/code
+        networks:
+            - soa
+networks:
+    soa:
+        external: true

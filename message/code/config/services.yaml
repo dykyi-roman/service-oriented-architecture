@@ -44,10 +44,6 @@ services:
         resource: '../src/UI/Http'
         tags: ['controller.service_arguments']
 
-    App\UI\Cli\:
-        resource: '../src/UI/Cli'
-        tags: ['controller.service_arguments']
-
     App\Infrastructure\Repository\Doctrine\:
         resource: '%kernel.project_dir%/src/Infrastructure/Repository/Doctrine/*'
 
