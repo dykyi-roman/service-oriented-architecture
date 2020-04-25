@@ -11,7 +11,9 @@ Authorization: Refers to what you can do, for example access, edit or delete per
 
 JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token format, defines the Token content, encrypts it, and provides lib for various languages.
 
-Read more how is organized [authenticate between microservice](JWT.md)
+## Authenticate between microservice
+
+Read more how is organized, click [here](JWT.md)
 
 ## Configuration
 
