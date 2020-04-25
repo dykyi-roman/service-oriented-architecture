@@ -273,29 +273,84 @@
 				"description": "get user data"
 			},
 			"response": []
+		},
+		{
+			"name": "cert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ede43ba1-0a06-4d77-8e0b-93c3bf31791d",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has key\", function(){",
+							"    pm.expect(pm.response.json().data.key).to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/cert",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"cert"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
 		}
 	],
 	"variable": [
 		{
-			"id": "2d4e710f-e794-49e7-980e-cfe7605b99ae",
+			"id": "36da55b2-3c66-43e0-9501-d65134587237",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "21d26010-3244-46fc-84b0-d26041667664",
+			"id": "ead4a283-e2d3-4df4-83c2-327b75e59047",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "21faa0fe-dc7c-40b1-ba75-dc4dabe24f01",
+			"id": "b6cfa078-60ff-40a3-9bf5-be0b22a16092",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2aa7a987-a4a5-41a5-9b80-077321643d33",
+			"id": "62ebe046-64e8-4b55-b0d8-367f82d22dd3",
 			"key": "test",
 			"value": "",
 			"type": "string"

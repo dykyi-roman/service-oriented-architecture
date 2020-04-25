@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @OA\Info(title="Auth API", version="1.0.3")
+ * @OA\SecurityScheme(
+ *   securityScheme="bearerAuth",
+ *   type="http",
+ *   scheme="bearer",
+ * )
  */
 abstract class ApiController extends AbstractController
 {

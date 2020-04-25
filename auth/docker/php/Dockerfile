@@ -1,5 +1,7 @@
 FROM php:7.4.0-fpm
 
+WORKDIR /var/www/html/code
+
 RUN apt-get update && apt-get install -y \
         libzip-dev \
         libmcrypt-dev \

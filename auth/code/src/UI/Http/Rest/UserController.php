@@ -20,11 +20,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * @OA\Tag(name="User")
- * @OA\SecurityScheme(
- *   securityScheme="bearerAuth",
- *   type="http",
- *   scheme="bearer",
- * )
  */
 class UserController extends ApiController
 {
@@ -43,29 +38,6 @@ class UserController extends ApiController
      *              ),
      *              @OA\Property(
      *                  property="password",
-     *                  type="string",
-     *              )
-     *          )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Success",
-     *     ),
-     * )
-     */
-
-     /**
-     * @OA\Post(
-     *     tags={"User"},
-     *     path="/api/token/refresh",
-     *     security= { { "bearerAuth": {} } },
-     *     summary="Refresh user token",
-     *     @OA\Parameter(
-     *          name="query",
-     *          in="query",
-     *          @OA\Schema(
-     *              @OA\Property(
-     *                  property="refresh_token",
      *                  type="string",
      *              )
      *          )

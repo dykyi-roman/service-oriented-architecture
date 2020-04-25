@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domain\Message\Service;
+namespace App\Domain\Message;
 
+use App\Application\Sender\Message\Message;
 use App\Domain\Message\ValueObject\Recipient;
 use App\Domain\Message\ValueObject\RecipientCollection;
 use App\Domain\Message\ValueObject\Template;
 use Symfony\Component\Messenger\MessageBusInterface;
-use App\Application\Sender\Message\Message;
 
 final class MessageAdapter
 {

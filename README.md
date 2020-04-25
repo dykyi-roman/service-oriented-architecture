@@ -5,6 +5,7 @@ Service oriented architecture
 
 - - -
 [![Build Status](https://api.travis-ci.org/dykyi-roman/service-oriented-architecture.svg?branch=master)](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/dykyi-roman/service-oriented-architecture/blob/SOA-app/LICENSE)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
 - - -
 
