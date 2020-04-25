@@ -5,6 +5,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+/config/jwt/
 /vendor/
 ###< symfony/framework-bundle ###
 

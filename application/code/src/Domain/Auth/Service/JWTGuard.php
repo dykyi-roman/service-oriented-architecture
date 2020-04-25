@@ -31,17 +31,20 @@ final class JWTGuard
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
-    public function downloadPublicKey(string $path): void
+    public function downloadPublicKey(string $path): bool
     {
         try {
             $request = new Request('GET', self::CERT_URI);
             $response = $this->client->sendRequest($request);
             $key = $this->responseDataExtractor->extract($response);
-            file_put_contents($path, $key['data']['key']);
+            if (file_put_contents($path, $key['data']['key'])) {
+                return true;
+            }
         } catch (\Throwable $exception) {
             $this->logger->error('Application::Security', ['error' => $exception->getMessage()]);
-            throw AuthException::downloadPublicKey();
         }
+
+        return false;
     }
 
     public function verify(string $token, string $key): User

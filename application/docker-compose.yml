@@ -21,9 +21,18 @@ services:
             - ./code:/var/www/html/code
         networks:
             - soa
+    supervisor:
+        build: docker/php
+        command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
+        volumes:
+            - ./code:/var/www/html/code
+            - ./code/config/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+        networks:
+            - soa
     postman_checks:
         build: docker/newman
-#        command:
+        command:
+             -v
 #            run test_postman_collection.json --insecure
 #            -e test_postman_environment.json
 #            -r cli
