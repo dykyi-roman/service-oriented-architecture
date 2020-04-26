@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Console\Command;
 
-use App\Domain\Auth\Service\JWTGuard;
+use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Service\Guard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,10 +18,10 @@ class DownloadJwtPublicKeyCommand extends Command
 
     protected static $defaultName = 'app:download-jwt-public-key';
 
-    private JWTGuard $JWTGuard;
+    private Guard $JWTGuard;
     private ParameterBagInterface $bag;
 
-    public function __construct(JWTGuard $JWTGuard, ParameterBagInterface $bag, string $name = null)
+    public function __construct(Guard $JWTGuard, ParameterBagInterface $bag, string $name = null)
     {
         parent::__construct($name);
         $this->JWTGuard = $JWTGuard;
@@ -44,8 +45,12 @@ class DownloadJwtPublicKeyCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         while (true) {
-            $result = $this->JWTGuard->downloadPublicKey($this->bag->get('JWT_PUBLIC_KEY'));
-            $output->write($result ? 'JWT key is updated' : 'JWT key is not updated');
+            try {
+                $result = $this->JWTGuard->downloadPublicKey($this->bag->get('JWT_PUBLIC_KEY'));
+                $output->write(sprintf('JWT key is updated status %s', $result ? 'success' : 'failed'));
+            } catch (AuthException $exception) {
+                $output->write(sprintf('Error: %s', $exception->getMessage()));
+            }
 
             sleep((int)$input->getOption('iteration_sleep'));
         }

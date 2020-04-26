@@ -13,7 +13,9 @@ JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token form
 
 ## Authenticate between microservice
 
-Read more how is organized, click [here](JWT.md)
+![image](docs/jwt-api-flow.png)
+
+Read more how is work, click [here](JWT.md)
 
 ## Configuration
 

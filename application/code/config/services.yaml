@@ -6,6 +6,7 @@
 parameters:
     JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
     AUTH_SERVICE_HOST: '%env(resolve:AUTH_SERVICE_HOST)%'
+    STORAGE_SERVICE_HOST: '%env(resolve:STORAGE_SERVICE_HOST)%'
 services:
     # default configuration for services in *this* file
     _defaults:

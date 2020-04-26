@@ -8,9 +8,9 @@ use RuntimeException;
 
 class AuthException extends RuntimeException
 {
-    public static function unexpectedErrorInAuthoriseProcess(): self
+    public static function unexpectedErrorInAuthoriseProcess(string $message): self
     {
-        return new static('Unknown error in Authorise process');
+        return new static(sprintf('Error in Authorise process: %s', $message));
     }
 
     public static function publicKeyIsNotFound(string $key): self
@@ -18,13 +18,18 @@ class AuthException extends RuntimeException
         return new static(sprintf('Public key is not found by path %s', $key));
     }
 
+    public static function publicKeyIsNotUpdated(string $message): self
+    {
+        return new static(sprintf('Could not download a new public key. Reason: %s', $message));
+    }
+
+    public static function tokenIsExpired(): self
+    {
+        return new static('Token is expired');
+    }
+
     public static function tokenIsNotDecoded(): self
     {
         return new static('Could not extract payload from token');
-    }
-
-    public static function downloadPublicKey(): self
-    {
-        return new static('Could not download a new public key');
     }
 }

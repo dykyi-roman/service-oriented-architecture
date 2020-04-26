@@ -8,24 +8,24 @@ use App\Domain\Auth\Exception\AuthException;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
 
-final class JWTAuth
+final class Auth
 {
     private const LOGIN_URI = '/api/user/login';
 
+    private string $host;
     private ClientInterface $client;
-    private LoggerInterface $logger;
     private ResponseDataExtractorInterface $responseDataExtractor;
 
     public function __construct(
         ClientInterface $client,
-        LoggerInterface $logger,
+        ParameterBagInterface $bag,
         ResponseDataExtractorInterface $responseDataExtractor
     ) {
+        $this->host = $bag->get('AUTH_SERVICE_HOST');
         $this->client = $client;
-        $this->logger = $logger;
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
@@ -33,14 +33,12 @@ final class JWTAuth
     {
         try {
             $payload = json_encode(['email' => $email, 'password' => $password], JSON_THROW_ON_ERROR, 512);
-            $request = new Request('POST', self::LOGIN_URI, [], $payload);
-
+            $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
 
             return $this->responseDataExtractor->extract($response);
         } catch (Throwable $exception) {
-            $this->logger->error('Application::Security', ['error' => $exception->getMessage()]);
-            throw AuthException::unexpectedErrorInAuthoriseProcess();
+            throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
         }
     }
 

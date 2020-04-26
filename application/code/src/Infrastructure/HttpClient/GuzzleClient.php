@@ -8,29 +8,25 @@ use GuzzleHttp\Client;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final class GuzzleClient implements ClientInterface
 {
     private Client $client;
-    private ParameterBagInterface $bag;
 
-    public function __construct(Client $client, ParameterBagInterface $bag)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->bag = $bag;
     }
 
-    public function sendRequest(RequestInterface $request, array $headers = []): ResponseInterface
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        return $this->client->send($request, $this->defaultOptions($headers));
+        return $this->client->send($request, $this->defaultOptions($request->getHeaders()));
     }
 
-    private function defaultOptions($headers): array
+    private function defaultOptions(array $headers): array
     {
         return [
             'verify' => false,
-            'base_uri' => $this->bag->get('AUTH_SERVICE_HOST'),
             'http_errors' => false,
             'headers' => array_merge(['Content-Type' => 'application/json'], $headers),
         ];

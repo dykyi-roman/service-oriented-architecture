@@ -11,47 +11,43 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Throwable;
 
-final class JWTGuard
+final class Guard
 {
     private const CERT_URI = '/api/cert';
 
+    private string $host;
     private ClientInterface $client;
-    private LoggerInterface $logger;
     private ResponseDataExtractorInterface $responseDataExtractor;
 
     public function __construct(
         ClientInterface $client,
-        LoggerInterface $logger,
+        ParameterBagInterface $bag,
         ResponseDataExtractorInterface $responseDataExtractor
     ) {
+        $this->host = $bag->get('AUTH_SERVICE_HOST');
         $this->client = $client;
-        $this->logger = $logger;
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
     public function downloadPublicKey(string $path): bool
     {
         try {
-            $request = new Request('GET', self::CERT_URI);
+            $request = new Request('GET', $this->host . self::CERT_URI);
             $response = $this->client->sendRequest($request);
             $key = $this->responseDataExtractor->extract($response);
-            if (file_put_contents($path, $key['data']['key'])) {
-                return true;
-            }
-        } catch (\Throwable $exception) {
-            $this->logger->error('Application::Security', ['error' => $exception->getMessage()]);
-        }
 
-        return false;
+            return (bool)file_put_contents($path, $key['data']['key']);
+        } catch (Throwable $exception) {
+            throw AuthException::publicKeyIsNotUpdated($exception->getMessage());
+        }
     }
 
     public function verify(string $token, string $key): User
     {
         if (!file_exists($key)) {
-            $message = sprintf('Public key is not found by path %s', $key);
-            $this->logger->error('Application::Security', ['error' => $message]);
             throw AuthException::publicKeyIsNotFound($key);
         }
 
@@ -60,11 +56,10 @@ final class JWTGuard
             $payload = JWT::decode($token, file_get_contents($key), ['RS256']);
         } catch (ExpiredException $exception) {
             //TODO:: Try to refresh key
-            $this->logger->error('Application::Security', ['error' => 'Token is expired']);
+            throw AuthException::tokenIsExpired();
         }
 
         if (null === $payload) {
-            $this->logger->error('Application::Security', ['error' => 'Could not extract payload from token']);
             throw AuthException::tokenIsNotDecoded();
         }
 
