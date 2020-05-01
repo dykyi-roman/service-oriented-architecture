@@ -3,7 +3,7 @@
 namespace App\UI\Http\Controllers;
 
 use App\Application\Service\Client;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\ValueObject\UploadFile;
 use DomainException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,7 +15,7 @@ class StorageController extends ApiController
 
     /**
      * @inheritDoc
-     * @throws \App\Domain\Exception\AdapterException
+     * @throws \App\Domain\Storage\Exception\AdapterException
      */
     public function __construct(Client $client)
     {
