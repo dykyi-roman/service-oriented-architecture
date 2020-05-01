@@ -31,9 +31,9 @@ install:
     - cd $PROJECT
     - docker network create -d bridge soa
     - docker-compose build
+    - docker-compose up -d php
 
 before_script:
-    - docker-compose up -d php
     - docker-compose exec php sh -c "php -d memory_limit=-1 composer.phar install -n"
     - docker-compose exec php sh -c "sh post-install.sh"
 script:
