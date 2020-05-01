@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\StorageInterface;
-use App\Domain\ValueObject\StorageResponse;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\StorageInterface;
+use App\Domain\Storage\ValueObject\StorageResponse;
+use App\Domain\Storage\ValueObject\UploadFile;
 
 final class InMemoryAdapter implements StorageInterface
 {
@@ -22,7 +22,7 @@ final class InMemoryAdapter implements StorageInterface
         }
 
         $dir = '' === $uploadFile->fileDir() ? '' : $uploadFile->fileDir() . '/';
-        
+
         return StorageResponse::create('test-id', $uploadFile->fileName(), '/' . $dir . $uploadFile->fileName());
     }
 

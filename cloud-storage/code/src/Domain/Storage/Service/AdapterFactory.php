@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service;
+namespace App\Domain\Storage\Service;
 
-use App\Domain\Exception\AdapterException;
+use App\Domain\Storage\Exception\AdapterException;
 
 use function explode;
 

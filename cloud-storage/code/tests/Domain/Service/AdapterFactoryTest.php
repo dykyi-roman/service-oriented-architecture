@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Domain\Exception\AdapterException;
-use App\Domain\Service\AdapterFactory;
-use App\Domain\Service\ExistAdaptersFinder;
-use App\Domain\StorageInterface;
+use App\Domain\Storage\Exception\AdapterException;
+use App\Domain\Storage\Service\AdapterFactory;
+use App\Domain\Storage\Service\ExistAdaptersFinder;
+use App\Domain\Storage\StorageInterface;
 
 /**
  * @coversDefaultClass AdapterFactory

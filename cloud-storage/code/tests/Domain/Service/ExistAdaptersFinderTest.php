@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Domain\Service\ExistAdaptersFinder;
+use App\Domain\Storage\Service\ExistAdaptersFinder;
 
 /**
  * @coversDefaultClass ExistAdaptersFinder

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Domain\StorageInterface;
-use App\Domain\ValueObject\StorageResponse;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\StorageInterface;
+use App\Domain\Storage\ValueObject\StorageResponse;
+use App\Domain\Storage\ValueObject\UploadFile;
 use Aws\S3\S3Client;
 
 /**

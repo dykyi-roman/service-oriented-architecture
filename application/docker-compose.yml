@@ -17,12 +17,6 @@ services:
             - soa
     php:
         build: docker/php
-        volumes:
-            - ./code:/var/www/html/code
-        networks:
-            - soa
-    supervisor:
-        build: docker/php
         command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
         volumes:
             - ./code:/var/www/html/code

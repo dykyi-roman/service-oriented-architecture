@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service;
+namespace App\Domain\Storage\Service;
 
 final class ExistAdaptersFinder
 {
     public function supported(): array
     {
         $adapters = [];
-        $files = $this->getFileListByPath(__DIR__ . '/../../Infrastructure/Adapters/');
+        $files = $this->getFileListByPath(__DIR__ . '/../../../Infrastructure/Adapters/');
         array_walk($files, static function ($item) use (&$adapters) {
             $tmp = str_replace('Adapter.php', '', $item);
             $adapters[] = strtolower(preg_replace('/\B([A-Z])/', '-$1', $tmp));

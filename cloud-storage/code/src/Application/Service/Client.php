@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Service;
 
-use App\Domain\Exception\AdapterException;
-use App\Domain\Exception\StorageConnectException;
-use App\Domain\Service\AdapterFactory;
-use App\Domain\StorageInterface;
-use App\Domain\ValueObject\StorageResponse;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\Exception\AdapterException;
+use App\Domain\Storage\Exception\StorageConnectException;
+use App\Domain\Storage\Service\AdapterFactory;
+use App\Domain\Storage\StorageInterface;
+use App\Domain\Storage\ValueObject\StorageResponse;
+use App\Domain\Storage\ValueObject\UploadFile;
 use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
 use DomainException;

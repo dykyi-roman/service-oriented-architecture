@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use App\Application\Service\Client;
-use App\Domain\Exception\StorageConnectException;
-use App\Domain\Service\AdapterFactory;
-use App\Domain\Service\ExistAdaptersFinder;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\Exception\StorageConnectException;
+use App\Domain\Storage\Service\AdapterFactory;
+use App\Domain\Storage\Service\ExistAdaptersFinder;
+use App\Domain\Storage\ValueObject\UploadFile;
 use App\Infrastructure\Cache\InMemoryCache;
 use App\Infrastructure\Metrics\InMemoryMetrics;
 use Psr\Log\NullLogger;

@@ -17,8 +17,10 @@ services:
             - soa
     php:
         build: docker/php
+        command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
         volumes:
             - ./code:/var/www/html/code
+            - ./code/config/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
         links:
             - mongo
             - rabbit

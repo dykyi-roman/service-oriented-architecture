@@ -25,7 +25,8 @@ parameters:
     ###
     PROJECT_DIR: '%kernel.project_dir%/src/UI/'
     JSON_SCHEME_PATH: '%kernel.project_dir%/config/jsonschema/'
-
+    JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
+    AUTH_SERVICE_HOST: '%env(resolve:AUTH_SERVICE_HOST)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -49,7 +50,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    GuzzleHttp\Client: ~
 
+    Psr\Http\Client\ClientInterface: '@App\Infrastructure\HttpClient\GuzzleClient'
     Psr\SimpleCache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
     App\Domain\Template\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
     App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'

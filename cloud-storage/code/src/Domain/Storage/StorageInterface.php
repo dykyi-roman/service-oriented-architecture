@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain;
+namespace App\Domain\Storage;
 
-use App\Domain\ValueObject\StorageResponse;
-use App\Domain\ValueObject\UploadFile;
+use App\Domain\Storage\ValueObject\StorageResponse;
+use App\Domain\Storage\ValueObject\UploadFile;
 
 interface StorageInterface
 {

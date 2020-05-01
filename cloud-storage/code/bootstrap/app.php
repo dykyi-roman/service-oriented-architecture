@@ -2,11 +2,16 @@
 
 use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Cache\RedisCache;
+use App\Infrastructure\HttpClient\GuzzleClient;
+use App\Infrastructure\HttpClient\ResponseDataExtractor;
+use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
 use App\Infrastructure\Secret\VaultClient;
+use App\UI\Console\Commands\DownloadJwtPublicKeyCommand;
 use App\UI\Http\Middleware\CacheControlMiddleware;
 use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
 use Sentry\Laravel\ServiceProvider;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -62,15 +67,10 @@ $app = new Laravel\Lumen\Application(
 |
 */
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Application\Exceptions\Handler::class,
-);
-
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\UI\Console\Kernel::class
-);
+$app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, App\Application\Exceptions\Handler::class,);
+$app->singleton(Illuminate\Contracts\Console\Kernel::class, App\UI\Console\Kernel::class);
+$app->singleton(ClientInterface::class, GuzzleClient::class);
+$app->singleton(ResponseDataExtractorInterface::class, ResponseDataExtractor::class);
 
 $app->singleton(MetricsInterface::class, static function () {
     return new StatsDMetrics(
