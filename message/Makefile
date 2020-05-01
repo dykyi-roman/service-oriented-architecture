@@ -4,6 +4,7 @@ placeholder:
 	@echo "----------------------------------------------------"
 	@echo "| start        | Up all docker containers          |"
 	@echo "| stop         | Down all docker containers        |"
+	@echo "| supervisor   | supervisor [COMMAND NAME]         |"
 	@echo "| clear-cache  | Clear cache                       |"
 	@echo "| phpcs        | Run phpcs                         |"
 	@echo "| clean-code   | Run easy code standard            |"
@@ -17,6 +18,9 @@ start:
 
 stop:
 	@docker-compose down
+
+supervisor:
+	@docker-compose exec php sh -c "supervisorctl $*"
 
 clear-cache:
 	@rm -rf code/var/cache/*
