@@ -30,6 +30,7 @@ before_install:
 install:
     - cd $PROJECT
     - docker network create -d bridge soa
+    - docker-compose build
     - docker-compose up -d php
 
 before_script:

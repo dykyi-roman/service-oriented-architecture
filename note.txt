@@ -19,5 +19,8 @@ subscribe microservice
  - group send message cron and command
 
 
+cloud-storage:
+ - virus check
+
 graphQL, newRelic, jenkins
 
