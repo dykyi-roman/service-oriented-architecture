@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     web:
-        image: nginx:latest
+        image: nginx:stable-alpine
         ports:
             - "6000:80"
             - "6001:443"

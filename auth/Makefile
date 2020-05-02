@@ -2,43 +2,53 @@ placeholder:
 	@echo "----------------------------------------------------"
 	@echo "| COMMAND      | DESCRIPTION                       |"
 	@echo "----------------------------------------------------"
+	@echo "| init         | Up from the ground                |"
 	@echo "| start        | Up all docker containers          |"
 	@echo "| stop         | Down all docker containers        |"
+	@echo "| restart      | Restart all docker containers     |"
 	@echo "| clear-cache  | Clear cache                       |"
 	@echo "| phpcs        | Run phpcs                         |"
 	@echo "| clean-code   | Run easy code standard            |"
 	@echo "| psalm        | Run psalm                         |"
-	@echo "| tests-run    | Run phpunit tests                 |"
+	@echo "| php-test     | Run phpunit tests                 |"
 	@echo "| postman-test | Run postman tests                 |"
 	@echo "| pre-commit   | phpcs clean-code psalm tests-run  |"
 
+init:
+	docker-compose down -v --remove-orphans
+	docker-compose pull
+	docker-compose build
+	docker-compose up -d
+
 start:
-	@docker-compose up -d
+	docker-compose up -d
 
 stop:
-	@docker-compose down
+	docker-compose down
+
+restart: stop start
 
 clear-cache:
-	@rm -rf code/var/cache/*
-	@echo "Cache is clean!"
+	rm -rf code/var/cache/*
+	echo "Cache is clean!"
 
 phpcs:
-	@docker-compose exec php sh -c "vendor/bin/phpcs --standard=PSR2 src/"
-	@echo "phpcs done"
+	docker-compose exec php sh -c "vendor/bin/phpcs --standard=PSR2 src/"
+	echo "phpcs done"
 
 clean-code:
-	@docker-compose exec php sh -c "vendor/bin/ecs check ./src/ --set clean-code"
-	@echo "clean-code done"
+	docker-compose exec php sh -c "vendor/bin/ecs check ./src/ --set clean-code"
+	echo "clean-code done"
 
 psalm:
-	@docker-compose exec php sh -c "vendor/bin/psalm"
-	@echo "psalm done"
+	docker-compose exec php sh -c "vendor/bin/psalm"
+	echo "psalm done"
 
-tests-run:
-	@docker-compose exec php sh -c "vendor/bin/phpunit tests/"
+php-tests:
+	docker-compose exec php sh -c "vendor/bin/phpunit tests/"
 
 postman-test:
-	@docker-compose run postman_checks
+	docker-compose run postman_checks
 
-pre-commit: phpcs clean-code psalm tests-run
+pre-commit: phpcs clean-code psalm php-tests
 	@:
