@@ -28,7 +28,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Domain\Repository\UserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\UserRepository'
+    App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\UserRepository'
     App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
 
     App\Infrastructure\Metrics\StatsDMetrics:
@@ -38,24 +38,24 @@ services:
             - '%env(METRICS_NAMESPACE)%'
             - '%env(METRICS_TIMEOUT)%'
 
-    App\Application\Handler\UserRegisterHandler:
+    App\Application\User\Handler\UserRegisterHandler:
         tags:
-            - { name: tactician.handler, command: App\Application\Command\UserRegisterCommand }
+            - { name: tactician.handler, command: App\Application\User\Command\UserRegisterCommand }
 
     App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
         public: true
 
-    App\Application\Listeners\PreflightIgnoreOnNewRelicListener:
+    App\Application\User\Listeners\PreflightIgnoreOnNewRelicListener:
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    App\Application\Listeners\JWTCreatedListener:
+    App\Application\User\Listeners\JWTCreatedListener:
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
-    App\Application\Listeners\JWTDecodedListener:
+    App\Application\User\Listeners\JWTDecodedListener:
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }
