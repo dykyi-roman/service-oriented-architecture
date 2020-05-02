@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Rest;
 
-use App\Application\Command\UserRegisterCommand;
-use App\Domain\Entity\User;
-use App\Domain\Transformer\Api\UserApiTransformer;
-use App\Domain\VO\FullName;
-use App\Domain\VO\UserRegistrationRequest;
+use App\Application\Common\Error;
+use App\Application\User\Command\UserRegisterCommand;
+use App\Domain\User\Entity\User;
+use App\Domain\User\Transformer\Api\UserApiTransformer;
+use App\Domain\User\ValueObject\FullName;
+use App\Domain\User\ValueObject\UserRegistrationRequest;
+use Exception;
 use Immutable\Exception\ImmutableObjectException;
+use InvalidArgumentException;
 use League\Tactician\CommandBus;
 use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Uuid;
@@ -90,7 +93,6 @@ class UserController extends ApiController
 
     /**
      * @Route(path="/api/user/registration", methods={"POST"}, name="user_registration")
-     * @inheritDoc
      */
     public function register(Request $request, CommandBus $commandBus): JsonResponse
     {
@@ -105,12 +107,12 @@ class UserController extends ApiController
                     $request->get('phone'),
                     new FullName(
                         $request->get('firstName'),
-                        $request->get('lastName'),
+                        $request->get('lastName')
                     )
                 )
             ));
-        } catch (\Exception | \InvalidArgumentException | ImmutableObjectException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+        } catch (Exception | InvalidArgumentException | ImmutableObjectException $exception) {
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
 
         return $this->respondCreated(['uuid' => $uuid->toString()]);
@@ -136,12 +138,12 @@ class UserController extends ApiController
     {
         $token = $tokenStorage->getToken();
         if (null === $token) {
-            return $this->respondNotFound();
+            return $this->respondNotFound(Error::create('Token not Found!'));
         }
 
         $user = $token->getUser();
         if (!$user instanceof User) {
-            return $this->respondNotFound();
+            return $this->respondNotFound(Error::create('User not Found!'));
         }
 
         return $this->respondWithSuccess(UserApiTransformer::transform($user));

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Sender\MessageHandler;
 
-use App\Application\JsonSchemaValidator;
+use App\Application\Common\JsonSchemaValidator;
 use App\Application\Sender\Message\Message;
 use App\Application\Sender\Service\ProviderSender;
 use JsonException;

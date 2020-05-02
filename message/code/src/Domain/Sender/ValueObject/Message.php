@@ -15,7 +15,6 @@ final class Message implements MessageInterface
     private Template $template;
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      * @throws RecipientsException

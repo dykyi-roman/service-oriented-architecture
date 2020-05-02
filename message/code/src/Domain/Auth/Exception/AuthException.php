@@ -10,21 +10,21 @@ class AuthException extends RuntimeException
 {
     public static function publicKeyIsNotFound(string $key): self
     {
-        return new static(sprintf('Public key is not found by path %s', $key));
+        return new static(sprintf('Public key is not found by path %s', $key), 4100);
     }
 
     public static function publicKeyIsNotUpdated(string $message): self
     {
-        return new static(sprintf('Could not download a new public key. Reason: %s', $message));
+        return new static(sprintf('Could not download a new public key. Reason: %s', $message), 4101);
     }
 
     public static function tokenIsExpired(): self
     {
-        return new static('Token is expired');
+        return new static('Token is expired', 4102);
     }
 
     public static function tokenIsNotDecoded(): self
     {
-        return new static('Could not extract payload from token');
+        return new static('Could not extract payload from token', 4103);
     }
 }

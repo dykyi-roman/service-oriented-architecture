@@ -9,7 +9,6 @@ final class NotEmpty extends ValueObject
     protected string $value = '';
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */
@@ -20,7 +19,6 @@ final class NotEmpty extends ValueObject
     }
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
      */

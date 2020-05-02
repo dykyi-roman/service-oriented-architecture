@@ -10,7 +10,6 @@ final class Phone extends ValueObject
     protected string $phone;
 
     /**
-     * @inheritDoc
      * @throws \InvalidArgumentException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
@@ -22,7 +21,6 @@ final class Phone extends ValueObject
     }
 
     /**
-     * @inheritDoc
      * @throws \InvalidArgumentException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException

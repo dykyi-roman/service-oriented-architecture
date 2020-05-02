@@ -10,6 +10,6 @@ final class StorageConnectException extends RuntimeException
 {
     public static function connectProblem(): self
     {
-        return new self('Connect is not initialization');
+        return new self('Connect is not initialization', 6202);
     }
 }

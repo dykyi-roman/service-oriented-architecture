@@ -20,8 +20,6 @@ final class MessageType extends ValueObject
     protected string $type;
 
     /**
-     * @inheritDoc
-     *
      * @throws MessageException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
@@ -33,8 +31,6 @@ final class MessageType extends ValueObject
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws MessageException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException

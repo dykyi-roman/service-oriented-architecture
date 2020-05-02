@@ -12,7 +12,6 @@ final class PhoneRecipients extends ValueObject implements Recipients
     protected Phone $recipient;
 
     /**
-     * @inheritDoc
      * @throws \InvalidArgumentException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException
@@ -24,7 +23,6 @@ final class PhoneRecipients extends ValueObject implements Recipients
     }
 
     /**
-     * @inheritDoc
      * @throws \InvalidArgumentException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException

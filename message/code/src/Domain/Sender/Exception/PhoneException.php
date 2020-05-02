@@ -8,6 +8,6 @@ class PhoneException extends \InvalidArgumentException
 {
     public static function notCorrectPhoneNumber(): self
     {
-        return new static('Phone number is not correct');
+        return new static('Phone number is not correct', 4203);
     }
 }

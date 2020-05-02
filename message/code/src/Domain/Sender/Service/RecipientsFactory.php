@@ -18,7 +18,6 @@ final class RecipientsFactory
     }
 
     /**
-     * @inheritDoc
      * @throws RecipientsException
      * @throws \Immutable\Exception\ImmutableObjectException
      * @throws \Immutable\Exception\InvalidValueException

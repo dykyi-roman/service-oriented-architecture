@@ -2,6 +2,7 @@
 
 namespace App\UI\Http\Controllers;
 
+use App\Application\Common\Error;
 use App\Application\Service\Client;
 use App\Domain\Storage\ValueObject\UploadFile;
 use DomainException;
@@ -52,7 +53,7 @@ class StorageController extends ApiController
             $result = $this->client->createFolder($request->get('name', ''));
             return $this->respondWithSuccess($result);
         } catch (DomainException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
@@ -92,7 +93,7 @@ class StorageController extends ApiController
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
             if (null === $file) {
-                return $this->respondWithErrors('File is empty');
+                return $this->respondWithError(Error::create('File is empty'));
             }
 
             $result = $this->client->upload(new UploadFile(
@@ -103,7 +104,7 @@ class StorageController extends ApiController
 
             return $this->respondWithSuccess($result);
         } catch (DomainException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
@@ -143,7 +144,7 @@ class StorageController extends ApiController
 
             return $this->respondWithSuccess($data);
         } catch (DomainException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
@@ -177,7 +178,7 @@ class StorageController extends ApiController
 
             return $this->respondWithSuccess();
         } catch (DomainException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 }

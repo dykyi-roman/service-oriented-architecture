@@ -12,11 +12,13 @@ final class AdapterException extends Exception
 
     public static function adapterListIsEmpty(array $adapters): self
     {
-        return new self(sprintf('Adapter list is empty. Choose one from this list: "%s"', implode(',', $adapters)));
+        $message = sprintf('Adapter list is empty. Choose one from this list: "%s"', implode(',', $adapters));
+
+        return new self($message, 6200);
     }
 
     public static function adapterIsNotSupport(string $adapter): self
     {
-        return new self(sprintf(self::NO_SUPPORTED_MESSAGE, $adapter));
+        return new self(sprintf(self::NO_SUPPORTED_MESSAGE, $adapter), 6201);
     }
 }

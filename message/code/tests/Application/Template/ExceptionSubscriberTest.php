@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Template;
 
-use App\Application\Template\Exception\ExceptionSubscriber;
+use App\Application\Template\Listener\ExceptionSubscriber;
 use App\Application\Template\Exception\JsonSchemaException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 /**
- * @coversDefaultClass \App\Application\Template\Exception\ExceptionSubscriber
+ * @coversDefaultClass \App\Application\Template\Listener\ExceptionSubscriber
  */
 class ExceptionSubscriberTest extends TestCase
 {

@@ -28,15 +28,15 @@ clear-cache:
 
 phpcs:
 	@docker-compose exec php sh -c "vendor/bin/phpcs --standard=PSR2 src/"
-	@echo "All done"
+	@echo "phpcs done"
 
 clean-code:
 	@docker-compose exec php sh -c "vendor/bin/ecs check ./src/ --set clean-code"
-	@echo "All done"
+	@echo "clean-code done"
 
 psalm:
 	@docker-compose exec php sh -c "vendor/bin/psalm"
-	@echo "All done"
+	@echo "psalm done"
 
 tests-run:
 	@docker-compose exec php sh -c "vendor/bin/phpunit tests/"

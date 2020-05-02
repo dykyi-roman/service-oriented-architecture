@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository\InMemory;
 
-use App\Domain\Entity\User;
-use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\User\Entity\User;
+use App\Domain\User\Repository\UserRepositoryInterface;
 use Doctrine\ORM\ORMException;
 use Ramsey\Uuid\UuidInterface;
 

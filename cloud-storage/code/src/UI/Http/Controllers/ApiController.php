@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Controllers;
 
-use App\Application\ResponseFactory;
+use App\Application\Common\Error;
+use App\Application\Common\Response;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,29 +36,29 @@ abstract class ApiController extends BaseController
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
 
-    public function respondWithErrors(string $errors, int $statusCode = 500, array $headers = []): JsonResponse
+    public function respondWithError(Error $error, int $statusCode = 500, array $headers = []): JsonResponse
     {
-        return new JsonResponse(ResponseFactory::error($errors), $statusCode, $headers);
+        return new JsonResponse(Response::error($error), $statusCode, $headers);
     }
 
     public function respondWithSuccess(array $data = [], int $statusCode = 200, array $headers = []): JsonResponse
     {
-        return new JsonResponse(ResponseFactory::success($data), $statusCode, $headers);
+        return new JsonResponse(Response::success($data), $statusCode, $headers);
     }
 
-    public function respondUnauthorized(string $message = 'Not authorized!'): JsonResponse
+    public function respondUnauthorized(Error $error): JsonResponse
     {
-        return $this->respondWithErrors($message, 401);
+        return $this->respondWithError($error, 401);
     }
 
-    public function respondValidationError(string $message = 'Validation errors'): JsonResponse
+    public function respondValidationError(Error $error): JsonResponse
     {
-        return $this->respondWithErrors($message, 422);
+        return $this->respondWithError($error, 422);
     }
 
-    public function respondNotFound(string $message = 'Not found!'): JsonResponse
+    public function respondNotFound(Error $error): JsonResponse
     {
-        return $this->respondWithErrors($message, 404);
+        return $this->respondWithError($error, 404);
     }
 
     public function respondCreated(array $data = []): JsonResponse

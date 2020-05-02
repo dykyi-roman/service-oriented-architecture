@@ -12,7 +12,6 @@ final class EmailRecipients extends ValueObject implements Recipients
     protected Email $recipient;
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      */
     public function __construct(string $sender, string $recipient)
@@ -22,7 +21,6 @@ final class EmailRecipients extends ValueObject implements Recipients
     }
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      */
     public function withChanged(string $sender, string $recipient): ValueObject

@@ -11,7 +11,6 @@ final class Email extends ValueObject
     protected string $email;
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      */
     public function __construct(string $email)
@@ -21,7 +20,6 @@ final class Email extends ValueObject
     }
 
     /**
-     * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException
      */
     public function withChanged(string $email): ValueObject

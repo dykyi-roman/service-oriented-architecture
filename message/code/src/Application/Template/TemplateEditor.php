@@ -24,7 +24,6 @@ final class TemplateEditor
     }
 
     /**
-     * @inheritDoc
      * @throws TemplateException
      */
     public function create(UuidInterface $id, Template $template, MessageType $type, string $name, string $lang): void
@@ -45,7 +44,6 @@ final class TemplateEditor
     }
 
     /**
-     * @inheritDoc
      * @throws TemplateException
      */
     public function update(string $id, Template $template): void
@@ -59,7 +57,6 @@ final class TemplateEditor
     }
 
     /**
-     * @inheritDoc
      * @throws TemplateException
      */
     public function delete(string $id): void

@@ -19,8 +19,6 @@ class MessageSenderFactory
     }
 
     /**
-     * @inheritDoc
-     * @return MessageSenderInterface
      * @throws MessageException
      */
     public function create(MessageType $type): MessageSenderInterface

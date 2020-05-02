@@ -23,8 +23,6 @@ class SwaggerController extends AbstractController
 
     /**
      * @Route(path="/swagger/update", name="swagger_update")
-     *
-     * @inheritDoc
      */
     public function update(ParameterBagInterface $bag): Response
     {

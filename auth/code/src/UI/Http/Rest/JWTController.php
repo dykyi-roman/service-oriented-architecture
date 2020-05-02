@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Rest;
 
+use App\Application\Common\Error;
 use function file_get_contents;
 use OpenApi\Annotations as OA;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -56,7 +57,7 @@ class JWTController extends ApiController
     public function cert(ParameterBagInterface $bag): JsonResponse
     {
         if (!file_exists($bag->get('JWT_PUBLIC_KEY'))) {
-            return $this->respondNotFound();
+            return $this->respondNotFound(Error::create('Not Found!'));
         }
 
         return $this->respondWithSuccess([

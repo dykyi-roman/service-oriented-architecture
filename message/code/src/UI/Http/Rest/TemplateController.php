@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Rest;
 
+use App\Application\Common\Error;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\DeleteTemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
@@ -71,7 +72,6 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/", methods={"POST"}, name="template_create")
-     * @inheritDoc
      */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
@@ -84,9 +84,9 @@ final class TemplateController extends ApiController
 
             return $this->respondCreated(['id' => $id]);
         } catch (TemplateException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         } catch (Exception $exception) {
-            return $this->respondValidationError($exception->getMessage());
+            return $this->respondValidationError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
@@ -118,7 +118,6 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/{id}", methods={"PUT"}, name="template_update")
-     * @inheritDoc
      */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
@@ -127,7 +126,7 @@ final class TemplateController extends ApiController
 
             return $this->respondWithSuccess();
         } catch (TemplateException | Exception $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
@@ -155,7 +154,6 @@ final class TemplateController extends ApiController
 
     /**
      * @Route("/api/template/{id}", methods={"DELETE"}, name="template_delete")
-     * @inheritDoc
      */
     public function delete(DeleteTemplateRequest $request): JsonResponse
     {
@@ -164,7 +162,7 @@ final class TemplateController extends ApiController
 
             return $this->respondWithSuccess();
         } catch (TemplateException $exception) {
-            return $this->respondWithErrors($exception->getMessage());
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 }

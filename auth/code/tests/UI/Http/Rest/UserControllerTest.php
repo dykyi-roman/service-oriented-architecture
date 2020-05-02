@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\UI\Http\Rest;
 
-use App\Domain\Entity\User;
+use App\Domain\User\Entity\User;
 use App\Tests\DBHelper;
 use App\UI\Http\Rest\UserController;
 use Faker\Factory;
