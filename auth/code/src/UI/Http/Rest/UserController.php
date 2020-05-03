@@ -132,7 +132,7 @@ class UserController extends ApiController
      */
 
     /**
-     * @Route(path="/api/user/current", methods={"GET"}, name="user_current_info")
+     * @Route(path="/api/user/current", methods={"GET"}, name="api.user.current_info")
      */
     public function user(Request $request, TokenStorageInterface $tokenStorage): JsonResponse
     {

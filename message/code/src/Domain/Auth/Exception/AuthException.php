@@ -23,8 +23,13 @@ class AuthException extends RuntimeException
         return new static('Token is expired', 4102);
     }
 
+    public static function tokenIsNotFoundInHeaders(string $tokenKey): self
+    {
+        return new static(sprintf('Token "%s" is not found in the headers', $tokenKey), 4103);
+    }
+
     public static function tokenIsNotDecoded(): self
     {
-        return new static('Could not extract payload from token', 4103);
+        return new static('Could not extract payload from token', 4104);
     }
 }

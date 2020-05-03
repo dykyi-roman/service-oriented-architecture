@@ -55,7 +55,6 @@ final class Guard
         try {
             $payload = JWT::decode($token, file_get_contents($key), ['RS256']);
         } catch (ExpiredException $exception) {
-            //TODO:: Try to refresh key
             throw AuthException::tokenIsExpired();
         }
 

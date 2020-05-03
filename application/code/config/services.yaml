@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    APP_ENV: '%env(resolve:APP_ENV)%'
     JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
     AUTH_SERVICE_HOST: '%env(resolve:AUTH_SERVICE_HOST)%'
     STORAGE_SERVICE_HOST: '%env(resolve:STORAGE_SERVICE_HOST)%'

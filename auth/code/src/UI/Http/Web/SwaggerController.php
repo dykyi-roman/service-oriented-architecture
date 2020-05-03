@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SwaggerController extends AbstractController
 {
     /**
-     * @Route(path="/", methods={"GET"}, name="swagger_index")
+     * @Route(path="/", methods={"GET"}, name="web.swagger_index")
      */
     public function index(): RedirectResponse
     {
@@ -22,7 +22,7 @@ class SwaggerController extends AbstractController
     }
 
     /**
-     * @Route(path="/swagger/update", methods={"GET"}, name="swagger_update")
+     * @Route(path="/swagger/update", methods={"GET"}, name="web.swagger_update")
      * @inheritDoc
      */
     public function update(ParameterBagInterface $bag): Response

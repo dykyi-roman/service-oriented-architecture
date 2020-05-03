@@ -1,8 +1,8 @@
 <?php
 
-$router->group(['prefix' => 'api/'], static function ($router) {
-    $router->post('storage/folder', 'StorageController@createFolder');
-    $router->post('storage/upload', 'StorageController@uploadFile');
-    $router->get('storage/download', ['middleware' => 'cache-control', 'uses' => 'StorageController@download']);
-    $router->delete('storage/delete', 'StorageController@delete');
+$router->group(['prefix' => 'api/', 'middleware' => ['auth-verify']], static function ($router) {
+    $router->post('storage/folder', ['uses' => 'StorageController@createFolder', 'as' => 'api.storage.folder.create']);
+    $router->post('storage/upload', ['uses' => 'StorageController@uploadFile', 'as' => 'api.storage.upload']);
+    $router->get('storage/download', ['uses' => 'StorageController@download', 'middleware' => ['cache-control'], 'as' => 'api.storage.download']);
+    $router->delete('storage/delete', ['uses' => 'StorageController@delete', 'as' => 'api.storage.delete']);
 });

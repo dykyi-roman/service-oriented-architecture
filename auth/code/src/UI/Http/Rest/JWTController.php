@@ -52,7 +52,7 @@ class JWTController extends ApiController
      */
 
     /**
-     * @Route(path="/api/cert", methods={"GET"}, name="cert_public_key")
+     * @Route(path="/api/cert", methods={"GET"}, name="api.jwt.cert_public_key")
      */
     public function cert(ParameterBagInterface $bag): JsonResponse
     {

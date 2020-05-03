@@ -71,7 +71,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/", methods={"POST"}, name="template_create")
+     * @Route("/api/template/", methods={"POST"}, name="api.template.create")
      */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
@@ -117,7 +117,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/{id}", methods={"PUT"}, name="template_update")
+     * @Route("/api/template/{id}", methods={"PUT"}, name="api.template.update")
      */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
@@ -153,7 +153,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/{id}", methods={"DELETE"}, name="template_delete")
+     * @Route("/api/template/{id}", methods={"DELETE"}, name="api.template.delete")
      */
     public function delete(DeleteTemplateRequest $request): JsonResponse
     {

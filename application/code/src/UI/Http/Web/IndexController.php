@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route(path="/", name="test_page")
+     * @Route(path="/", name="web.test.page")
      */
     public function test(
         ParameterBagInterface $bag,

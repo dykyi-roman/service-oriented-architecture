@@ -9,6 +9,7 @@ use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
 use App\Infrastructure\Secret\VaultClient;
 use App\UI\Console\Commands\DownloadJwtPublicKeyCommand;
+use App\UI\Http\Middleware\AuthVerifyMiddleware;
 use App\UI\Http\Middleware\CacheControlMiddleware;
 use GuzzleHttp\Client;
 use Psr\Http\Client\ClientInterface;
@@ -114,11 +115,12 @@ $app->configure('logging');
 */
 
 $app->middleware([
-    CacheControlMiddleware::class
+  // Your global middleware
 ]);
 
 $app->routeMiddleware([
     'cache-control' => CacheControlMiddleware::class,
+    'auth-verify' => AuthVerifyMiddleware::class,
 ]);
 
 /*
