@@ -8,7 +8,7 @@ use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
 use App\Infrastructure\Metrics\StatsDMetrics;
 use App\Infrastructure\Secret\VaultClient;
-use App\UI\Console\Commands\DownloadJwtPublicKeyCommand;
+use App\UI\Console\Commands\CertDownloadCommand;
 use App\UI\Http\Middleware\AuthVerifyMiddleware;
 use App\UI\Http\Middleware\CacheControlMiddleware;
 use GuzzleHttp\Client;

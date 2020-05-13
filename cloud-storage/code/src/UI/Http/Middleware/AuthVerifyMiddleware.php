@@ -6,15 +6,15 @@ namespace App\UI\Http\Middleware;
 
 use App\Application\Common\Error;
 use App\Application\Common\Response;
+use App\Application\Security\Guard;
 use App\Domain\Auth\Exception\AuthException;
-use App\Domain\Auth\Service\Guard;
 use Closure;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthVerifyMiddleware
 {
-    private $guard;
+    private Guard $guard;
 
     public function __construct(Guard $guard)
     {
@@ -34,7 +34,7 @@ class AuthVerifyMiddleware
         }
         $routeName = $request->route()[1]['as'];
 
-        if (false === strpos($routeName, 'api.')) {
+        if (false === mb_strpos($routeName, 'api.')) {
             return $response;
         }
 

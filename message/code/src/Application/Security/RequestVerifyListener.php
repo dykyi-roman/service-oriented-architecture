@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Template\Listener;
+namespace App\Application\Security;
 
 use App\Application\Common\Error;
 use App\Application\Common\Response;
 use App\Domain\Auth\Exception\AuthException;
-use App\Domain\Auth\Service\Guard;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +34,7 @@ final class RequestVerifyListener
             return;
         }
 
-        if (false === strpos($routeName, 'api.')) {
+        if (false === mb_strpos($routeName, 'api.')) {
             return;
         }
 

@@ -36,10 +36,16 @@ final class Auth
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
 
-            return $this->responseDataExtractor->extract($response);
+            $response = $this->responseDataExtractor->extract($response);
         } catch (Throwable $exception) {
             throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
         }
+
+        if (!array_key_exists('token', $response)) {
+            throw AuthException::invalidCredentials();
+        }
+
+        return $response;
     }
 
     public function authenticate(): bool

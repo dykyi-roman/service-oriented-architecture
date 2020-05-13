@@ -30,7 +30,33 @@ services:
     # please note that last definitions always *replace* previous ones
     GuzzleHttp\Client: ~
 
+    App\Infrastructure\HttpClient\GuzzleClient:
+        - '@GuzzleHttp\Client'
+        - ['@App\Infrastructure\HttpClient\Middleware\AuthTokenMiddleware']
+
     App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
     Psr\Http\Client\ClientInterface: '@App\Infrastructure\HttpClient\GuzzleClient'
     App\Infrastructure\HttpClient\ResponseDataExtractorInterface: '@App\Infrastructure\HttpClient\ResponseDataExtractor'
+    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface: '@App\Application\Security\Service\TokenStorage'
 
+    ########## Listener ###########
+    App\Application\Security\Listener\RequestVerifyListener:
+        tags:
+            - { name: kernel.event_listener }
+
+    App\Application\Security\Listener\RequestRedirectListener:
+        tags:
+            - { name: kernel.event_listener }
+
+    App\Application\Security\Listener\AddCookiesToLoginResponseSubscriber:
+        tags:
+            - { name: kernel.response }
+
+    ########## Command ###########
+    App\Application\Auth\Handler\LoginUserHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Command\LoginUserCommand }
+
+    App\Application\Auth\Handler\LogoutUserHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Command\LogoutUserCommand }

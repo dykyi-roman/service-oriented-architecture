@@ -62,7 +62,7 @@ services:
     App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\RedisCache'
     App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
 
-    App\Application\Template\Listener\RequestVerifyListener:
+    App\Application\Security\RequestVerifyListener:
         tags:
             - { name: kernel.event_listener }
 

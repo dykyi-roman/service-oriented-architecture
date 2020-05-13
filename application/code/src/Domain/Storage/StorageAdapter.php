@@ -31,6 +31,9 @@ final class StorageAdapter
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
+    /**
+     * @throws StorageException
+     */
     public function uploadFile(string $file, string $fileExt, string $dir = null): array
     {
         try {
@@ -61,6 +64,9 @@ final class StorageAdapter
         }
     }
 
+    /**
+     * @throws StorageException
+     */
     public function downloadFile(string $file): array
     {
         try {

@@ -14,7 +14,7 @@ use Psr\Http\Client\ClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
 
-final class Guard
+final class CertReceiver
 {
     private const CERT_URI = '/api/cert';
 

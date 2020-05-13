@@ -4,6 +4,7 @@ auth:
  - black list
  - simple registration without JWT
  - api for admin panel
+ - registration by partner code
 
 adminka
  - think about server (based on CQRS) 

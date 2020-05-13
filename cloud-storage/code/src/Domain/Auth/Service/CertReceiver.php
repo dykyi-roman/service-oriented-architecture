@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Auth\Service;
 
-use App\Domain\Auth\Entity\User;
 use App\Domain\Auth\Exception\AuthException;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\JWT;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
 use Throwable;
 
-final class Guard
+final class CertReceiver
 {
     private const CERT_URI = '/api/cert';
 
@@ -39,25 +36,5 @@ final class Guard
         } catch (Throwable $exception) {
             throw AuthException::publicKeyIsNotUpdated($exception->getMessage());
         }
-    }
-
-    public function verify(string $token, string $key): User
-    {
-        if (!file_exists($key)) {
-            throw AuthException::publicKeyIsNotFound($key);
-        }
-
-        $payload = null;
-        try {
-            $payload = JWT::decode($token, file_get_contents($key), ['RS256']);
-        } catch (ExpiredException $exception) {
-            throw AuthException::tokenIsExpired();
-        }
-
-        if (null === $payload) {
-            throw AuthException::tokenIsNotDecoded();
-        }
-
-        return User::createUserByJWTPayload($payload);
     }
 }

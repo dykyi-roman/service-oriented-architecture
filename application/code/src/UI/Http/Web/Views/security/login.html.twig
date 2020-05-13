@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="limiter">
+        <div class="message-box">
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="container-login">
+            <div class="wrap-login p-l-55 p-r-55 p-t-65 p-b-50">
+                <form class="login-form validate-form" action="{{ path('web.login') }}" method="POST">
+					<span class="login-form-title p-b-33">
+						Account Login
+					</span>
+
+                    <div class="wrap-input validate-input">
+                        <input class="input" type="email" name="email" placeholder="Login">
+                        <span class="focus-input-1"></span>
+                        <span class="focus-input-2"></span>
+                    </div>
+
+                    <div class="wrap-input rs1 validate-input" data-validate="Password is required">
+                        <input class="input" type="password" name="password" placeholder="Password">
+                        <span class="focus-input-1"></span>
+                        <span class="focus-input-2"></span>
+                    </div>
+
+                    <div class="container-login-form-btn m-t-20">
+                        <button class="login-form-btn">
+                            Sign in
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-45 p-b-4">
+						<span class="txt1">
+							Forgot
+						</span>
+
+                        <a href="#" class="txt2 hov1">
+                            Username / Password?
+                        </a>
+                    </div>
+
+                    <div class="text-center">
+						<span class="txt1">
+							Create an account?
+						</span>
+
+                        <a href="#" class="txt2 hov1">
+                            Sign up
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
