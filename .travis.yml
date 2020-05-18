@@ -37,7 +37,7 @@ before_script:
     - docker-compose exec php sh -c "sh post-install.sh"
 script:
     - docker-compose exec php sh -c "vendor/bin/phpcs --standard=PSR2 src/"
-#    - docker-compose exec php sh -c "vendor/bin/ecs check ./src/ --set clean-code"
+    - docker-compose exec php sh -c "vendor/bin/ecs check ./src/ --set clean-code"
     - docker-compose exec php sh -c "vendor/bin/psalm"
     - docker-compose exec php sh -c "vendor/bin/phpunit tests/"
     - docker-compose run postman_checks
