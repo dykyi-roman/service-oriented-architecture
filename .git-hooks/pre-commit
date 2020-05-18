@@ -1,0 +1,205 @@
+#!/bin/bash
+
+function run_test {
+  echo
+  echo '.....................................'
+  echo '........... TESTS RUN ...............'
+  echo '.....................................'
+  echo
+
+  error=0
+  arr=("$@")
+  for FILE in "${arr[@]}";
+  do
+     if [ -d "$FILE" ]; then
+       // **** RUN CODE HERE **** //
+       returnCode=$?
+       if [ $returnCode -ne 0 ]; then
+         error=1
+       fi
+     fi
+  done
+
+  if [ $error == 1 ]; then
+      echo "-----------------------------------------"
+      echo "[ ✗ ] Fix errors and try again           "
+      echo "-----------------------------------------"
+      exit 1
+  fi
+}
+
+function run_php_cs {
+  echo
+  echo '.....................................'
+  echo '........... PHP CS RUN ..............'
+  echo '.....................................'
+  echo
+
+  error=0
+  arr=("$@")
+  for FILE in "${arr[@]}";
+  do
+     if [ -d "$FILE" ]; then
+       // **** RUN CODE HERE **** //
+       returnCode=$?
+       if [ $returnCode -ne 0 ]; then
+         error=1
+       fi
+     fi
+  done
+
+  if [ $error == 1 ]; then
+      echo "-----------------------------------------"
+      echo "[ ✗ ] Fix errors and try again           "
+      echo "-----------------------------------------"
+      exit 1
+  fi
+}
+
+function run_psalm {
+  echo
+  echo '.....................................'
+  echo '........... PSALM RUN ...............'
+  echo '.....................................'
+  echo
+
+  error=0
+  arr=("$@")
+  for FILE in "${arr[@]}";
+  do
+     if [ -d "$FILE" ]; then
+       // **** RUN CODE HERE **** //
+       returnCode=$?
+       if [ $returnCode -ne 0 ]; then
+         error=1
+       fi
+     fi
+  done
+
+  if [ $error == 1 ]; then
+      echo "-----------------------------------------"
+      echo "[ ✗ ] Fix errors and try again           "
+      echo "-----------------------------------------"
+      exit 1
+  fi
+}
+
+function run_ecs {
+  echo
+  echo '.....................................'
+  echo '........... ECS RUN .................'
+  echo '.....................................'
+  echo
+
+  error=0
+  arr=("$@")
+  for FILE in "${arr[@]}";
+  do
+     if [ -d "$FILE" ]; then
+       // **** RUN CODE HERE **** //
+       returnCode=$?
+       if [ $returnCode -ne 0 ]; then
+         error=1
+       fi
+     fi
+  done
+
+  if [ $error == 1 ]; then
+      echo "-----------------------------------------"
+      echo "[ ✗ ] Fix errors and try again           "
+      echo "-----------------------------------------"
+      exit 1
+  fi
+}
+
+#######################################
+
+function filterSourceFolder {
+   local -a FILES=()
+   local dir="$1"
+   shift
+   arr=("$@")
+   for FILE in "${arr[@]}";
+   do
+      if [[ ${FILE} == *"$dir"* ]];then
+        FILES+=($FILE)
+      fi
+   done
+
+   echo ${FILES[@]}
+}
+
+function filterTestFolder {
+   local -a a=()
+   arr=("$@")
+   for FILE in "${arr[@]}";
+   do
+     if [ $(cut -d'/' -f3 <<<"$FILE") == "tests" ]; then
+         a+=${FILE%/*}
+     else
+         a+=("tests/$(cut -d'/' -f4 <<<"$FILE")/$(cut -d'/' -f5 <<<"$FILE")")
+     fi
+   done
+
+   ## Remove dublicates
+   b=($(echo "${a[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+   echo ${b[@]}
+}
+
+function getChangedFilesList {
+  FILE_PATTERN="\.(php|phtml)$"
+  FILES=$(git diff --name-only ; git diff --name-only --staged)
+  if [ "$FILES" == "" ]; then
+    exit 0
+  fi
+
+  FILES_TO_CHECK=""
+  for FILE in $FILES
+  do
+     echo "$FILE" | egrep -q "$FILE_PATTERN"
+     RETVAL=$?
+     if [ "$RETVAL" -eq "0" ]
+     then
+         FILES_TO_CHECK="$FILES_TO_CHECK $FILE"
+     fi
+  done
+
+  if [ "$FILES_TO_CHECK" == "" ]; then
+     exit 0
+  fi
+
+  echo $FILES_TO_CHECK
+}
+
+############################################################################
+############################################################################
+############################################################################
+
+COMMIT_FILES=$(getChangedFilesList)
+SRC_FILES=$(filterSourceFolder "auth/code/src" $COMMIT_FILES)
+TEST_FILES=$(filterSourceFolder "auth/code/tests" $COMMIT_FILES)
+TESTS_FOLDER="$(filterTestFolder $TEST_FILES) $(filterTestFolder $SRC_FILES)"
+
+if [ "$TESTS_FOLDER" == "" ] && [ "$SRC_FILES" == "" ]; then
+    echo "Nothing to check!"
+    exit 0
+fi
+
+if [ "$TESTS_FOLDER" != "" ]; then
+    run_test "${TESTS_FOLDER[@]}"
+fi
+
+if [ "$SRC_FILES" != "" ]; then
+    run_php_cs $SRC_FILES
+    run_psalm $SRC_FILES
+    run_ecs $SRC_FILES
+fi
+
+echo "Your code shines like a diamond"
+echo "--------------------------------------"
+echo "[ ✔ ] PHP CS checks were passed successfully"
+echo "[ ✔ ] PSALM checks were passed successfully"
+echo "[ ✔ ] ECS checks were passed successfully"
+echo "[ ✔ ] TESTS were passed successfully"
+echo "--------------------------------------"
+exit 0
