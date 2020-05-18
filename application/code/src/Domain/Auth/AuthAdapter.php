@@ -4,27 +4,42 @@ declare(strict_types=1);
 
 namespace App\Domain\Auth;
 
+use App\Domain\Auth\Exception\AuthException;
 use App\Domain\Auth\Service\Auth;
-use App\Domain\Auth\Service\Registration;
+use App\Domain\Auth\Service\SignUp;
+use App\Domain\Auth\ValueObject\Email;
+use App\Domain\Auth\ValueObject\FullName;
+use App\Domain\Auth\ValueObject\Password;
+use App\Domain\Auth\ValueObject\Phone;
+use App\Domain\Auth\ValueObject\Token;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 final class AuthAdapter
 {
     private Auth $auth;
-    private Registration $registration;
+    private SignUp $signUp;
 
-    public function __construct(Auth $auth, Registration $registration)
+    public function __construct(Auth $auth, SignUp $signUp)
     {
         $this->auth = $auth;
-        $this->registration = $registration;
+        $this->signUp = $signUp;
     }
 
-    public function authorize(string $email, $password): array
+    public function authorize(Email $email, Password $password): Token
     {
-        return $this->auth->authorizeByEmail($email, $password);
+        $response = $this->auth->authorizeByEmail($email, $password);
+
+        return new Token($response);
     }
 
-    public function registration(): array
+    public function signUp(Email $email, Password $password, Phone $phone, FullName $fullName): UuidInterface
     {
-        return $this->registration->createNewUser();
+        $response = $this->signUp->createNewUser($email, $password, $phone, $fullName);
+        if ($response['status'] === 'error') {
+            throw AuthException::unexpectedErrorInSignUpProcess($response['error']);
+        }
+
+        return Uuid::fromString($response['data']['uuid']);
     }
 }

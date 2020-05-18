@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Auth\Command;
+namespace App\Application\Auth\Commands\Command;
 
 /**
  * @see LoginUserHandler::class

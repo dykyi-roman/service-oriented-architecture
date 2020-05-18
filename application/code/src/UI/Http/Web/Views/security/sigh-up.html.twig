@@ -18,13 +18,13 @@
         </div>
         <div class="container-login">
             <div class="wrap-login p-l-55 p-r-55 p-t-65 p-b-50">
-                <form class="login-form validate-form" action="{{ path('web.login') }}" method="POST">
+                <form class="login-form validate-form" action="{{ path('web.sign-up') }}" method="POST">
 					<span class="login-form-title p-b-33">
-						Login
+						Sign up
 					</span>
 
-                    <div class="wrap-input validate-input">
-                        <input class="input" type="email" name="login" placeholder="Login">
+                    <div class="wrap-input validate-input" data-validate="Email is required">
+                        <input class="input" type="email" name="email" placeholder="Email">
                         <span class="focus-input-1"></span>
                         <span class="focus-input-2"></span>
                     </div>
@@ -34,30 +34,35 @@
                         <span class="focus-input-1"></span>
                         <span class="focus-input-2"></span>
                     </div>
+                    <div class="wrap-input rs1 validate-input" data-validate="First name is required">
+                        <input class="input" type="text" name="firstName" placeholder="Last name">
+                        <span class="focus-input-1"></span>
+                        <span class="focus-input-2"></span>
+                    </div>
+                    <div class="wrap-input rs1 validate-input" data-validate="Last name is required">
+                        <input class="input" type="text" name="lastName" placeholder="Last name">
+                        <span class="focus-input-1"></span>
+                        <span class="focus-input-2"></span>
+                    </div>
+                    <div class="wrap-input rs1 validate-input" data-validate="Phone is required">
+                        <input class="input" type="text" name="phone" placeholder="Phone">
+                        <span class="focus-input-1"></span>
+                        <span class="focus-input-2"></span>
+                    </div>
 
                     <div class="container-login-form-btn m-t-20">
                         <button class="login-form-btn">
-                            Sign in
+                            Sign up
                         </button>
-                    </div>
-
-                    <div class="text-center p-t-45 p-b-4">
-						<span class="txt1">
-							Forgot
-						</span>
-
-                        <a href="#" class="txt2 hov1">
-                            Username / Password?
-                        </a>
                     </div>
 
                     <div class="text-center">
 						<span class="txt1">
-							Create an account?
+							Have an account?
 						</span>
 
-                        <a href="{{ path('web.sign-up') }}" class="txt2 hov1">
-                            Sign up
+                        <a href="{{ path('web.login') }}" class="txt2 hov1">
+                            Login
                         </a>
                     </div>
                 </form>

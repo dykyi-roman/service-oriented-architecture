@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Auth\Handler;
+namespace App\Application\Auth\Commands\Handler;
 
-use App\Application\Auth\Command\LoginUserCommand;
+use App\Application\Auth\Commands\Command\LoginUserCommand;
 use App\Application\Security\Service\Guard;
 use App\Application\Security\Service\Token;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -30,6 +30,7 @@ class LoginUserHandler
         $token->setUser($user);
         $token->setAuthToken($command->getToken());
         $token->setRefreshAuthToken($command->getRefreshToken());
+        $token->setAuthenticated(true);
         $this->tokenStorage->setToken($token);
     }
 }

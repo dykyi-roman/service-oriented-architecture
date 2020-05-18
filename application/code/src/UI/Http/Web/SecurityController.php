@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Application\Auth\Command\LogoutUserCommand;
+use App\Application\Auth\Commands\Command\LogoutUserCommand;
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\LoginRequest;
+use App\Application\Auth\Request\SignUpRequest;
 use App\Application\Auth\Service\LoginUser;
+use App\Application\Auth\Service\SignUpUser;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,29 +48,49 @@ class SecurityController extends AbstractController
             );
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
-            $logger->error('SecurityController::loginAction', ['error' => $exception->getMessage()]);
+            $logger->error('SecurityController::loginPostAction', ['error' => $exception->getMessage()]);
             $flashBag->add('error', 'web.login.error.code.' . $exception->getCode());
         }
 
-        return $this->render('security/login.html.twig');
+        return $this->redirectToRoute('web.login');
     }
 
     /**
-     * @Route(path="/registration", methods={"GET"}, name="web.registration", defaults={"security" = "no"})
+     * @Route(path="/sign-up", methods={"GET"}, name="web.sign-up", defaults={"security" = "no"})
      */
-    public function registrationAction(): RedirectResponse
+    public function signUpAction(): Response
     {
-        return $this->redirectToRoute('web.index');
+        return $this->render('security/sigh-up.html.twig');
     }
 
     /**
-     * @Route(path="/registration", methods={"POST"}, name="web.registration.post", defaults={"security" = "no"})
+     * @Route(path="/sign-up", methods={"POST"}, name="web.sign-up.post", defaults={"security" = "no"})
      */
-    public function registrationPostAction(FlashBagInterface $flashBag): RedirectResponse
-    {
-        $flashBag->add('success', 'web.login.success');
+    public function signUpPostAction(
+        Request $request,
+        SignUpUser $signUp,
+        FlashBagInterface $flashBag,
+        LoggerInterface $logger
+    ) {
+        try {
+            $signUp->signUp(
+                new SignUpRequest(
+                    $request->get('email', ''),
+                    $request->get('password', ''),
+                    $request->get('phone', ''),
+                    $request->get('firstName', ''),
+                    $request->get('lastName', '')
+                )
+            );
+            $flashBag->add('success', 'web.sign-up.success');
 
-        return $this->redirectToRoute('web.index');
+            return $this->redirectToRoute('web.index');
+        } catch (AppAuthException $exception) {
+            $logger->error('SecurityController::signUpPostAction', ['error' => $exception->getMessage()]);
+            $flashBag->add('error', 'web.sign-up.error.code.' . $exception->getCode());
+        }
+
+        return $this->redirectToRoute('web.sign-up');
     }
 
     /**

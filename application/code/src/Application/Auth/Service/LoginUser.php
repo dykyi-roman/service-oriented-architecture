@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Auth\Service;
 
-use App\Application\Auth\Command\LoginUserCommand;
+use App\Application\Auth\Commands\Command\LoginUserCommand;
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\LoginRequest;
 use App\Domain\Auth\AuthAdapter;
@@ -26,7 +26,7 @@ final class LoginUser
     {
         try {
             $tokens = $this->authAdapter->authorize($loginRequest->login(), $loginRequest->password());
-            $this->commandBus->handle(new LoginUserCommand($tokens['token'], $tokens['refresh_token']));
+            $this->commandBus->handle(new LoginUserCommand($tokens->token(), $tokens->refreshToken()));
         } catch (AuthException $exception) {
             throw AppAuthException::domainException($exception->getMessage(), $exception->getCode());
         }

@@ -44,7 +44,7 @@ services:
         tags:
             - { name: kernel.event_listener }
 
-    App\Application\Security\Listener\RequestRedirectListener:
+    App\Application\Security\Listener\ProhibitedActionForAuthorizedUserListener:
         tags:
             - { name: kernel.event_listener }
 
@@ -53,10 +53,10 @@ services:
             - { name: kernel.response }
 
     ########## Command ###########
-    App\Application\Auth\Handler\LoginUserHandler:
+    App\Application\Auth\Commands\Handler\LoginUserHandler:
         tags:
-            - { name: command_handler, handles: App\Application\Auth\Command\LoginUserCommand }
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LoginUserCommand }
 
-    App\Application\Auth\Handler\LogoutUserHandler:
+    App\Application\Auth\Commands\Handler\LogoutUserHandler:
         tags:
-            - { name: command_handler, handles: App\Application\Auth\Command\LogoutUserCommand }
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutUserCommand }

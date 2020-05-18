@@ -3,10 +3,12 @@
 namespace App\Domain\Message;
 
 use App\Application\Sender\Message\Message;
+use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Message\Exception\MessageException;
 use App\Domain\Message\ValueObject\Recipient;
 use App\Domain\Message\ValueObject\RecipientCollection;
 use App\Domain\Message\ValueObject\Template;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
 
@@ -22,16 +24,15 @@ final class MessageAdapter
     /**
      * @throws MessageException
      */
-    public function sendWelcomeMessage(string $userId): void
+    public function sendRegistrationSuccessMessage(UuidInterface $uuid, Email $email): void
     {
         try {
             $recipients = (new RecipientCollection())
-                ->add(new Recipient(Recipient::TYPE_EMAIL, 'mr.dukuy@gmail.com'))
-                ->add(new Recipient(Recipient::TYPE_PHONE, '+380938982443'))
+                ->add(new Recipient(Recipient::TYPE_EMAIL, $email->toString()))
                 ->get();
-            $template = new Template(Template::WELCOME, 'en');
+            $template = new Template(Template::REGISTRATION_SUCCESS, 'en');
 
-            $message = new Message($userId, $recipients, $template->toArray());
+            $message = new Message($uuid->toString(), $recipients, $template->toArray());
             $this->messageBus->dispatch($message);
         } catch (Throwable $exception) {
             throw MessageException::sendProblem($exception->getMessage());

@@ -7,7 +7,7 @@ namespace App\Application\Security\Listener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
-final class RequestRedirectListener
+final class ProhibitedActionForAuthorizedUserListener
 {
     private const PROHIBITED_ROUTES = ['web.login', 'web.registration'];
 

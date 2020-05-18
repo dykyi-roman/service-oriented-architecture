@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Auth\Handler;
+namespace App\Application\Auth\Commands\Handler;
 
-use App\Application\Auth\Command\LogoutUserCommand;
+use App\Application\Auth\Commands\Command\LogoutUserCommand;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class LogoutUserHandler
