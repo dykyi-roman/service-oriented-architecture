@@ -10,18 +10,14 @@ adminka
  - think about server (based on CQRS) 
  - create admin
  
-app:
-  - login registration page
- 
 yandex tank
+
+cloud-storage:
+ - virus check
 
 subscribe microservice 
  - (think about it)
  - group send message cron and command
-
-
-cloud-storage:
- - virus check
 
 graphQL, newRelic, jenkins
 

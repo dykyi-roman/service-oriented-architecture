@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+ini_set('display_errors', '1');
+error_reporting(-1);
+
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
