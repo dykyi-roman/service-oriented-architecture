@@ -24,7 +24,7 @@ services:
         networks:
             - soa
     mysql:
-        image: mysql
+        image: mysql:8.0
         restart: always
         command: --init-file /docker-entrypoint-initdb.d/init.sql
         volumes:
