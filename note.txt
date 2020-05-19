@@ -1,6 +1,6 @@
 auth:
  - password restore
- - RBAC, 
+ - RBAC
  - black list
  - simple registration without JWT
  - api for admin panel
