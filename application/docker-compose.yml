@@ -23,6 +23,13 @@ services:
             - ./code/config/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
         networks:
             - soa
+    redis:
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"]
+        networks:
+            - soa
+        volumes:
+            - redis-data:/data
     postman_checks:
         build: docker/newman
         command:
@@ -39,3 +46,6 @@ services:
 networks:
     soa:
         external: true
+
+volumes:
+    redis-data:

@@ -11,10 +11,6 @@ Authorization: Refers to what you can do, for example access, edit or delete per
 
 JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token format, defines the Token content, encrypts it, and provides lib for various languages.
 
-## Authenticate between microservice
-
-![image](docs/jwt-api-flow.png)
-
 Read more how is work, click [here](JWT.md)
 
 ## Configuration
@@ -31,7 +27,7 @@ php bin/console doctrine:migrations:migrate
 | ----------------------  | ------- | ------ | ----- |
 | /api/user/registration  | POST    | ANY    | ALL   |
 | /api/user/login         | POST    | ANY    | ALL   |
-| /api/user//current      | GET     | ANY    | ALL   |
+| /api/user/current       | GET     | ANY    | ALL   |
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
 | /api/cert               | GET     | ANY    | ALL   |
 

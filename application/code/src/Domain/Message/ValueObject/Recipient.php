@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Message\ValueObject;
 
 use App\Domain\Message\Exception\MessageException;
+
 use function in_array;
 
 final class Recipient
@@ -41,6 +42,16 @@ final class Recipient
         if (!in_array($type, self::ALLOW_MESSAGES_TYPE, true)) {
             throw MessageException::messageTypeIsNotSupport();
         }
+    }
+
+    public static function autoDetectType(string $contact): Recipient
+    {
+        $type = self::TYPE_PHONE;
+        if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {
+            $type = self::TYPE_EMAIL;
+        }
+
+        return new self($type, $contact);
     }
 
     /**

@@ -34,10 +34,16 @@ services:
         - '@GuzzleHttp\Client'
         - ['@App\Infrastructure\HttpClient\Middleware\AuthTokenMiddleware']
 
+    App\Infrastructure\Cache\RedisCache:
+        arguments:
+            - '%env(REDIS_HOST)%'
+            - '%env(REDIS_PORT)%'
+
     App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
     Psr\Http\Client\ClientInterface: '@App\Infrastructure\HttpClient\GuzzleClient'
     App\Infrastructure\HttpClient\ResponseDataExtractorInterface: '@App\Infrastructure\HttpClient\ResponseDataExtractor'
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface: '@App\Application\Security\Service\TokenStorage'
+    App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\RedisCache'
 
     ########## Listener ###########
     App\Application\Security\Listener\RequestVerifyListener:
@@ -60,3 +66,7 @@ services:
     App\Application\Auth\Commands\Handler\LogoutUserHandler:
         tags:
             - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutUserCommand }
+
+    App\Application\Auth\Commands\Handler\ForgotPasswordHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\ForgotPasswordCommand }

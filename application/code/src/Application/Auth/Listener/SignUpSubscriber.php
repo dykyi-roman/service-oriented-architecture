@@ -12,8 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class SignUpSubscriber implements EventSubscriberInterface
 {
-    private MessageAdapter $messageAdapter;
     private LoggerInterface $logger;
+    private MessageAdapter $messageAdapter;
 
     public function __construct(MessageAdapter $messageAdapter, LoggerInterface $logger)
     {
@@ -21,7 +21,7 @@ final class SignUpSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UserRegisteredEvent::class => 'onUserRegistered'
@@ -33,7 +33,7 @@ final class SignUpSubscriber implements EventSubscriberInterface
         try {
             $this->messageAdapter->sendRegistrationSuccessMessage($event->uuid(), $event->email());
         } catch (MessageException $exception) {
-            $this->logger->error('App::SignUpSubscriber', ['error' => $exception->getMessage()]);
+            $this->logger->error('App::SignUpSubscriber::onUserRegistered', ['error' => $exception->getMessage()]);
         }
     }
 }

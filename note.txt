@@ -1,9 +1,5 @@
 auth:
- - password restore
- - RBAC
- - black list
- - simple registration without JWT
- - api for admin panel
+ - api for admin panel (black list, )
  - registration by partner code
 
 adminka
@@ -14,6 +10,8 @@ yandex tank
 
 cloud-storage:
  - virus check
+
+RBAC
 
 subscribe microservice 
  - (think about it)

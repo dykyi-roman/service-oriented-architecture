@@ -9,8 +9,6 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 final class ProhibitedActionForAuthorizedUserListener
 {
-    private const PROHIBITED_ROUTES = ['web.login', 'web.registration'];
-
     public function __invoke(RequestEvent $event)
     {
         $request = $event->getRequest();
@@ -23,7 +21,7 @@ final class ProhibitedActionForAuthorizedUserListener
             return;
         }
 
-        if (in_array($routeName, self::PROHIBITED_ROUTES, true)) {
+        if ('no' === $request->attributes->get('security')) {
             $event->setResponse(RedirectResponse::create('/'));
             return;
         }

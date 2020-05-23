@@ -10,6 +10,7 @@
         "firebase/php-jwt": "^5.2",
         "graylog2/gelf-php": "^1.6",
         "guzzlehttp/guzzle": "^6.5",
+        "predis/predis": "^1.1",
         "ramsey/uuid": "^4.0",
         "sensio/framework-extra-bundle": "^5.5",
         "sentry/sentry-symfony": "^3.4",

@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route(path="/login", methods={"GET"}, name="web.login", defaults={"security" = "no"})
+     * @Route(path="/login", methods={"GET"}, name="web.login", defaults={"security" = "no", "onlyForNotAuthorized" = "yes"})
      */
     public function loginAction(): Response
     {
@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
             );
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
-            $logger->error('SecurityController::loginPostAction', ['error' => $exception->getMessage()]);
+            $logger->error('App::SecurityController::loginPostAction', ['error' => $exception->getMessage()]);
             $flashBag->add('error', 'web.login.error.code.' . $exception->getCode());
         }
 
@@ -71,7 +71,7 @@ class SecurityController extends AbstractController
         SignUpUser $signUp,
         FlashBagInterface $flashBag,
         LoggerInterface $logger
-    ) {
+    ): Response {
         try {
             $signUp->signUp(
                 new SignUpRequest(
@@ -86,7 +86,7 @@ class SecurityController extends AbstractController
 
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
-            $logger->error('SecurityController::signUpPostAction', ['error' => $exception->getMessage()]);
+            $logger->error('App::SecurityController::signUpPostAction', ['error' => $exception->getMessage()]);
             $flashBag->add('error', 'web.sign-up.error.code.' . $exception->getCode());
         }
 
@@ -94,7 +94,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route(path="/logout", methods={"GET"}, name="web.logout", defaults={"security" = "no"})
+     * @Route(path="/logout", methods={"GET"}, name="web.logout")
      */
     public function logoutAction(CommandBus $commandBus): RedirectResponse
     {

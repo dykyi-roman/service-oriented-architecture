@@ -26,6 +26,8 @@ Here I want to add some plus from me:
 
 # Documentation
 
+[Application service](application/README.md)
+
 [Auth service](auth/README.md)
 
 [Message service](message/README.md)
@@ -47,6 +49,12 @@ Here I want to add some plus from me:
 [Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 
 [Vault](vault/README.md)
+
+# Application
+
+## Authenticate between microservice
+
+![image](auth/docs/jwt-api-flow.png)
 
 # Auth service
 

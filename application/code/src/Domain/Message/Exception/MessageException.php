@@ -13,8 +13,13 @@ class MessageException extends Exception
         return new static('Message type is not support', 1201);
     }
 
-    public static function sendProblem(string $message): self
+    public static function sendRegistrationSuccessMessageProblem(string $message): self
     {
         return new static(sprintf('Send message problem. Reason: %s', $message), 1202);
+    }
+
+    public static function sendPasswordForgotCodeMessageProblem(string $message): self
+    {
+        return new static(sprintf('Send message problem. Reason: %s', $message), 1203);
     }
 }

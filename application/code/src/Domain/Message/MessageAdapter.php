@@ -35,7 +35,23 @@ final class MessageAdapter
             $message = new Message($uuid->toString(), $recipients, $template->toArray());
             $this->messageBus->dispatch($message);
         } catch (Throwable $exception) {
-            throw MessageException::sendProblem($exception->getMessage());
+            throw MessageException::sendRegistrationSuccessMessageProblem($exception->getMessage());
+        }
+    }
+
+    /**
+     * @throws MessageException
+     */
+    public function sendPasswordForgotCodeMessage(string $contact, string $code): void
+    {
+        try {
+            $recipients = (new RecipientCollection())->add(Recipient::autoDetectType($contact))->get();
+            $template = new Template(Template::REGISTRATION_SUCCESS, 'en', ['code' => $code]);
+
+            $message = new Message('????', $recipients, $template->toArray());
+            $this->messageBus->dispatch($message);
+        } catch (Throwable $exception) {
+            throw MessageException::sendPasswordForgotCodeMessageProblem($exception->getMessage());
         }
     }
 }
