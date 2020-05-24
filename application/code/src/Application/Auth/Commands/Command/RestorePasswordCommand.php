@@ -6,6 +6,7 @@ namespace App\Application\Auth\Commands\Command;
 
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\RestorePasswordRequest;
+use App\Domain\Auth\ValueObject\Password;
 
 /**
  * @see RestorePasswordHandler::class
@@ -32,8 +33,8 @@ final class RestorePasswordCommand
         return $this->request->code();
     }
 
-    public function password(): string
+    public function password(): Password
     {
-        return $this->request->password()->toString();
+        return $this->request->password();
     }
 }

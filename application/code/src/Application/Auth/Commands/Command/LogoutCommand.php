@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\Auth\Commands\Command;
 
 /**
- * @see LogoutUserHandler::class
+ * @see LogoutHandler::class
  */
-final class LogoutUserCommand
+final class LogoutCommand
 {
 }

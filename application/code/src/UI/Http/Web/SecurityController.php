@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Application\Auth\Commands\Command\LogoutUserCommand;
+use App\Application\Auth\Commands\Command\LoginCommand;
+use App\Application\Auth\Commands\Command\LogoutCommand;
+use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\LoginRequest;
 use App\Application\Auth\Request\SignUpRequest;
-use App\Application\Auth\Service\LoginUser;
-use App\Application\Auth\Service\SignUpUser;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route(path="/login", methods={"GET"}, name="web.login", defaults={"security" = "no", "onlyForNotAuthorized" = "yes"})
+     * @Route(
+     *     path="/login",
+     *     methods={"GET"},
+     *     name="web.login",
+     *     defaults={"security" = "no", "onlyForNotAuthorized" = "yes"})
      */
     public function loginAction(): Response
     {
@@ -35,17 +39,16 @@ class SecurityController extends AbstractController
      */
     public function loginPostAction(
         Request $request,
-        LoginUser $loginUser,
+        CommandBus $commandBus,
         FlashBagInterface $flashBag,
         LoggerInterface $logger
     ): Response {
         try {
-            $loginUser->login(
-                new LoginRequest(
-                    $request->get('login', ''),
-                    $request->get('password', '')
-                )
+            $request = new LoginRequest(
+                $request->get('login', ''),
+                $request->get('password', '')
             );
+            $commandBus->handle(new LoginCommand($request));
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
             $logger->error('App::SecurityController::loginPostAction', ['error' => $exception->getMessage()]);
@@ -68,20 +71,20 @@ class SecurityController extends AbstractController
      */
     public function signUpPostAction(
         Request $request,
-        SignUpUser $signUp,
+        CommandBus $commandBus,
         FlashBagInterface $flashBag,
         LoggerInterface $logger
     ): Response {
         try {
-            $signUp->signUp(
-                new SignUpRequest(
-                    $request->get('email', ''),
-                    $request->get('password', ''),
-                    $request->get('phone', ''),
-                    $request->get('firstName', ''),
-                    $request->get('lastName', '')
-                )
+            $request = new SignUpRequest(
+                $request->get('email', ''),
+                $request->get('password', ''),
+                $request->get('phone', ''),
+                $request->get('firstName', ''),
+                $request->get('lastName', '')
             );
+
+            $commandBus->handle(new SignUpCommand($request));
             $flashBag->add('success', 'web.sign-up.success');
 
             return $this->redirectToRoute('web.index');
@@ -98,7 +101,7 @@ class SecurityController extends AbstractController
      */
     public function logoutAction(CommandBus $commandBus): RedirectResponse
     {
-        $commandBus->handle(new LogoutUserCommand());
+        $commandBus->handle(new LogoutCommand());
 
         $response = $this->redirectToRoute('web.index');
         $response->headers->setCookie(new Cookie('auth-token', null));

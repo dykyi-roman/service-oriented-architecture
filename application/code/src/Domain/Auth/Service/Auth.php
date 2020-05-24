@@ -16,6 +16,7 @@ use Throwable;
 final class Auth
 {
     private const LOGIN_URI = '/api/user/login';
+    private const CHANGE_PASSWORD_URI = '/api/user/change-password';
 
     private string $host;
     private ClientInterface $client;
@@ -43,6 +44,26 @@ final class Auth
                 512
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
+            $response = $this->client->sendRequest($request);
+
+            return $this->responseDataExtractor->extract($response);
+        } catch (Throwable $exception) {
+            throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
+        }
+    }
+
+    public function resetPassword(string $contact, Password $password): array
+    {
+        try {
+            $payload = json_encode(
+                [
+                    'contact' => $contact,
+                    'password' => $password->toString()
+                ],
+                JSON_THROW_ON_ERROR | JSON_THROW_ON_ERROR,
+                512
+            );
+            $request = new Request('POST', $this->host . self::CHANGE_PASSWORD_URI, [], $payload);
             $response = $this->client->sendRequest($request);
 
             return $this->responseDataExtractor->extract($response);

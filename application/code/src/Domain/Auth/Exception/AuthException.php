@@ -62,4 +62,9 @@ class AuthException extends RuntimeException
     {
         return new static(sprintf('Your password is not secure. Min length should be "%d" symbol', $length), 1112);
     }
+
+    public static function changePasswordError(string $message): self
+    {
+        return new static(sprintf('Change password error: %s', $message), 1113);
+    }
 }

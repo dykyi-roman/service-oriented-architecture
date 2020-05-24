@@ -6,9 +6,10 @@ namespace App\Domain\TemporaryCode;
 
 use App\Infrastructure\Cache\CacheInterface;
 
-final class WriteTemporaryGenerator implements WriteTemporaryCodeInterface
+final class WriteTemporaryCode implements WriteTemporaryCodeInterface
 {
     private const CODE_LENGTH = 5;
+    private const TEMPORARY_CODE_TTL = 60;
     private const TEMPORARY_CODE_KEY = 'temporary_code_%s_%s';
 
     private CacheInterface $cache;

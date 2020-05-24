@@ -24,7 +24,7 @@
 					</span>
 
                     <div class="wrap-input validate-input">
-                        <input class="input" type="email" name="code" placeholder="Code">
+                        <input class="input" type="text" name="code" placeholder="Code">
                         <span class="focus-input-1"></span>
                         <span class="focus-input-2"></span>
                     </div>
@@ -35,19 +35,24 @@
                         <span class="focus-input-2"></span>
                     </div>
 
-                    <input class="input" type="hidden" name="contact" value="{{ contact }}">
-
                     <div class="container-login-form-btn m-t-20">
                         <button class="login-form-btn">
                             Apply
                         </button>
                     </div>
+                    <input class="input" type="hidden" name="contact" value="{{ contact }}">
 
                     <div class="text-center p-t-45 p-b-4">
 						<span class="txt1">
 							The code to confirm the new password was sent to {{ contact }}
 						</span>
                     </div>
+                </form>
+                <form class="login-form validate-form" action="{{ path('web.password.restore.code.resend.post') }}" method="POST">
+                    <div class="text-center p-t-45 p-b-4">
+                        <button id="resend-code-button" class="-align-right">Send new code</button>
+                    </div>
+                    <input class="input" type="hidden" name="contact" value="{{ contact }}">
                 </form>
             </div>
         </div>

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Auth\Service;
+namespace App\Application\Auth\Commands\Handler;
 
+use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Events\UserRegisteredEvent;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Application\Auth\Request\SignUpRequest;
 use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class SignUpUser
+final class SignUpHandler
 {
     private AuthAdapter $authAdapter;
     private EventDispatcherInterface $dispatcher;
@@ -22,9 +22,10 @@ final class SignUpUser
         $this->dispatcher = $dispatcher;
     }
 
-    public function signUp(SignUpRequest $signUpRequest): void
+    public function __invoke(SignUpCommand $command)
     {
         try {
+            $signUpRequest = $command->request();
             $uuid = $this->authAdapter->signUp(
                 $signUpRequest->email(),
                 $signUpRequest->password(),

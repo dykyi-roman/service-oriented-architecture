@@ -59,14 +59,26 @@ services:
             - { name: kernel.response }
 
     ########## Command ###########
-    App\Application\Auth\Commands\Handler\LoginUserHandler:
+    App\Application\Auth\Commands\Handler\AuthorizeHandler:
         tags:
-            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LoginUserCommand }
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\AuthorizeCommand }
 
-    App\Application\Auth\Commands\Handler\LogoutUserHandler:
+    App\Application\Auth\Commands\Handler\LoginHandler:
         tags:
-            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutUserCommand }
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LoginCommand }
+
+    App\Application\Auth\Commands\Handler\SignUpHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\SignUpCommand }
+
+    App\Application\Auth\Commands\Handler\LogoutHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutCommand }
 
     App\Application\Auth\Commands\Handler\ForgotPasswordHandler:
         tags:
             - { name: command_handler, handles: App\Application\Auth\Commands\Command\ForgotPasswordCommand }
+
+    App\Application\Auth\Commands\Handler\RestorePasswordHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\RestorePasswordCommand }

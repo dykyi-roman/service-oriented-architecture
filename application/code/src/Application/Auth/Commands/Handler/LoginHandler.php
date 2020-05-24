@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Auth\Service;
+namespace App\Application\Auth\Commands\Handler;
 
-use App\Application\Auth\Commands\Command\LoginUserCommand;
+use App\Application\Auth\Commands\Command\AuthorizeCommand;
+use App\Application\Auth\Commands\Command\LoginCommand;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Application\Auth\Request\LoginRequest;
 use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 
-final class LoginUser
+final class LoginHandler
 {
     private CommandBus $commandBus;
     private AuthAdapter $authAdapter;
@@ -22,11 +22,12 @@ final class LoginUser
         $this->authAdapter = $authAdapter;
     }
 
-    public function login(LoginRequest $loginRequest): void
+    public function __invoke(LoginCommand $command): void
     {
         try {
+            $loginRequest = $command->request();
             $tokens = $this->authAdapter->authorize($loginRequest->login(), $loginRequest->password());
-            $this->commandBus->handle(new LoginUserCommand($tokens->token(), $tokens->refreshToken()));
+            $this->commandBus->handle(new AuthorizeCommand($tokens->token(), $tokens->refreshToken()));
         } catch (AuthException $exception) {
             throw AppAuthException::domainException($exception->getMessage(), $exception->getCode());
         }
