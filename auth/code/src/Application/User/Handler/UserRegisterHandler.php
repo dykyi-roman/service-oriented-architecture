@@ -7,7 +7,7 @@ namespace App\Application\User\Handler;
 use App\Application\User\Command\UserRegisterCommand;
 use App\Domain\User\Event\UserRegisteredEvent;
 use App\Domain\User\Exception\UserException;
-use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\Repository\WriteUserRepositoryInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
@@ -16,12 +16,12 @@ use Throwable;
 final class UserRegisterHandler
 {
     private LoggerInterface $logger;
-    private UserRepositoryInterface $userRepository;
+    private WriteUserRepositoryInterface $userRepository;
     private EventDispatcherInterface $dispatcher;
     private MetricsInterface $metrics;
 
     public function __construct(
-        UserRepositoryInterface $userRepository,
+        WriteUserRepositoryInterface $userRepository,
         EventDispatcherInterface $dispatcher,
         MetricsInterface $metrics,
         LoggerInterface $logger

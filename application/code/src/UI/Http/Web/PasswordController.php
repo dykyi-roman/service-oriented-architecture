@@ -66,7 +66,7 @@ class PasswordController extends AbstractController
      *     defaults={"security" = "no"}
      *     )
      */
-    public function restorePostAction(Request $request): RedirectResponse
+    public function restorePostAction(Request $request): SymfonyResponse
     {
         try {
             $request = new RestorePasswordRequest(
@@ -76,12 +76,14 @@ class PasswordController extends AbstractController
             );
             $this->commandBus->handle(new RestorePasswordCommand($request));
             $this->flashBag->add('success', 'web.password.restore.success');
+
+            return $this->redirectToRoute('web.index');
         } catch (\Throwable $exception) {
             $this->logger->error('App::PasswordController::restorePostAction', ['error' => $exception->getMessage()]);
             $this->flashBag->add('error', 'web.password.restore.error.code.' . $exception->getCode());
         }
 
-        return $this->redirectToRoute('web.index');
+        return $this->render('password/restore.html.twig', ['contact' => $request->get('contact')]);
     }
 
     /**

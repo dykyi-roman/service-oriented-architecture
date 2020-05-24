@@ -7,6 +7,10 @@ namespace App\UI\Http\Rest;
 use App\Application\Common\Error;
 use App\Application\User\Command\UserRegisterCommand;
 use App\Domain\User\Entity\User;
+use App\Domain\User\Exception\UserException;
+use App\Domain\User\Service\PasswordRestore;
+use App\Domain\User\Service\UserFinder;
+use App\Domain\User\Service\UserStore;
 use App\Domain\User\Transformer\Api\UserApiTransformer;
 use App\Domain\User\ValueObject\FullName;
 use App\Domain\User\ValueObject\UserRegistrationRequest;
@@ -20,6 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Throwable;
 
 /**
  * @OA\Tag(name="User")
@@ -99,18 +104,20 @@ class UserController extends ApiController
         try {
             $uuid = Uuid::uuid4();
             $request = $this->transformJsonBody($request);
-            $commandBus->handle(new UserRegisterCommand(
-                $uuid,
-                new UserRegistrationRequest(
-                    $request->get('email'),
-                    $request->get('password'),
-                    $request->get('phone'),
-                    new FullName(
-                        $request->get('firstName'),
-                        $request->get('lastName')
+            $commandBus->handle(
+                new UserRegisterCommand(
+                    $uuid,
+                    new UserRegistrationRequest(
+                        $request->get('email'),
+                        $request->get('password'),
+                        $request->get('phone'),
+                        new FullName(
+                            $request->get('firstName'),
+                            $request->get('lastName')
+                        )
                     )
                 )
-            ));
+            );
         } catch (Exception | InvalidArgumentException | ImmutableObjectException $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
@@ -134,7 +141,7 @@ class UserController extends ApiController
     /**
      * @Route(path="/api/user/current", methods={"GET"}, name="api.user.current_info")
      */
-    public function user(Request $request, TokenStorageInterface $tokenStorage): JsonResponse
+    public function user(TokenStorageInterface $tokenStorage): JsonResponse
     {
         $token = $tokenStorage->getToken();
         if (null === $token) {
@@ -147,5 +154,33 @@ class UserController extends ApiController
         }
 
         return $this->respondWithSuccess(UserApiTransformer::transform($user));
+    }
+
+    /**
+     * @OA\Put(
+     *     tags={"User"},
+     *     security= { { "bearerAuth": {} } },
+     *     path="/api/user/password/restore",
+     *     summary="Restore password",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route(path="/api/user/password/restore", methods={"PUT"}, name="api.user.password.restore")
+     */
+    public function passwordRestore(Request $request, PasswordRestore $passwordRestore): JsonResponse
+    {
+        try {
+            $request = $this->transformJsonBody($request);
+            $passwordRestore->restore($request->get('contact', ''), $request->get('password', ''));
+        } catch (Throwable $exception) {
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
+        }
+
+        return $this->respondWithSuccess();
     }
 }

@@ -33,7 +33,7 @@ final class RestorePasswordHandler
         }
 
         try {
-            $this->authAdapter->resetPassword($command->contact(), $command->password());
+            $this->authAdapter->passwordRestore($command->contact(), $command->password());
         } catch (AuthException $exception) {
             throw AppAuthException::domainException($exception->getMessage(), $exception->getCode());
         }

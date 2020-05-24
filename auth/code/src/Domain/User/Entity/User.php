@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\Doctrine\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\Doctrine\ReadUserRepository")
  * @UniqueEntity(fields={"email"})
  */
 class User implements UserInterface, JWTUserInterface

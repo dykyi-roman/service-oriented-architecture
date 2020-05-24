@@ -4,59 +4,60 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    APP_ENV: '%env(resolve:APP_ENV)%'
-    PROJECT_DIR: '%kernel.project_dir%/src/UI/'
-    JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
+  APP_ENV: '%env(resolve:APP_ENV)%'
+  PROJECT_DIR: '%kernel.project_dir%/src/UI/'
+  JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Domain/User/Entity,Domain/User/ValueObject,Infrastructure/Migrations,Tests,Kernel.php}'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{DependencyInjection,Domain/User/Entity,Domain/User/ValueObject,Infrastructure/Migrations,Tests,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\UI\Http\:
-        resource: '../src/UI/Http'
-        tags: ['controller.service_arguments']
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  App\UI\Http\:
+    resource: '../src/UI/Http'
+    tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
 
-    App\Domain\User\Repository\UserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\UserRepository'
-    App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
+  App\Domain\User\Repository\WriteUserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\WriteUserRepository'
+  App\Domain\User\Repository\ReadUserRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\ReadUserRepository'
+  App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
 
-    App\Infrastructure\Metrics\StatsDMetrics:
-        arguments:
-            - '%env(METRICS_HOST)%'
-            - '%env(METRICS_PORT)%'
-            - '%env(METRICS_NAMESPACE)%'
-            - '%env(METRICS_TIMEOUT)%'
+  App\Infrastructure\Metrics\StatsDMetrics:
+    arguments:
+      - '%env(METRICS_HOST)%'
+      - '%env(METRICS_PORT)%'
+      - '%env(METRICS_NAMESPACE)%'
+      - '%env(METRICS_TIMEOUT)%'
 
-    App\Application\User\Handler\UserRegisterHandler:
-        tags:
-            - { name: tactician.handler, command: App\Application\User\Command\UserRegisterCommand }
+  App\Application\User\Handler\UserRegisterHandler:
+    tags:
+      - { name: tactician.handler, command: App\Application\User\Command\UserRegisterCommand }
 
-    App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
-        public: true
+  App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
+    public: true
 
-    App\Application\User\Listeners\PreflightIgnoreOnNewRelicListener:
-        arguments: [ '@request_stack' ]
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+  App\Application\User\Listeners\PreflightIgnoreOnNewRelicListener:
+    arguments: [ '@request_stack' ]
+    tags:
+      - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    App\Application\User\Listeners\JWTCreatedListener:
-        arguments: [ '@request_stack' ]
-        tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+  App\Application\User\Listeners\JWTCreatedListener:
+    arguments: [ '@request_stack' ]
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
-    App\Application\User\Listeners\JWTDecodedListener:
-        arguments: [ '@request_stack' ]
-        tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }
+  App\Application\User\Listeners\JWTDecodedListener:
+    arguments: [ '@request_stack' ]
+    tags:
+      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }

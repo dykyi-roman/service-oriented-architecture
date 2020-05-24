@@ -7,7 +7,7 @@ namespace App\Domain\User\Repository;
 use App\Domain\User\Entity\User;
 use Ramsey\Uuid\UuidInterface;
 
-interface UserRepositoryInterface
+interface WriteUserRepositoryInterface
 {
     public function createUser(
         UuidInterface $uuid,
@@ -17,7 +17,5 @@ interface UserRepositoryInterface
         string $fullName
     ): void;
 
-    public function findUserByEmail(string $email): ?User;
-
-    public function findUserById(string $id): ?User;
+    public function store(User $user): void;
 }

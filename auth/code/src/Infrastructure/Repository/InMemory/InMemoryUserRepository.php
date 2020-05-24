@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository\InMemory;
 
 use App\Domain\User\Entity\User;
-use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\Repository\ReadUserRepositoryInterface;
+use App\Domain\User\Repository\WriteUserRepositoryInterface;
 use Doctrine\ORM\ORMException;
 use Ramsey\Uuid\UuidInterface;
 
-class InMemoryUserRepository implements UserRepositoryInterface
+class InMemoryUserRepository implements WriteUserRepositoryInterface, ReadUserRepositoryInterface
 {
     /**
      * @var User[]
@@ -56,5 +57,21 @@ class InMemoryUserRepository implements UserRepositoryInterface
         $user->setPassword($password);
 
         $this->users[$uuid->toString()] = $user;
+    }
+
+    public function findUserByEmailOrPhone(string $contact): ?User
+    {
+        foreach ($this->users as $user) {
+            if ($user->getPhone() === $contact || $user->getEmail() === $contact) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
+    public function store(User $user): void
+    {
+        $this->users[$user->getId()->toString()] = $user;
     }
 }

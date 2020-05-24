@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\User\Service;
 
 use App\Domain\User\Entity\User;
-use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\Repository\ReadUserRepositoryInterface;
 
 class UserFinder
 {
-    private UserRepositoryInterface $userRepository;
+    private ReadUserRepositoryInterface $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(ReadUserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -19,5 +19,10 @@ class UserFinder
     public function findById(string $userId): ?User
     {
         return $this->userRepository->findUserById($userId);
+    }
+
+    public function findByContact(string $contact): ?User
+    {
+        return $this->userRepository->findUserByEmailOrPhone($contact);
     }
 }

@@ -12,4 +12,9 @@ class UserException extends Exception
     {
         return new static('Create user problem', 5100);
     }
+
+    public static function passwordRestore(): UserException
+    {
+        return new static('User password restore problem', 5101);
+    }
 }

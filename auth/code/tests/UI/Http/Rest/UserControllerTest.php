@@ -34,9 +34,8 @@ class UserControllerTest extends WebTestCase
      */
     public function testGetUserWithEmptyUserInTheStorage(): void
     {
-        $request = Request::create('/api/user/', 'GET', ['id' => ''], [], [], []);
         $controller = new UserController();
-        $response = $controller->user($request, $this->createTokenStorage(null));
+        $response = $controller->user($this->createTokenStorage(null));
 
         $this->assertEquals($response->getStatusCode(), 404);
     }
@@ -52,9 +51,8 @@ class UserControllerTest extends WebTestCase
         $user->setFullName($this->faker->name);
         $user->setPassword($this->faker->password);
 
-        $request = Request::create('/api/user/current', 'GET');
         $controller = new UserController();
-        $response = $controller->user($request, $this->createTokenStorage($user));
+        $response = $controller->user($this->createTokenStorage($user));
         $this->assertEquals($response->getStatusCode(), 200);
 
         $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);

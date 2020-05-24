@@ -43,9 +43,9 @@ final class AuthAdapter
         return Uuid::fromString($response['data']['uuid']);
     }
 
-    public function resetPassword(string $contact, Password $password): void
+    public function passwordRestore(string $contact, Password $password): void
     {
-        $response = $this->auth->resetPassword($contact, $password);
+        $response = $this->auth->passwordRestore($contact, $password);
         if ($response['status'] === 'error') {
             throw AuthException::changePasswordError($response['error']);
         }

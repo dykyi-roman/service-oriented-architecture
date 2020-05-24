@@ -28,6 +28,7 @@ php bin/console doctrine:migrations:migrate
 | /api/user/registration  | POST    | ANY    | ALL   |
 | /api/user/login         | POST    | ANY    | ALL   |
 | /api/user/current       | GET     | ANY    | ALL   |
+| /api/user/password      | PUT     | ANY    | ALL   |
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
 | /api/cert               | GET     | ANY    | ALL   |
 
