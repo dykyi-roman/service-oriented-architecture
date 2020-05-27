@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Template\Document;
 
-use App\Infrastructure\Repository\Doctrine\TemplateRepository;
+use App\Infrastructure\Repository\Doctrine\ReadTemplateRepository;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document(collection="template", repositoryClass=TemplateRepository::class)
+ * @MongoDB\Document(collection="template", repositoryClass=ReadTemplateRepository::class)
  */
 class Template
 {
@@ -101,5 +101,17 @@ class Template
     public function setContext(string $context): void
     {
         $this->context = $context;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'lang' => $this->lang,
+            'subject' => $this->subject,
+            'context' => $this->context,
+        ];
     }
 }

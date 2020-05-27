@@ -6,7 +6,7 @@ namespace App\Domain\Template;
 
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\Exception\TemplateException;
-use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
+use App\Domain\Template\Repository\ReadTemplateRepositoryInterface;
 use App\Domain\Template\ValueObject\Template;
 use App\Infrastructure\Cache\CacheInterface;
 use App\Infrastructure\Metrics\MetricsInterface;
@@ -19,16 +19,16 @@ final class TemplateLoader
 
     private CacheInterface $cache;
     private MetricsInterface $metrics;
-    private TemplateReadRepositoryInterface $templateReadRepository;
+    private ReadTemplateRepositoryInterface $readTemplateReadRepository;
 
     public function __construct(
-        TemplateReadRepositoryInterface $templateReadRepository,
+        ReadTemplateRepositoryInterface $readTemplateReadRepository,
         CacheInterface $cache,
         MetricsInterface $metrics
     ) {
         $this->cache = $cache;
         $this->metrics = $metrics;
-        $this->templateReadRepository = $templateReadRepository;
+        $this->readTemplateReadRepository = $readTemplateReadRepository;
     }
 
     /**
@@ -42,7 +42,7 @@ final class TemplateLoader
         $cacheKey = $this->generateCacheKey($data, $type);
         if (!$this->cache->has($cacheKey)) {
             $lang = $data->lang ?? Template::DEFAULT_LANGUAGE;
-            $documentTemplate = $this->templateReadRepository->findTemplate($data->name, $type->toString(), $lang);
+            $documentTemplate = $this->readTemplateReadRepository->findTemplate($data->name, $type->toString(), $lang);
             if (null === $documentTemplate) {
                 throw TemplateException::notFoundTemplate($data->name, $data->lang, $type->toString());
             }

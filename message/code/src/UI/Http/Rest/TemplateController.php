@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\UI\Http\Rest;
 
 use App\Application\Common\Error;
+use App\Application\Template\DTO\EntitiesToArrayDTO;
 use App\Application\Template\Request\CreateTemplateRequest;
-use App\Application\Template\Request\DeleteTemplateRequest;
+use App\Application\Template\Request\TemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
 use App\Application\Template\TemplateEditor;
 use App\Domain\Sender\ValueObject\MessageType;
@@ -131,6 +132,58 @@ final class TemplateController extends ApiController
     }
 
     /**
+     * @OA\Get(
+     *     tags={"Template"},
+     *     path="/api/template/{id}",
+     *     summary="Get template by id",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route("/api/template/{id}", methods={"GET"}, name="api.template.one")
+     */
+    public function getOne(TemplateRequest $request): JsonResponse
+    {
+        try {
+            $template = $this->templateEditor->getOneById($request->getId());
+
+            return $this->respondWithSuccess([$template->toArray()]);
+        } catch (TemplateException | Exception $exception) {
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"Template"},
+     *     path="/api/template",
+     *     summary="Get all templates",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route("/api/template", methods={"GET"}, name="api.template.all")
+     */
+    public function getAll(): JsonResponse
+    {
+        try {
+            $templates = $this->templateEditor->getAll();
+
+            return $this->respondWithSuccess(EntitiesToArrayDTO::convert($templates));
+        } catch (Exception $exception) {
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
+        }
+    }
+
+    /**
      * @OA\Delete(
      *     tags={"Template"},
      *     path="/api/template/{id}",
@@ -155,7 +208,7 @@ final class TemplateController extends ApiController
     /**
      * @Route("/api/template/{id}", methods={"DELETE"}, name="api.template.delete")
      */
-    public function delete(DeleteTemplateRequest $request): JsonResponse
+    public function delete(TemplateRequest $request): JsonResponse
     {
         try {
             $this->templateEditor->delete($request->getId());

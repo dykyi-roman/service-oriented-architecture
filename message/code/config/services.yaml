@@ -55,8 +55,8 @@ services:
 
     Psr\Http\Client\ClientInterface: '@App\Infrastructure\HttpClient\GuzzleClient'
     Psr\SimpleCache\CacheInterface: '@App\Infrastructure\Cache\InMemoryCache'
-    App\Domain\Template\Repository\TemplateReadRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
-    App\Domain\Template\Repository\TemplatePersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\TemplateRepository'
+    App\Domain\Template\Repository\WriteTemplateRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\WriteTemplateRepository'
+    App\Domain\Template\Repository\ReadTemplateRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\ReadTemplateRepository'
     App\Domain\Sender\Repository\NotSentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\NotSentRepository'
     App\Domain\Sender\Repository\SentPersistRepositoryInterface: '@App\Infrastructure\Repository\Doctrine\SentRepository'
     App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\RedisCache'

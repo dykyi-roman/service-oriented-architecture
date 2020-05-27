@@ -28,4 +28,9 @@ class TemplateException extends Exception
     {
         return new static(sprintf('Template "%s" is not deleted', $name), 4303);
     }
+
+    public static function notFoundTemplateById(string $id): self
+    {
+        return new static(sprintf('Template "%s" is not found', $id), 4304);
+    }
 }

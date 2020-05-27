@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Template\Repository;
 
-interface TemplatePersistRepositoryInterface
+interface WriteTemplateRepositoryInterface
 {
     public function edit(string $id, string $subject, string $context): bool;
 

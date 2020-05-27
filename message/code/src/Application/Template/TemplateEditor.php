@@ -5,31 +5,39 @@ declare(strict_types=1);
 namespace App\Application\Template;
 
 use App\Domain\Sender\ValueObject\MessageType;
+use App\Domain\Template\Document\Template;
 use App\Domain\Template\Exception\TemplateException;
-use App\Domain\Template\Repository\TemplatePersistRepositoryInterface;
-use App\Domain\Template\ValueObject\Template;
+use App\Domain\Template\Repository\ReadTemplateRepositoryInterface;
+use App\Domain\Template\Repository\WriteTemplateRepositoryInterface;
+use App\Domain\Template\ValueObject\Template as TemplateVO;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
 use Throwable;
 
 final class TemplateEditor
 {
-    private TemplatePersistRepositoryInterface $persistRepository;
     private LoggerInterface $logger;
+    private WriteTemplateRepositoryInterface $writeTemplateRepository;
+    private ReadTemplateRepositoryInterface $readTemplateRepository;
 
-    public function __construct(TemplatePersistRepositoryInterface $persistRepository, LoggerInterface $logger)
-    {
+    public function __construct(
+        WriteTemplateRepositoryInterface $writeTemplateRepository,
+        ReadTemplateRepositoryInterface $readTemplateRepository,
+        LoggerInterface $logger
+    ) {
         $this->logger = $logger;
-        $this->persistRepository = $persistRepository;
+        $this->writeTemplateRepository = $writeTemplateRepository;
+        $this->readTemplateRepository = $readTemplateRepository;
     }
 
     /**
      * @throws TemplateException
      */
-    public function create(UuidInterface $id, Template $template, MessageType $type, string $name, string $lang): void
+    public function create(UuidInterface $id, TemplateVO $template, MessageType $type, string $name, string $lang): void
     {
         try {
-            $this->persistRepository->create(
+            $this->writeTemplateRepository->create(
                 $id->toString(),
                 $name,
                 $type->toString(),
@@ -46,10 +54,10 @@ final class TemplateEditor
     /**
      * @throws TemplateException
      */
-    public function update(string $id, Template $template): void
+    public function update(string $id, TemplateVO $template): void
     {
         try {
-            $this->persistRepository->edit($id, $template->subject(), $template->body());
+            $this->writeTemplateRepository->edit($id, $template->subject(), $template->body());
         } catch (Throwable $exception) {
             $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::updateTemplateProblem($id);
@@ -62,10 +70,33 @@ final class TemplateEditor
     public function delete(string $id): void
     {
         try {
-            $this->persistRepository->remove($id);
+            $this->writeTemplateRepository->remove($id);
         } catch (Throwable $exception) {
             $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
             throw TemplateException::deleteTemplateProblem($id);
         }
+    }
+
+    /**
+     * @throws TemplateException
+     */
+    public function getOneById(string $id): Template
+    {
+        try {
+            $template = $this->readTemplateRepository->findById($id);
+            if (null === $template) {
+                throw new RuntimeException('');
+            }
+
+            return $template;
+        } catch (Throwable $exception) {
+            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
+            throw TemplateException::notFoundTemplateById($id);
+        }
+    }
+
+    public function getAll(): array
+    {
+        return $this->readTemplateRepository->all();
     }
 }

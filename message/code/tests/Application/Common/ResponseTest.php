@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Common\Application;
+namespace App\Tests\Common;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Application\Common\Response;

@@ -5,31 +5,15 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository\Doctrine;
 
 use App\Domain\Template\Document\Template;
-use App\Domain\Template\Repository\TemplatePersistRepositoryInterface as persistTemplate;
-use App\Domain\Template\Repository\TemplateReadRepositoryInterface as readTemplate;
+use App\Domain\Template\Repository\WriteTemplateRepositoryInterface;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Doctrine\Bundle\MongoDBBundle\Repository\ServiceDocumentRepository;
 
-final class TemplateRepository extends ServiceDocumentRepository implements persistTemplate, readTemplate
+final class WriteTemplateRepository extends ServiceDocumentRepository implements WriteTemplateRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Template::class);
-    }
-
-    /**
-     * @inheritDoc
-     * @return Template|null
-     */
-    public function findTemplate(string $name, string $type, string $lang): ?Template
-    {
-        return $this->findOneBy(
-            [
-                'name' => $name,
-                'type' => $type,
-                'lang' => $lang
-            ]
-        );
     }
 
     /**

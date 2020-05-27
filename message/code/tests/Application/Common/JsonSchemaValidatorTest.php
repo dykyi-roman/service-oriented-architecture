@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Common\Application;
+namespace App\Tests\Common;
 
 use App\Application\Common\JsonSchemaValidator;
 use Faker\Factory;

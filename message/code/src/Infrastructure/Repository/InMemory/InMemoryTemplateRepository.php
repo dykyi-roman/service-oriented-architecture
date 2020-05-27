@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository\InMemory;
 
 use App\Domain\Template\Document\Template;
-use App\Domain\Template\Repository\TemplatePersistRepositoryInterface;
-use App\Domain\Template\Repository\TemplateReadRepositoryInterface;
+use App\Domain\Template\Repository\ReadTemplateRepositoryInterface;
+use App\Domain\Template\Repository\WriteTemplateRepositoryInterface;
 
-class InMemoryTemplateRepository implements TemplateReadRepositoryInterface, TemplatePersistRepositoryInterface
+class InMemoryTemplateRepository implements ReadTemplateRepositoryInterface, WriteTemplateRepositoryInterface
 {
     public array $collection = [];
 
@@ -63,5 +63,19 @@ class InMemoryTemplateRepository implements TemplateReadRepositoryInterface, Tem
             'lang' => $lang,
             'template' => $template
         ];
+    }
+
+    public function findById(string $id): ?Template
+    {
+        if (isset($this->collection[$id])) {
+            return new Template($id);
+        }
+
+        return null;
+    }
+
+    public function all(): array
+    {
+        return $this->collection;
     }
 }

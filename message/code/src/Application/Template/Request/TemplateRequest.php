@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class DeleteTemplateRequest
+final class TemplateRequest
 {
     private RequestStack $requestStack;
 

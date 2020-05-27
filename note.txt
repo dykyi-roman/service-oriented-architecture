@@ -1,10 +1,6 @@
-auth:
- - api for admin panel (black list, )
- - registration by partner code
-
 adminka
  - think about server (based on CQRS) 
- - create admin
+ - create super admin (console command)
  
 yandex tank
 

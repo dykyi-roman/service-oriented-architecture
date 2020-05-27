@@ -35,7 +35,7 @@ class TemplateEditorTest extends TestCase
     public function testCreate(): InMemoryTemplateRepository
     {
         $repository = new InMemoryTemplateRepository();
-        $templateEditor = new TemplateEditor($repository, new NullLogger());
+        $templateEditor = new TemplateEditor($repository, $repository, new NullLogger());
         $templateEditor->create(
             Uuid::fromString(self::UUID),
             new Template($this->faker->title, $this->faker->text),
@@ -54,7 +54,7 @@ class TemplateEditorTest extends TestCase
      */
     public function testUpdate(InMemoryTemplateRepository $repository): void
     {
-        $templateEditor = new TemplateEditor($repository, new NullLogger());
+        $templateEditor = new TemplateEditor($repository, $repository, new NullLogger());
         $templateEditor->update(self::UUID, new Template('test-subject', 'test-context'));
 
         $this->assertCount(1, $repository->collection);
@@ -65,9 +65,31 @@ class TemplateEditorTest extends TestCase
     /**
      * @depends testCreate
      */
+    public function testGetOne(InMemoryTemplateRepository $repository): void
+    {
+        $templateEditor = new TemplateEditor($repository, $repository, new NullLogger());
+        $template = $templateEditor->getOneById(self::UUID);
+
+        $this->assertInstanceOf(\App\Domain\Template\Document\Template::class, $template);
+    }
+
+    /**
+     * @depends testCreate
+     */
+    public function testGetAll(InMemoryTemplateRepository $repository): void
+    {
+        $templateEditor = new TemplateEditor($repository, $repository, new NullLogger());
+        $templates = $templateEditor->getAll();
+
+        $this->assertCount(1, $repository->collection);
+    }
+
+    /**
+     * @depends testCreate
+     */
     public function testDelete(InMemoryTemplateRepository $repository): void
     {
-        $templateEditor = new TemplateEditor($repository, new NullLogger());
+        $templateEditor = new TemplateEditor($repository, $repository, new NullLogger());
         $templateEditor->delete(self::UUID);
 
         $this->assertCount(0, $repository->collection);
