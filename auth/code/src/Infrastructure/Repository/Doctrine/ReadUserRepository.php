@@ -26,6 +26,11 @@ class ReadUserRepository extends ServiceEntityRepository implements ReadUserRepo
         return $this->findOneBy(['id' => $userId, 'isActive' => true]);
     }
 
+    public function all(): array
+    {
+        return $this->findAll();
+    }
+
     public function findUserByEmailOrPhone(string $contact): ?User
     {
         return $this->createQueryBuilder('u')

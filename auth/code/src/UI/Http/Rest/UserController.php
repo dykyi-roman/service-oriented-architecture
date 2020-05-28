@@ -7,11 +7,7 @@ namespace App\UI\Http\Rest;
 use App\Application\Common\Error;
 use App\Application\User\Command\UserRegisterCommand;
 use App\Domain\User\Entity\User;
-use App\Domain\User\Exception\UserException;
 use App\Domain\User\Service\PasswordRestore;
-use App\Domain\User\Service\UserFinder;
-use App\Domain\User\Service\UserStore;
-use App\Domain\User\Transformer\Api\UserApiTransformer;
 use App\Domain\User\ValueObject\FullName;
 use App\Domain\User\ValueObject\UserRegistrationRequest;
 use Exception;
@@ -97,7 +93,7 @@ class UserController extends ApiController
      */
 
     /**
-     * @Route(path="/api/user/registration", methods={"POST"}, name="user_registration")
+     * @Route(path="/api/user/registration", methods={"POST"}, name="api.user.registration")
      */
     public function register(Request $request, CommandBus $commandBus): JsonResponse
     {
@@ -153,7 +149,7 @@ class UserController extends ApiController
             return $this->respondNotFound(Error::create('User not Found!'));
         }
 
-        return $this->respondWithSuccess(UserApiTransformer::transform($user));
+        return $this->respondWithSuccess($user->toArray());
     }
 
     /**

@@ -6,6 +6,7 @@ namespace App\Tests\UI\Http\Rest;
 
 use App\Domain\User\Entity\User;
 use App\Tests\DBHelper;
+use App\UI\Http\Rest\AdminController;
 use App\UI\Http\Rest\UserController;
 use Faker\Factory;
 use Faker\Generator;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
- * @coversDefaultClass UserController
+ * @coversDefaultClass AdminController
  */
 class UserControllerTest extends WebTestCase
 {

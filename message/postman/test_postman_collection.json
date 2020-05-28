@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "create",
+			"name": "admin/create",
 			"event": [
 				{
 					"listen": "test",
@@ -58,12 +58,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/template/",
+					"raw": "{{host}}/api/admin/template/",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"admin",
 						"template",
 						""
 					]
@@ -72,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "edit",
+			"name": "admin/edit",
 			"event": [
 				{
 					"listen": "test",
@@ -118,12 +119,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/template/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"admin",
 						"template",
 						"{{templateId}}"
 					]
@@ -132,7 +134,7 @@
 			"response": []
 		},
 		{
-			"name": "one",
+			"name": "admin/one",
 			"event": [
 				{
 					"listen": "test",
@@ -181,12 +183,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/template/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"admin",
 						"template",
 						"{{templateId}}"
 					]
@@ -195,7 +198,7 @@
 			"response": []
 		},
 		{
-			"name": "all",
+			"name": "admin/all",
 			"event": [
 				{
 					"listen": "test",
@@ -244,12 +247,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/template",
+					"raw": "{{host}}/api/admin/template",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"admin",
 						"template"
 					]
 				}
@@ -257,7 +261,7 @@
 			"response": []
 		},
 		{
-			"name": "delete",
+			"name": "admin/delete",
 			"event": [
 				{
 					"listen": "test",
@@ -303,12 +307,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/template/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"admin",
 						"template",
 						"{{templateId}}"
 					]
@@ -319,7 +324,7 @@
 	],
 	"variable": [
 		{
-			"id": "845cd3d3-4e35-47fa-861e-d3cc05bf7aeb",
+			"id": "eaf587c0-afbb-4123-9593-f0cd6fa111a4",
 			"key": "templateId",
 			"value": "",
 			"type": "string"

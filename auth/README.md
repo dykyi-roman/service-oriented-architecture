@@ -32,6 +32,11 @@ php bin/console doctrine:migrations:migrate
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
 | /api/cert               | GET     | ANY    | ALL   |
 
+| Path                    | Method  | Scheme | Grant |
+| ----------------------  | ------- | ------ | ----- |
+| /api/admin/user/{id}    | GET     | ANY    | ALL   |
+| /api/admin/user         | GET     | ANY    | ALL   |
+
 ## Requirements
 
 * PHP 7.4

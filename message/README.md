@@ -57,13 +57,13 @@ and push the data in the next queue ["sent", "notSent"]. I following YAGNI princ
 
 # Admin api endpoints
 
-| Path                    | Method | Scheme | Grant |
-| ----------------------  | ------ | ------ | ----- |
-| /api/template/          | POST   | ANY    | ALL   |
-| /api/template/          | GET    | ANY    | ALL   |
-| /api/template/{id}      | GET    | ANY    | ALL   |
-| /api/template/{id}      | PUT    | ANY    | ALL   |
-| /api/template/{id}      | DELETE | ANY    | ALL   |
+| Path                          | Method | Scheme | Grant |
+| ----------------------------  | ------ | ------ | ----- |
+| /api/admin/template/          | POST   | ANY    | ALL   |
+| /api/admin/template/          | GET    | ANY    | ALL   |
+| /api/admin/template/{id}      | GET    | ANY    | ALL   |
+| /api/admin/template/{id}      | PUT    | ANY    | ALL   |
+| /api/admin/template/{id}      | DELETE | ANY    | ALL   |
 
 ## Requirements
 

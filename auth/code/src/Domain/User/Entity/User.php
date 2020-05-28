@@ -184,4 +184,14 @@ class User implements UserInterface, JWTUserInterface
     {
         return [self::ROLE_USER];
     }
+
+    public function toArray(): array
+    {
+        return [
+            'email' => $this->getEmail(),
+            'phone' => $this->getPhone(),
+            'fullName' => $this->getFullName(),
+            'isActive' => $this->isActive(),
+        ];
+    }
 }

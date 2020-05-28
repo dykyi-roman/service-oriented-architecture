@@ -32,7 +32,6 @@
 							"});",
 							"",
 							"pm.collectionVariables.set('uuid', pm.response.json().data.uuid)",
-							"pm.collectionVariables.set('test', pm.response.json().data.uuid)",
 							""
 						],
 						"type": "text/javascript"
@@ -225,7 +224,7 @@
 			"response": []
 		},
 		{
-			"name": "user",
+			"name": "current",
 			"event": [
 				{
 					"listen": "test",
@@ -274,6 +273,100 @@
 						"api",
 						"user",
 						"current"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		},
+		{
+			"name": "admin/one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "480f06e5-230d-4633-a59f-21411fdffe2e",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/admin/user/{{uuid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"{{uuid}}"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		},
+		{
+			"name": "admin/all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7a0aebe1-8ac9-4c0c-8bb4-c533c8acee3b",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/admin/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user"
 					]
 				},
 				"description": "get user data"
@@ -396,25 +489,25 @@
 	],
 	"variable": [
 		{
-			"id": "620d18fd-96b9-44ad-9d90-64a44643181e",
+			"id": "394b66cb-c3f4-4618-a68a-8c4fe217e0f5",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "de331154-f278-4369-a1f1-21bb29a439bc",
+			"id": "fdee1243-12c6-4942-a9fc-8dd7bac75db7",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "be8c4a09-f2ad-4877-b9c2-dc80defdc859",
+			"id": "9ff1b63c-aafc-42d5-8426-be6c3f53cd07",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "b2eca05d-fddb-4d0d-9359-6bd8f097b6ac",
+			"id": "1818aaca-24c6-4fb9-8b06-d87bc823fd3a",
 			"key": "test",
 			"value": "",
 			"type": "string"

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Http\Rest;
 
 use App\Application\Common\Error;
-use App\Application\Template\DTO\EntitiesToArrayDTO;
+use App\Application\Template\Transformer\TemplatesToArrayTransformer;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\TemplateRequest;
 use App\Application\Template\Request\UpdateTemplateRequest;
@@ -18,11 +18,12 @@ use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Throwable;
 
 /**
- * @OA\Tag(name="Template")
+ * @OA\Tag(name="Admin")
  */
-final class TemplateController extends ApiController
+final class AdminController extends ApiController
 {
     private TemplateEditor $templateEditor;
 
@@ -33,8 +34,8 @@ final class TemplateController extends ApiController
 
     /**
      * @OA\Post(
-     *     tags={"Template"},
-     *     path="/api/template/",
+     *     tags={"Admin"},
+     *     path="/api/admin/template/",
      *     summary="Create new template",
      *     @OA\Parameter(
      *          name="query",
@@ -72,7 +73,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/", methods={"POST"}, name="api.template.create")
+     * @Route("/api/admin/template/", methods={"POST"}, name="api.admin.template.create")
      */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
@@ -93,8 +94,8 @@ final class TemplateController extends ApiController
 
     /**
      * @OA\Put(
-     *     tags={"Template"},
-     *     path="/api/template/{id}",
+     *     tags={"Admin"},
+     *     path="/api/admin/template/{id}",
      *     summary="Update exist template by id",
      *     @OA\Parameter(
      *          name="query",
@@ -118,7 +119,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/{id}", methods={"PUT"}, name="api.template.update")
+     * @Route("/api/admin/template/{id}", methods={"PUT"}, name="api.admin.template.update")
      */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
@@ -133,8 +134,8 @@ final class TemplateController extends ApiController
 
     /**
      * @OA\Get(
-     *     tags={"Template"},
-     *     path="/api/template/{id}",
+     *     tags={"Admin"},
+     *     path="/api/admin/template/{id}",
      *     summary="Get template by id",
      *     @OA\Response(
      *         response=200,
@@ -144,7 +145,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/{id}", methods={"GET"}, name="api.template.one")
+     * @Route("/api/admin/template/{id}", methods={"GET"}, name="api.admin.template.one")
      */
     public function getOne(TemplateRequest $request): JsonResponse
     {
@@ -152,15 +153,15 @@ final class TemplateController extends ApiController
             $template = $this->templateEditor->getOneById($request->getId());
 
             return $this->respondWithSuccess([$template->toArray()]);
-        } catch (TemplateException | Exception $exception) {
+        } catch (TemplateException $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
     /**
      * @OA\Get(
-     *     tags={"Template"},
-     *     path="/api/template",
+     *     tags={"Admin"},
+     *     path="/api/admin/template",
      *     summary="Get all templates",
      *     @OA\Response(
      *         response=200,
@@ -170,23 +171,23 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template", methods={"GET"}, name="api.template.all")
+     * @Route("/api/admin/template", methods={"GET"}, name="api.admin.template.all")
      */
     public function getAll(): JsonResponse
     {
         try {
             $templates = $this->templateEditor->getAll();
 
-            return $this->respondWithSuccess(EntitiesToArrayDTO::convert($templates));
-        } catch (Exception $exception) {
+            return $this->respondWithSuccess(TemplatesToArrayTransformer::transform($templates));
+        } catch (Throwable $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
     }
 
     /**
      * @OA\Delete(
-     *     tags={"Template"},
-     *     path="/api/template/{id}",
+     *     tags={"Admin"},
+     *     path="/api/admin/template/{id}",
      *     summary="Delete template by id",
      *     @OA\Parameter(
      *          name="query",
@@ -206,7 +207,7 @@ final class TemplateController extends ApiController
      */
 
     /**
-     * @Route("/api/template/{id}", methods={"DELETE"}, name="api.template.delete")
+     * @Route("/api/admin/template/{id}", methods={"DELETE"}, name="api.admin.template.delete")
      */
     public function delete(TemplateRequest $request): JsonResponse
     {

@@ -74,4 +74,9 @@ class InMemoryUserRepository implements WriteUserRepositoryInterface, ReadUserRe
     {
         $this->users[$user->getId()->toString()] = $user;
     }
+
+    public function all(): array
+    {
+        return $this->users;
+    }
 }

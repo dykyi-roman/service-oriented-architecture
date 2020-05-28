@@ -13,4 +13,6 @@ interface ReadUserRepositoryInterface
     public function findUserById(string $id): ?User;
 
     public function findUserByEmailOrPhone(string $contact): ?User;
+
+    public function all(): array;
 }

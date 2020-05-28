@@ -25,4 +25,9 @@ class UserFinder
     {
         return $this->userRepository->findUserByEmailOrPhone($contact);
     }
+
+    public function findAll(): array
+    {
+        return $this->userRepository->all();
+    }
 }
