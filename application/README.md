@@ -1,19 +1,10 @@
 Application
 =======
 
-## Tests
-
-```
-make tests-run
-make postman-test
-```
-
 ## Clean code
 
 ```
-make phpcs
-make clean-code
-make psalm
+make pre-commit
 ```
 
 ## Resources

@@ -3,6 +3,7 @@
 namespace App\Domain\Message;
 
 use App\Application\Sender\Message\Message;
+use App\Application\Sender\Message\UnauthorizedMessage;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Message\Exception\MessageException;
 use App\Domain\Message\ValueObject\Recipient;
@@ -45,10 +46,10 @@ final class MessageAdapter
     public function sendPasswordForgotCodeMessage(string $contact, string $code): void
     {
         try {
-            $recipients = (new RecipientCollection())->add(Recipient::autoDetectType($contact))->get();
+            $recipients = (new RecipientCollection())->add(Recipient::withContact($contact))->get();
             $template = new Template(Template::REGISTRATION_SUCCESS, 'en', ['code' => $code]);
 
-            $message = new Message('????', $recipients, $template->toArray());
+            $message = UnauthorizedMessage::create($recipients, $template->toArray());
             $this->messageBus->dispatch($message);
         } catch (Throwable $exception) {
             throw MessageException::sendPasswordForgotCodeMessageProblem($exception->getMessage());

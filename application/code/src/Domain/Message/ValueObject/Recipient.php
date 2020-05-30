@@ -44,7 +44,7 @@ final class Recipient
         }
     }
 
-    public static function autoDetectType(string $contact): Recipient
+    public static function withContact(string $contact): Recipient
     {
         $type = self::TYPE_PHONE;
         if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {

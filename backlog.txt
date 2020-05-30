@@ -7,7 +7,14 @@ yandex tank
 cloud-storage:
  - virus check
 
+auth:
+ - black list
+
+message:
+ - add new message type - notify
+
 RBAC
+ - separate microservice or part of auth service?
 
 subscribe microservice 
  - (think about it)

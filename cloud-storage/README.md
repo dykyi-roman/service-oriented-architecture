@@ -77,19 +77,10 @@ and make sure that your bucket is configured for clients to set a public-accessi
 
 To start working with the Dropbox API, you'll need an App. You can create a new app for the Dropbox API [here](https://www.dropbox.com/developers/apps)
  
-## Tests
-
-```
-make tests-run
-make postman-test
-```
-
 ## Clean code
 
 ```
-make phpcs
-make clean-code
-make psalm
+make pre-commit
 ```
  
 ## Ressources:

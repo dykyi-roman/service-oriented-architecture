@@ -88,19 +88,10 @@ RabitMQ open [https://localhost:15672](https://localhost:15672) and use login an
     password: rabbitmq
 ```
 
-## Tests
-
-```
-make tests-run
-make postman-test
-```
-
 ## Clean code
 
 ```
-make phpcs
-make clean-code
-make psalm
+make pre-commit
 ```
 
 ## Resources

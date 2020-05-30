@@ -24,7 +24,7 @@ Here I want to add some plus from me:
 * support continuous integration;
 * independently deployable.
 
-# Documentation
+# Services
 
 [Application service](application/README.md)
 
@@ -36,7 +36,7 @@ Here I want to add some plus from me:
 
 [Admin panel service](adminpanel/README.md)
 
-- - -
+# Tools
 
 [Sentry](sentry/README.md)
 
@@ -50,11 +50,35 @@ Here I want to add some plus from me:
 
 [Vault](vault/README.md)
 
+# Architecture
+
+![image](application/docs/layer-architecture.png)
+
+### Layered architecture 
+The most common architecture pattern is the layered architecture pattern, otherwise known as the n-tier architecture pattern. 
+This pattern is the de facto standard for most Java and PHP enterprise applications. 
+The layered architecture pattern closely matches the traditional IT communication and organizational structures found in most companies, making it a natural choice for most business application development efforts. 
+ 
+### DDD
+Often layered architecture comes with the concept DDD. Domain-driven design (DDD) advocates modeling based on the reality of business as relevant to your use cases. 
+DDD talks about problems as domains. It describes independent problem areas as Bounded Contexts (each Bounded Context correlates to a microservice), and emphasizes a common language to talk about these problems.
+It also suggests many technical concepts and patterns, like domain entities with rich models (no anemic-domain model), value objects, aggregates and aggregate root (or root entity) rules to support the internal implementation. 
+This section introduces the design and implementation of those internal patterns. 
+ 
 # Application
 
-## Authenticate between microservice
+Service that combines work with microservices.
 
-![image](auth/docs/jwt-api-flow.png)
+Auth:
+ - login
+ - sign up
+ - password restore
+ 
+Messages:
+ - send message operation
+ 
+Cloud storage:
+ - storage for user uploaded files
 
 # Auth service
 
@@ -66,6 +90,10 @@ This means each service can verify requests on their own. Token issuing is done 
 A client library is usually used to share this verification functionality with all the services that need to perform authentication. 
 
 When you take a JWT from the authorization server you can use it for communicating with another service, putting token inside a request header. Or you can use the SSL certificate between microservices and left the problem of security for DevOps.
+
+## Authenticate between microservice    
+
+![image](auth/docs/jwt-api-flow.png)
 
 For more information, click [here](auth/README.md).
 
@@ -93,10 +121,6 @@ Cloud storage is a service model in which data is transmitted and stored on remo
 Service provide API for easy connect and use base methods cloud or file storage.
 
 For more information read [here](cloud-storage/README.md).
-
-# Application
-
-...
 
 ## Sentry
 
