@@ -24,6 +24,21 @@ Here I want to add some plus from me:
 * support continuous integration;
 * independently deployable.
 
+# Architecture
+
+![image](application/docs/layer-architecture.png)
+
+### Layered architecture 
+The most common architecture pattern is the layered architecture pattern, otherwise known as the n-tier architecture pattern. 
+This pattern is the de facto standard for most Java and PHP enterprise applications. 
+The layered architecture pattern closely matches the traditional IT communication and organizational structures found in most companies, making it a natural choice for most business application development efforts. 
+ 
+### DDD
+Often layered architecture comes with the concept DDD. Domain-driven design (DDD) advocates modeling based on the reality of business as relevant to your use cases. 
+DDD talks about problems as domains. It describes independent problem areas as Bounded Contexts (each Bounded Context correlates to a microservice), and emphasizes a common language to talk about these problems.
+It also suggests many technical concepts and patterns, like domain entities with rich models (no anemic-domain model), value objects, aggregates and aggregate root (or root entity) rules to support the internal implementation. 
+This section introduces the design and implementation of those internal patterns. 
+ 
 # Services
 
 [Application service](application/README.md)
@@ -48,22 +63,7 @@ Here I want to add some plus from me:
 
 [Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 
-[Vault](vault/README.md)
-
-# Architecture
-
-![image](application/docs/layer-architecture.png)
-
-### Layered architecture 
-The most common architecture pattern is the layered architecture pattern, otherwise known as the n-tier architecture pattern. 
-This pattern is the de facto standard for most Java and PHP enterprise applications. 
-The layered architecture pattern closely matches the traditional IT communication and organizational structures found in most companies, making it a natural choice for most business application development efforts. 
- 
-### DDD
-Often layered architecture comes with the concept DDD. Domain-driven design (DDD) advocates modeling based on the reality of business as relevant to your use cases. 
-DDD talks about problems as domains. It describes independent problem areas as Bounded Contexts (each Bounded Context correlates to a microservice), and emphasizes a common language to talk about these problems.
-It also suggests many technical concepts and patterns, like domain entities with rich models (no anemic-domain model), value objects, aggregates and aggregate root (or root entity) rules to support the internal implementation. 
-This section introduces the design and implementation of those internal patterns. 
+[Vault](vault/README.md) 
  
 # Application
 
