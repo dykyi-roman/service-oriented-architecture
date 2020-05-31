@@ -3,14 +3,21 @@ Cloud storage service
 
 ![image](docs/architecture.png)
 
-## Endpoints
+## App endpoints
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
 | /api/storage/folder     | POST    | ANY    | ALL   |
-| /api/storage/upload     | POST    | ANY    | ALL   |
-| /api/storage/download   | GET     | ANY    | ALL   |
-| /api/storage/delete     | DELETE  | ANY    | ALL   |
+| /api/storage/file       | POST    | ANY    | ALL   |
+| /api/storage/file       | GET     | ANY    | ALL   |
+| /api/storage/file       | DELETE  | ANY    | ALL   |
+
+## Admin endpoints
+
+| Path                         | Method  | Scheme | Grant |
+| ---------------------------  | ------- | ------ | ----- |
+| /api/admin/storage/file      | GET     | ANY    | ALL   |
+| /api/admin/storage/file/{id} | GET     | ANY    | ALL   |
 
 ## Requirements
 

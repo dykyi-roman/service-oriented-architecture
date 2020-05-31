@@ -60,7 +60,7 @@ class StorageController extends ApiController
     /**
      * @OA\Post(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/upload",
+     *     path="/api/storage/file",
      *     summary="Upload file",
      *     @OA\RequestBody(
      *          @OA\MediaType(
@@ -111,7 +111,7 @@ class StorageController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/download",
+     *     path="/api/storage/file",
      *     summary="Download file",
      *     @OA\Parameter(
      *          name="query",
@@ -151,7 +151,7 @@ class StorageController extends ApiController
     /**
      * @OA\Delete(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/delete",
+     *     path="/api/storage/file",
      *     summary="Delete file or folder",
      *     @OA\Parameter(
      *          name="query",

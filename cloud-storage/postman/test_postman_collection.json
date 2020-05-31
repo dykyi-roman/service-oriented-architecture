@@ -147,7 +147,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/upload",
+					"raw": "{{host}}/api/storage/file",
 					"host": [
 						"{{host}}"
 					],
@@ -202,7 +202,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/api/storage/download?file=test/5e956606833e68.35220329.jpg",
+					"raw": "{{host}}/api/storage/file?file=test/5e956606833e68.35220329.jpg",
 					"host": [
 						"{{host}}"
 					],
@@ -269,7 +269,7 @@
 					"raw": "{\n\t\"path\":\"{{cloud-folder}}\"\n}"
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/delete",
+					"raw": "{{host}}/api/storage/file",
 					"host": [
 						"{{host}}"
 					],

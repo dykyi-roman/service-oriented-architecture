@@ -9,7 +9,7 @@ User notification playing a very important role in modern application. Basically
 
 * bulk - which are triggered after user subscribed for some event.
 
-### Consumer
+## Consumer
 
 On production, there are a few important things to think about:
 
@@ -25,11 +25,11 @@ To run a new consumer for message processing - use the command with parameter. W
     bin/console messenger:consume message sent notsent
 ```
 
-### Cache
+## Cache
 
 Cache usage gives us an available template without load from DB. Thanks for that we save time for loading and transform.
 
-### Priority
+## Priority
 
 For us each type of message we could have a next priority queue:
  
@@ -39,7 +39,7 @@ For us each type of message we could have a next priority queue:
   
  * low - use for subscribers notification 
 
-### Storage sent message
+## Storage sent message
 
 When there is no more space in the collection ["sent"], the oldest documents are deleted and new data is added to the end.
 More detail read [here](https://docs.mongodb.com/manual/core/capped-collections/)
@@ -47,7 +47,7 @@ More detail read [here](https://docs.mongodb.com/manual/core/capped-collections/
 When storage a sent messages becomes a bottleneck in your architecture, you could to replace repository interface to queue interface 
 and push the data in the next queue ["sent", "notSent"]. I following YAGNI principle and do not stay do it this improvement now.
 
-### Queue message:
+## Queue message:
 
 | Params   |  Example                                              | Description                                       |
 | ---------| ----------------------------------------------------- | ------------------------------------------------- |
@@ -55,12 +55,12 @@ and push the data in the next queue ["sent", "notSent"]. I following YAGNI princ
 | to       | {"email":"mr.dukuy@gmail.com","phone":"+380938982443"}| sent type for recipient and contact data          |                        
 | template | {"name":"welcome","lang":"en","variables":["Roman"]}  | sent template with require params                 |                        
 
-# Admin api endpoints
+## Admin endpoints
 
 | Path                          | Method | Scheme | Grant |
 | ----------------------------  | ------ | ------ | ----- |
-| /api/admin/template/          | POST   | ANY    | ALL   |
-| /api/admin/template/          | GET    | ANY    | ALL   |
+| /api/admin/template           | POST   | ANY    | ALL   |
+| /api/admin/template           | GET    | ANY    | ALL   |
 | /api/admin/template/{id}      | GET    | ANY    | ALL   |
 | /api/admin/template/{id}      | PUT    | ANY    | ALL   |
 | /api/admin/template/{id}      | DELETE | ANY    | ALL   |

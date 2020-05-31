@@ -21,7 +21,7 @@ Run migrations:
 php bin/console doctrine:migrations:migrate 
 ```
 
-## Endpoints
+## App endpoints
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
@@ -31,6 +31,8 @@ php bin/console doctrine:migrations:migrate
 | /api/user/password      | PUT     | ANY    | ALL   |
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
 | /api/cert               | GET     | ANY    | ALL   |
+
+## Admin endpoints
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
