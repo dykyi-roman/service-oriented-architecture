@@ -60,18 +60,7 @@ This section introduces the design and implementation of those internal patterns
  
 # Application
 
-Service that combines work with microservices.
-
-Auth:
- - login
- - sign up
- - password restore
- 
-Messages:
- - send message operation
- 
-Cloud storage:
- - storage for user uploaded files
+Service that combines work with microservices. For more information, click [here](application/README.md).
 
 # Auth
 

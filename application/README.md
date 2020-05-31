@@ -1,6 +1,18 @@
 Application
 =======
 
+
+Auth:
+ - login
+ - sign up
+ - password restore
+ 
+Messages:
+ - send message operation
+ 
+Cloud storage:
+ - storage for user uploaded files
+
 ## Clean code
 
 ```

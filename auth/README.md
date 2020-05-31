@@ -32,11 +32,16 @@ php bin/console doctrine:migrations:migrate
 | /api/token/refresh      | POST/GET| ANY    | ALL   |
 | /api/cert               | GET     | ANY    | ALL   |
 
+| Path                    | Method  | Scheme | Grant |
+| ----------------------  | ------- | ------ | ----- |
+| /api/admin/user         | GET     | ANY    | ALL   |
+| /api/admin/user/{id}    | GET     | ANY    | ALL   |
+
 ## Requirements
 
 * PHP 7.4
 * Symfony 5.0
-* MySQL
+* MySQL 8.0
 
 ## Clients
 
@@ -48,19 +53,10 @@ MySQL open [https://localhost:8081](https://localhost:8888) and use login and pa
     password: root
 ```
 
-## Tests
-
-```
-make tests-run
-make postman-test
-```
-
 ## Clean code
 
 ```
-make phpcs
-make clean-code
-make psalm
+make pre-commit
 ```
 
 ## Resources
