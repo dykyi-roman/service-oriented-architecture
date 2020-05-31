@@ -9,6 +9,25 @@ Service oriented architecture
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
 - - -
 
+### Architecture
+- [Layered architecture](#layered-architecture)
+- [DDD](#DDD)
+### Services  
+- [Application](application/README.md)
+- [Auth](auth/README.md)  
+- [Message](message/README.md)  
+- [Cloud storage](cloud-storage/README.md)  
+- [Admin panel](adminpanel/README.md)
+### Tools
+- [Sentry](sentry/README.md)
+- [Graylog](graylog/README.md)
+- <a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
+- [Metrics](metrics/README.md)
+- [Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
+- [Vault](vault/README.md) 
+
+# Intro
+
 Microservices architecture has been gaining a lot of ground as the preferred architecture for implementing solutions, 
 as it provides benefits like scalability, logical and physical separation, small teams managing a part of the functionality, flexibility in technology, etc. 
 But since microservices are distributed the complexity of managing them increases.
@@ -28,42 +47,16 @@ Here I want to add some plus from me:
 
 ![image](application/docs/layer-architecture.png)
 
-### Layered architecture 
+<a name="layered-architecture"><h3>Layered architecture</h3></a>
 The most common architecture pattern is the layered architecture pattern, otherwise known as the n-tier architecture pattern. 
 This pattern is the de facto standard for most Java and PHP enterprise applications. 
 The layered architecture pattern closely matches the traditional IT communication and organizational structures found in most companies, making it a natural choice for most business application development efforts. 
  
-### DDD
+<a name="DDD"><h3>DDD</h3></a>
 Often layered architecture comes with the concept DDD. Domain-driven design (DDD) advocates modeling based on the reality of business as relevant to your use cases. 
 DDD talks about problems as domains. It describes independent problem areas as Bounded Contexts (each Bounded Context correlates to a microservice), and emphasizes a common language to talk about these problems.
 It also suggests many technical concepts and patterns, like domain entities with rich models (no anemic-domain model), value objects, aggregates and aggregate root (or root entity) rules to support the internal implementation. 
 This section introduces the design and implementation of those internal patterns. 
- 
-# Services
-
-[Application service](application/README.md)
-
-[Auth service](auth/README.md)
-
-[Message service](message/README.md)
-
-[Cloud-storage service](cloud-storage/README.md)
-
-[Admin panel service](adminpanel/README.md)
-
-# Tools
-
-[Sentry](sentry/README.md)
-
-[Graylog](graylog/README.md)
-
-<a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#newman">Newman</a>
-
-[Metrics](metrics/README.md)
-
-[Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
-
-[Vault](vault/README.md) 
  
 # Application
 
@@ -80,7 +73,7 @@ Messages:
 Cloud storage:
  - storage for user uploaded files
 
-# Auth service
+# Auth
 
 ![image](auth/docs/main.png)
 
@@ -97,13 +90,13 @@ When you take a JWT from the authorization server you can use it for communicati
 
 For more information, click [here](auth/README.md).
 
-# Message service
+# Message
 
 ![image](message/docs/message.png)
 
 For more information, click [here](message/README.md).
 
-# Admin Panel service
+# Admin Panel
 
 ![image](adminpanel/docs/adminflow2.png)
 
@@ -113,7 +106,7 @@ On the picture use a REST for data transfer between a service but this is a deta
 
 For more information, click [here](adminpanel/README.md).
 
-# Cloud storage service 
+# Cloud storage 
    
 ![image](cloud-storage/docs/architecture.png)
 
