@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "57a8275a-8c06-44b2-844f-b1967fec2c1a",
+		"_postman_id": "024890e8-58c8-4d62-9e33-0e66cd33513d",
 		"name": "Cloud-storage",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c5707d08-9474-4084-8066-cc798b6000bf",
+						"id": "bbbfba7d-ede4-4bba-b240-ad5203e798e2",
 						"exec": [
 							"pm.test(\"Log response errors\", function () {",
 							"    if (pm.response.json().data.error){",
@@ -45,7 +45,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "8f9137cb-b8fc-44ba-b1ec-2a172e197890",
+						"id": "5d56bbb6-8ebf-4402-ba66-62fdbbe74aa5",
 						"exec": [
 							"var reqBody = JSON.parse(request.data);",
 							"pm.collectionVariables.set('cloud-folder', reqBody.name);"
@@ -66,7 +66,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\":\"test\"\n}"
+					"raw": "{\n\t\"name\":\"test\"\n}",
+					"options": {
+						"raw": {}
+					}
 				},
 				"url": {
 					"raw": "{{host}}/api/storage/folder",
@@ -88,7 +91,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
+						"id": "7b850859-eb3b-49f2-9efd-92a5791a7a22",
 						"exec": [
 							"pm.test(\"Log response errors\", function () {",
 							"    if (pm.response.json().data.error){",
@@ -144,7 +147,10 @@
 							"value": "{{cloud-folder}}",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"formdata": {}
+					}
 				},
 				"url": {
 					"raw": "{{host}}/api/storage/file",
@@ -154,7 +160,7 @@
 					"path": [
 						"api",
 						"storage",
-						"upload"
+						"file"
 					]
 				}
 			},
@@ -166,7 +172,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a4029bbd-f051-4e4e-8395-805850b80d7c",
+						"id": "ad46f322-bced-49dc-beca-973dedbebc64",
 						"exec": [
 							"pm.test(\"Log response errors\", function () {",
 							"    if (pm.response.json().data.error){",
@@ -209,7 +215,7 @@
 					"path": [
 						"api",
 						"storage",
-						"download"
+						"file"
 					],
 					"query": [
 						{
@@ -227,7 +233,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "73fc3e49-82b4-40ea-8cac-2ae85e871aba",
+						"id": "febf341a-0324-42c2-89d0-29b61771e26a",
 						"exec": [
 							"pm.test(\"Log response errors\", function () {",
 							"    if (pm.response.json().data.error){",
@@ -266,7 +272,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"path\":\"{{cloud-folder}}\"\n}"
+					"raw": "{\n\t\"path\":\"{{cloud-folder}}\"\n}",
+					"options": {
+						"raw": {}
+					}
 				},
 				"url": {
 					"raw": "{{host}}/api/storage/file",
@@ -276,12 +285,12 @@
 					"path": [
 						"api",
 						"storage",
-						"delete"
+						"file"
 					],
 					"query": [
 						{
 							"key": "",
-							"value": null,
+							"value": "",
 							"disabled": true
 						}
 					]
@@ -292,19 +301,19 @@
 	],
 	"variable": [
 		{
-			"id": "dc458139-66eb-47c2-9e56-b0014920025f",
+			"id": "413a2a46-b230-453b-ad9c-1ee07ab33b92",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "641a49bf-e22c-4fc7-9098-cef3d9e6638e",
+			"id": "7f3c989e-1525-46dc-8bcc-2aa9335132d5",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "83b43226-0b9a-4be8-b164-71ccd406cea2",
+			"id": "eedfb465-041a-4cf4-b2b2-28323135a525",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

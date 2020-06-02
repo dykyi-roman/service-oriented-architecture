@@ -12,13 +12,6 @@ Cloud storage service
 | /api/storage/file       | GET     | ANY    | ALL   |
 | /api/storage/file       | DELETE  | ANY    | ALL   |
 
-## Admin endpoints
-
-| Path                         | Method  | Scheme | Grant |
-| ---------------------------  | ------- | ------ | ----- |
-| /api/admin/storage/file      | GET     | ANY    | ALL   |
-| /api/admin/storage/file/{id} | GET     | ANY    | ALL   |
-
 ## Requirements
 
 * PHP 7.4

@@ -1,7 +1,6 @@
 Application
 =======
 
-
 Auth:
  - login
  - sign up
