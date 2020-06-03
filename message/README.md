@@ -59,11 +59,11 @@ and push the data in the next queue ["sent", "notSent"]. I following YAGNI princ
 
 | Path                          | Method | Scheme | Grant |
 | ----------------------------  | ------ | ------ | ----- |
-| /api/admin/template           | POST   | ANY    | ALL   |
-| /api/admin/template           | GET    | ANY    | ALL   |
-| /api/admin/template/{id}      | GET    | ANY    | ALL   |
-| /api/admin/template/{id}      | PUT    | ANY    | ALL   |
-| /api/admin/template/{id}      | DELETE | ANY    | ALL   |
+| /api/admin/templates           | POST   | ANY    | ALL   |
+| /api/admin/templates           | GET    | ANY    | ALL   |
+| /api/admin/templates/{id}      | GET    | ANY    | ALL   |
+| /api/admin/templates/{id}      | PUT    | ANY    | ALL   |
+| /api/admin/templates/{id}      | DELETE | ANY    | ALL   |
 
 ## Requirements
 

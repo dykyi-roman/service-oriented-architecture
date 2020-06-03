@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @OA\Info(title="Cloud-storage API", version="1.0.3")
- * @OA\Tag(name="Cloud-storage")
  */
 abstract class ApiController extends BaseController
 {

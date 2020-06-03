@@ -35,7 +35,7 @@ final class AdminController extends ApiController
     /**
      * @OA\Post(
      *     tags={"Admin"},
-     *     path="/api/admin/template/",
+     *     path="/api/admin/templates/",
      *     summary="Create new template",
      *     @OA\Parameter(
      *          name="query",
@@ -73,7 +73,7 @@ final class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/template/", methods={"POST"}, name="api.admin.template.create")
+     * @Route("/api/admin/templates/", methods={"POST"}, name="api.admin.template.create")
      */
     public function create(CreateTemplateRequest $request): JsonResponse
     {
@@ -95,7 +95,7 @@ final class AdminController extends ApiController
     /**
      * @OA\Put(
      *     tags={"Admin"},
-     *     path="/api/admin/template/{id}",
+     *     path="/api/admin/templates/{id}",
      *     summary="Update exist template by id",
      *     @OA\Parameter(
      *          name="query",
@@ -119,7 +119,7 @@ final class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/template/{id}", methods={"PUT"}, name="api.admin.template.update")
+     * @Route("/api/admin/templates/{id}", methods={"PUT"}, name="api.admin.template.update")
      */
     public function update(UpdateTemplateRequest $request): JsonResponse
     {
@@ -135,8 +135,15 @@ final class AdminController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Admin"},
-     *     path="/api/admin/template/{id}",
+     *     path="/api/admin/templates/{id}",
      *     summary="Get template by id",
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Success",
@@ -145,9 +152,9 @@ final class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/template/{id}", methods={"GET"}, name="api.admin.template.one")
+     * @Route("/api/admin/templates/{id}", methods={"GET"}, name="api.admin.template.one")
      */
-    public function getOne(TemplateRequest $request): JsonResponse
+    public function getTemplate(TemplateRequest $request): JsonResponse
     {
         try {
             $template = $this->templateEditor->getOneById($request->getId());
@@ -161,7 +168,7 @@ final class AdminController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Admin"},
-     *     path="/api/admin/template",
+     *     path="/api/admin/templates",
      *     summary="Get all templates",
      *     @OA\Response(
      *         response=200,
@@ -171,9 +178,9 @@ final class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/template", methods={"GET"}, name="api.admin.template.all")
+     * @Route("/api/admin/templates", methods={"GET"}, name="api.admin.template.all")
      */
-    public function getAll(): JsonResponse
+    public function getTemplates(): JsonResponse
     {
         try {
             $templates = $this->templateEditor->getAll();
@@ -187,7 +194,7 @@ final class AdminController extends ApiController
     /**
      * @OA\Delete(
      *     tags={"Admin"},
-     *     path="/api/admin/template/{id}",
+     *     path="/api/admin/templates/{id}",
      *     summary="Delete template by id",
      *     @OA\Parameter(
      *          name="query",
@@ -207,7 +214,7 @@ final class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/template/{id}", methods={"DELETE"}, name="api.admin.template.delete")
+     * @Route("/api/admin/templates/{id}", methods={"DELETE"}, name="api.admin.template.delete")
      */
     public function delete(TemplateRequest $request): JsonResponse
     {

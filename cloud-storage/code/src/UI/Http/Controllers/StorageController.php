@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\UI\Http\Controllers;
 
 use App\Application\Common\Error;
@@ -10,12 +12,14 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @OA\Tag(name="Cloud-storage")
+ */
 class StorageController extends ApiController
 {
     private Client $client;
 
     /**
-     * @inheritDoc
      * @throws \App\Domain\Storage\Exception\AdapterException
      */
     public function __construct(Client $client)
@@ -27,8 +31,15 @@ class StorageController extends ApiController
     /**
      * @OA\Post(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/folder",
+     *     path="/api/{userId}/storage/folders",
      *     summary="Create new folder",
+     *     @OA\Parameter(
+     *          name="userId",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\Parameter(
      *          name="query",
      *          in="query",
@@ -44,8 +55,6 @@ class StorageController extends ApiController
      *         description="Success",
      *     ),
      * )
-     *
-     * @inheritDoc
      */
     public function createFolder(Request $request): JsonResponse
     {
@@ -60,8 +69,15 @@ class StorageController extends ApiController
     /**
      * @OA\Post(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/file",
+     *     path="/api/{userId}/storage/files",
      *     summary="Upload file",
+     *     @OA\Parameter(
+     *          name="userId",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
@@ -84,8 +100,6 @@ class StorageController extends ApiController
      *         description="Success",
      *     ),
      * )
-     *
-     * @inheritDoc
      */
     public function uploadFile(Request $request): JsonResponse
     {
@@ -111,8 +125,15 @@ class StorageController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/file",
+     *     path="/api/{userId}/storage/files",
      *     summary="Download file",
+     *     @OA\Parameter(
+     *          name="userId",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\Parameter(
      *          name="query",
      *          in="query",
@@ -134,8 +155,6 @@ class StorageController extends ApiController
      *         description="Success",
      *     ),
      * )
-     *
-     * @inheritDoc
      */
     public function download(Request $request): JsonResponse
     {
@@ -151,8 +170,15 @@ class StorageController extends ApiController
     /**
      * @OA\Delete(
      *     tags={"Cloud-storage"},
-     *     path="/api/storage/file",
+     *     path="/api/{userId}/storage/files",
      *     summary="Delete file or folder",
+     *     @OA\Parameter(
+     *          name="userId",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\Parameter(
      *          name="query",
      *          in="query",
@@ -168,8 +194,6 @@ class StorageController extends ApiController
      *         description="Success",
      *     ),
      * )
-     *
-     * @inheritDoc
      */
     public function delete(Request $request): JsonResponse
     {

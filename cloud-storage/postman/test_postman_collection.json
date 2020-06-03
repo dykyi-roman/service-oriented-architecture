@@ -72,14 +72,16 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/folder",
+					"raw": "{{host}}/api/user/{{userId}}/storage/folders",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"user",
+						"{{userId}}",
 						"storage",
-						"folder"
+						"folders"
 					]
 				}
 			},
@@ -153,14 +155,16 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/file",
+					"raw": "{{host}}/api/user/{{userId}}/storage/files",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"user",
+						"{{userId}}",
 						"storage",
-						"file"
+						"files"
 					]
 				}
 			},
@@ -208,20 +212,139 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/api/storage/file?file=test/5e956606833e68.35220329.jpg",
+					"raw": "{{host}}/api/user/{{userId}}/storage/files?file=test/5e956606833e68.35220329.jpg",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"user",
+						"{{userId}}",
 						"storage",
-						"file"
+						"files"
 					],
 					"query": [
 						{
 							"key": "file",
 							"value": "test/5e956606833e68.35220329.jpg"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/file",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "893706af-8d33-43d0-a825-28b0818fa48a",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has status\", function(){",
+							"    pm.expect(pm.response.json().status).to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/admin/user/{{userId}}/storage/files/{{fileId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"{{userId}}",
+						"storage",
+						"files",
+						"{{fileId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbdfbfe9-2e98-4c09-80f1-52f7cbf44cb0",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has status\", function(){",
+							"    pm.expect(pm.response.json().status).to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/admin/user/{{userId}}/storage/files",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"{{userId}}",
+						"storage",
+						"files"
 					]
 				}
 			},
@@ -278,14 +401,16 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/storage/file",
+					"raw": "{{host}}/api/user/{{userId}}/storage/files",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
+						"user",
+						"{{userId}}",
 						"storage",
-						"file"
+						"files"
 					],
 					"query": [
 						{
@@ -301,19 +426,19 @@
 	],
 	"variable": [
 		{
-			"id": "413a2a46-b230-453b-ad9c-1ee07ab33b92",
+			"id": "097d83f8-d179-4bc2-a8b6-48847fb30dd4",
 			"key": "test",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7f3c989e-1525-46dc-8bcc-2aa9335132d5",
+			"id": "ac1001f1-3e25-4beb-91e6-8ba27061476a",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "eedfb465-041a-4cf4-b2b2-28323135a525",
+			"id": "0ff401f5-f1aa-4791-994b-46ee27a40254",
 			"key": "cloud-folder",
 			"value": "",
 			"type": "string"

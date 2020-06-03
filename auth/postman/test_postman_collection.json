@@ -280,7 +280,7 @@
 			"response": []
 		},
 		{
-			"name": "admin/one",
+			"name": "admin/user",
 			"event": [
 				{
 					"listen": "test",
@@ -312,14 +312,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/admin/user/{{uuid}}",
+					"raw": "{{host}}/api/admin/users/{{uuid}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"user",
+						"users",
 						"{{uuid}}"
 					]
 				},
@@ -328,7 +328,7 @@
 			"response": []
 		},
 		{
-			"name": "admin/all",
+			"name": "admin/users",
 			"event": [
 				{
 					"listen": "test",
@@ -359,14 +359,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/admin/user",
+					"raw": "{{host}}/api/admin/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"user"
+						"users"
 					]
 				},
 				"description": "get user data"
@@ -489,25 +489,25 @@
 	],
 	"variable": [
 		{
-			"id": "394b66cb-c3f4-4618-a68a-8c4fe217e0f5",
+			"id": "a7628d1c-885e-4c1a-a149-6cfc8d63c6c1",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "fdee1243-12c6-4942-a9fc-8dd7bac75db7",
+			"id": "2c8a5e45-58e2-4ee2-926c-606a6383ba38",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "9ff1b63c-aafc-42d5-8426-be6c3f53cd07",
+			"id": "4b8b457e-4151-46be-8c0c-9ebfc8d7eee4",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "1818aaca-24c6-4fb9-8b06-d87bc823fd3a",
+			"id": "fe39afba-7ab7-44c8-8d01-57e9dcaece53",
 			"key": "test",
 			"value": "",
 			"type": "string"

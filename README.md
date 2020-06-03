@@ -175,6 +175,8 @@ For more information, click [here](vault/README.md).
 [Super speed nginx](https://gnugat.github.io/2016/04/20/super-speed-sf-nginx.html)
 
 [Travis](https://docs.travis-ci.com/user/job-lifecycle/)
+
+[Best practices rest api](https://www.merixstudio.com/blog/best-practices-rest-api-development)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

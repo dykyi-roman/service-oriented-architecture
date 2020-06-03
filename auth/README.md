@@ -36,8 +36,8 @@ php bin/console doctrine:migrations:migrate
 
 | Path                    | Method  | Scheme | Grant |
 | ----------------------  | ------- | ------ | ----- |
-| /api/admin/user         | GET     | ANY    | ALL   |
-| /api/admin/user/{id}    | GET     | ANY    | ALL   |
+| /api/admin/users        | GET     | ANY    | ALL   |
+| /api/admin/users/{id}   | GET     | ANY    | ALL   |
 
 ## Requirements
 

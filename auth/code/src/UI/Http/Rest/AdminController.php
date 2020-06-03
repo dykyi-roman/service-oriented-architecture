@@ -22,8 +22,15 @@ class AdminController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Admin"},
-     *     path="/api/admin/user/{id}",
+     *     path="/api/admin/users/{id}",
      *     summary="Get user by id",
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Success",
@@ -32,9 +39,9 @@ class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/user/{id}", methods={"GET"}, name="api.admin.user.one")
+     * @Route("/api/admin/users/{id}", methods={"GET"}, name="api.admin.user")
      */
-    public function getOne(Request $request, UserFinder $userFinder): JsonResponse
+    public function getUserById(Request $request, UserFinder $userFinder): JsonResponse
     {
         try {
             $request = $this->transformJsonBody($request);
@@ -52,7 +59,7 @@ class AdminController extends ApiController
     /**
      * @OA\Get(
      *     tags={"Admin"},
-     *     path="/api/admin/user",
+     *     path="/api/admin/users",
      *     summary="Get all users",
      *     @OA\Response(
      *         response=200,
@@ -62,9 +69,9 @@ class AdminController extends ApiController
      */
 
     /**
-     * @Route("/api/admin/user", methods={"GET"}, name="api.admin.user.all")
+     * @Route("/api/admin/users", methods={"GET"}, name="api.admin.user.all")
      */
-    public function getAll(UserFinder $userFinder): JsonResponse
+    public function getUsers(UserFinder $userFinder): JsonResponse
     {
         try {
             $users = $userFinder->findAll();

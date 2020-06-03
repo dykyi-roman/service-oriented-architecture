@@ -29,7 +29,7 @@ class AdminControllerTest extends WebTestCase
     }
 
     /**
-     * @covers ::getOne
+     * @covers ::getUserById
      */
     public function testGetUserById(): void
     {
@@ -42,14 +42,14 @@ class AdminControllerTest extends WebTestCase
         $request = Request::create('', 'GET', ['id' => $uuid->toString()]);
         $userFinder = new UserFinder($repository);
 
-        $responseJson = $controller->getOne($request, $userFinder);
+        $responseJson = $controller->getUserById($request, $userFinder);
         $response = json_decode($responseJson->getContent());
 
         $this->assertSame($response->status, 'success');
     }
 
     /**
-     * @covers ::getAll
+     * @covers ::getUsers
      */
     public function testAllUserById(): void
     {
@@ -61,7 +61,7 @@ class AdminControllerTest extends WebTestCase
 
         $userFinder = new UserFinder($repository);
 
-        $responseJson = $controller->getAll($userFinder);
+        $responseJson = $controller->getUsers($userFinder);
         $response = json_decode($responseJson->getContent());
 
         $this->assertSame($response->status, 'success');

@@ -58,14 +58,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/admin/template/",
+					"raw": "{{host}}/api/admin/templates/",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"template",
+						"templates",
 						""
 					]
 				}
@@ -119,14 +119,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/admin/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/templates/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"template",
+						"templates",
 						"{{templateId}}"
 					]
 				}
@@ -134,7 +134,7 @@
 			"response": []
 		},
 		{
-			"name": "admin/one",
+			"name": "admin/template",
 			"event": [
 				{
 					"listen": "test",
@@ -183,14 +183,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/admin/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/templates/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"template",
+						"templates",
 						"{{templateId}}"
 					]
 				}
@@ -198,7 +198,7 @@
 			"response": []
 		},
 		{
-			"name": "admin/all",
+			"name": "admin/templates",
 			"event": [
 				{
 					"listen": "test",
@@ -247,14 +247,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/admin/template",
+					"raw": "{{host}}/api/admin/templates",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"template"
+						"templates"
 					]
 				}
 			},
@@ -307,14 +307,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/admin/template/{{templateId}}",
+					"raw": "{{host}}/api/admin/templates/{{templateId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"admin",
-						"template",
+						"templates",
 						"{{templateId}}"
 					]
 				}
@@ -324,7 +324,7 @@
 	],
 	"variable": [
 		{
-			"id": "eaf587c0-afbb-4123-9593-f0cd6fa111a4",
+			"id": "b2f47ed4-e345-4077-8130-5a8153602df5",
 			"key": "templateId",
 			"value": "",
 			"type": "string"

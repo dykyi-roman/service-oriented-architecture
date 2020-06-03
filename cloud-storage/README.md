@@ -5,12 +5,19 @@ Cloud storage service
 
 ## App endpoints
 
-| Path                    | Method  | Scheme | Grant |
-| ----------------------  | ------- | ------ | ----- |
-| /api/storage/folder     | POST    | ANY    | ALL   |
-| /api/storage/file       | POST    | ANY    | ALL   |
-| /api/storage/file       | GET     | ANY    | ALL   |
-| /api/storage/file       | DELETE  | ANY    | ALL   |
+| Path                                  | Method  | Scheme | Grant |
+| ------------------------------------- | ------- | ------ | ----- |
+| /api/user/{userId}/storage/folders    | POST    | ANY    | ALL   |
+| /api/user/{userId}/storage/files      | POST    | ANY    | ALL   |
+| /api/user/{userId}/storage/files      | GET     | ANY    | ALL   |
+| /api/user/{userId}/storage/files      | DELETE  | ANY    | ALL   |
+
+## Admin endpoints
+
+| Path                                        | Method  | Scheme | Grant |
+| ------------------------------------------- | ------- | ------ | ----- |
+| /api/admin/user/{userId}/storage/files      | GET     | ANY    | ALL   |
+| /api/admin/user/{userId}/storage/files/{id} | GET     | ANY    | ALL   |
 
 ## Requirements
 
