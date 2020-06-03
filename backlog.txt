@@ -5,9 +5,9 @@ adminka
 yandex tank
 
 cloud-storage:
- - api/{{userID}}/file/
+ - linked userId with upload file (finish admin contoller)
  - virus check
- - migrate files from oe storage to another without PC (cnsole command or API)
+ - migrate files from one storage to another without PC (cnsole command or API)
 
 auth:
  - black list
