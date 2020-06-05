@@ -1,0 +1,84 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    APP_ENV: '%env(resolve:APP_ENV)%'
+    JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
+    AUTH_SERVICE_HOST: '%env(resolve:AUTH_SERVICE_HOST)%'
+    MESSAGE_SERVICE_HOST: '%env(resolve:MESSAGE_SERVICE_HOST)%'
+    STORAGE_SERVICE_HOST: '%env(resolve:STORAGE_SERVICE_HOST)%'
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\UI\Http\:
+        resource: '../src/UI/Http'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    GuzzleHttp\Client: ~
+
+    App\Infrastructure\HttpClient\GuzzleClient:
+        - '@GuzzleHttp\Client'
+        - ['@App\Infrastructure\HttpClient\Middleware\AuthTokenMiddleware']
+
+    App\Infrastructure\Cache\RedisCache:
+        arguments:
+            - '%env(REDIS_HOST)%'
+            - '%env(REDIS_PORT)%'
+
+    App\Infrastructure\Metrics\MetricsInterface: '@App\Infrastructure\Metrics\StatsDMetrics'
+    Psr\Http\Client\ClientInterface: '@App\Infrastructure\HttpClient\GuzzleClient'
+    App\Infrastructure\HttpClient\ResponseDataExtractorInterface: '@App\Infrastructure\HttpClient\ResponseDataExtractor'
+    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface: '@App\Application\Security\Service\TokenStorage'
+
+    ########## Listener ###########
+    App\Application\Security\Listener\RequestVerifyListener:
+        tags:
+            - { name: kernel.event_listener }
+
+    App\Application\Security\Listener\ProhibitedActionForAuthorizedUserListener:
+        tags:
+            - { name: kernel.event_listener }
+
+    App\Application\Security\Listener\AddCookiesToLoginResponseSubscriber:
+        tags:
+            - { name: kernel.response }
+
+    ########## Command ###########
+    App\Application\Auth\Commands\Handler\AuthorizeHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\AuthorizeCommand }
+
+    App\Application\Auth\Commands\Handler\LoginHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LoginCommand }
+
+    App\Application\Auth\Commands\Handler\SignUpHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\SignUpCommand }
+
+    App\Application\Auth\Commands\Handler\LogoutHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutCommand }
+
+    App\Application\Auth\Commands\Handler\ForgotPasswordHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\ForgotPasswordCommand }
+
+    App\Application\Auth\Commands\Handler\RestorePasswordHandler:
+        tags:
+            - { name: command_handler, handles: App\Application\Auth\Commands\Command\RestorePasswordCommand }

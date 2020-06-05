@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+    web:
+        image: nginx:stable-alpine
+        ports:
+            - "2000:80"
+            - "2001:443"
+        expose:
+            - "2001"
+        volumes:
+            - ./code:/var/www/html/code
+            - ./docker/nginx/ssl:/etc/nginx/ssl
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
+        links:
+            - php
+        networks:
+            - soa
+    php:
+        build: docker/php
+        command: '/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
+        volumes:
+            - ./code:/var/www/html/code
+            - ./code/config/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+        networks:
+            - soa
+networks:
+    soa:
+        external: true
