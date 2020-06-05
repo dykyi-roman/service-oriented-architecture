@@ -10,7 +10,6 @@ use App\Domain\Auth\Service\SignUp;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
-use App\Domain\Auth\ValueObject\Phone;
 use App\Domain\Auth\ValueObject\Token;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -33,21 +32,13 @@ final class AuthAdapter
         return new Token($response);
     }
 
-    public function signUp(Email $email, Password $password, Phone $phone, FullName $fullName): UuidInterface
+    public function signUp(Email $email, Password $password, FullName $fullName): UuidInterface
     {
-        $response = $this->signUp->createNewUser($email, $password, $phone, $fullName);
+        $response = $this->signUp->createNewUser($email, $password, $fullName);
         if ($response['status'] === 'error') {
             throw AuthException::unexpectedErrorInSignUpProcess($response['error']);
         }
 
         return Uuid::fromString($response['data']['uuid']);
-    }
-
-    public function passwordRestore(string $contact, Password $password): void
-    {
-        $response = $this->auth->passwordRestore($contact, $password);
-        if ($response['status'] === 'error') {
-            throw AuthException::changePasswordError($response['error']);
-        }
     }
 }

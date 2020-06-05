@@ -44,6 +44,10 @@ services:
     tags:
       - { name: tactician.handler, command: App\Application\User\Command\UserRegisterCommand }
 
+  App\Application\User\Handler\AdminRegisterHandler:
+    tags:
+      - { name: tactician.handler, command: App\Application\User\Command\AdminRegisterCommand }
+
   App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
     public: true
 

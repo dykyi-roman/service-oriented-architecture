@@ -19,6 +19,7 @@ env:
         - PROJECT=message
         - PROJECT=cloud-storage
         - PROJECT=application
+        - PROJECT=adminpanel
 
 sudo: required
 

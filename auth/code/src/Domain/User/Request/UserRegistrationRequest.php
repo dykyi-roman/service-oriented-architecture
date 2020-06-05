@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\User\ValueObject;
+namespace App\Domain\User\Request;
 
+use App\Domain\User\ValueObject\FullName;
+use App\Domain\User\ValueObject\NotEmpty;
+use App\Domain\User\ValueObject\Phone;
 use Immutable\Exception\ImmutableObjectException;
 use Immutable\ValueObject\Email;
 use Immutable\ValueObject\ValueObject;
+use InvalidArgumentException;
+use Throwable;
 
 final class UserRegistrationRequest extends ValueObject
 {
@@ -29,7 +34,7 @@ final class UserRegistrationRequest extends ValueObject
     /**
      * @inheritDoc
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws ImmutableObjectException
      */
     public function withChanged(
@@ -47,8 +52,8 @@ final class UserRegistrationRequest extends ValueObject
                 'password' => $password,
                 'fullName' => $fullName,
             ]);
-        } catch (\Throwable $exception) {
-            throw new \InvalidArgumentException($exception->getMessage());
+        } catch (Throwable $exception) {
+            throw new InvalidArgumentException($exception->getMessage());
         }
     }
 

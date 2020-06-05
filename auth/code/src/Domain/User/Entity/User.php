@@ -16,7 +16,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, JWTUserInterface
 {
-    private const ROLE_USER = 'ROLE_USER';
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
      * @ORM\Id()
@@ -29,6 +30,11 @@ class User implements UserInterface, JWTUserInterface
      * @ORM\Column(type="string", length=80, unique=true)
      */
     private string $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private array $roles;
 
     /**
      * @var string The hashed password
@@ -168,9 +174,9 @@ class User implements UserInterface, JWTUserInterface
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): self
+    public function setPhone(string $phone): self
     {
-        $this->phone = $phone;
+        $this->phone = $phone ?? '';
 
         return $this;
     }
@@ -182,7 +188,12 @@ class User implements UserInterface, JWTUserInterface
 
     public function getRoles(): array
     {
-        return [self::ROLE_USER];
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     public function toArray(): array

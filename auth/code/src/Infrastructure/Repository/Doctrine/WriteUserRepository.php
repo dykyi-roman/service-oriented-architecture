@@ -35,9 +35,28 @@ class WriteUserRepository extends ServiceEntityRepository implements WriteUserRe
         string $fullName
     ): void {
         $user = new User($uuid);
+        $user->setRoles([User::ROLE_USER]);
         $user->setEmail($email);
         $user->setPhone($phone);
         $user->setFullName($fullName);
+        $user->setPassword($this->encoder->encodePassword($user, $password));
+
+        $this->store($user);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function createAdmin(UuidInterface $uuid, string $email, string $password, string $fullName): void
+    {
+        $user = new User($uuid);
+        $user->setRoles([User::ROLE_ADMIN]);
+        $user->setEmail($email);
+        $user->setFullName($fullName);
+        $user->setPhone('+000000000000');
         $user->setPassword($this->encoder->encodePassword($user, $password));
 
         $this->store($user);

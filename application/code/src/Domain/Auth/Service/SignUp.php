@@ -17,7 +17,7 @@ use Throwable;
 
 final class SignUp
 {
-    private const LOGIN_URI = '/api/user/registration';
+    private const LOGIN_URI = '/api/user';
 
     private string $host;
     private ClientInterface $client;

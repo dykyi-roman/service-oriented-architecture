@@ -7,9 +7,9 @@ namespace App\UI\Http\Rest;
 use App\Application\Common\Error;
 use App\Application\User\Command\UserRegisterCommand;
 use App\Domain\User\Entity\User;
+use App\Domain\User\Request\UserRegistrationRequest;
 use App\Domain\User\Service\PasswordRestore;
 use App\Domain\User\ValueObject\FullName;
-use App\Domain\User\ValueObject\UserRegistrationRequest;
 use Exception;
 use Immutable\Exception\ImmutableObjectException;
 use InvalidArgumentException;
@@ -56,7 +56,7 @@ class UserController extends ApiController
     /**
      * @OA\Post(
      *     tags={"User"},
-     *     path="/api/user/registration",
+     *     path="/api/user",
      *     summary="Register a new user",
      *     @OA\Parameter(
      *          name="query",
@@ -73,7 +73,6 @@ class UserController extends ApiController
      *              @OA\Property(
      *                  property="firstName",
      *                  type="string",
-     *                  description="phone|email"
      *              ),
      *              @OA\Property(
      *                  property="lastName",
@@ -93,7 +92,7 @@ class UserController extends ApiController
      */
 
     /**
-     * @Route(path="/api/user/registration", methods={"POST"}, name="api.user.registration")
+     * @Route(path="/api/user", methods={"POST"}, name="api.user.registration")
      */
     public function register(Request $request, CommandBus $commandBus): JsonResponse
     {
@@ -125,7 +124,7 @@ class UserController extends ApiController
      * @OA\Get(
      *     tags={"User"},
      *     security= { { "bearerAuth": {} } },
-     *     path="/api/user/current",
+     *     path="/api/user",
      *     summary="Get current user from token storage",
      *     @OA\Response(
      *         response=200,
@@ -135,7 +134,7 @@ class UserController extends ApiController
      */
 
     /**
-     * @Route(path="/api/user/current", methods={"GET"}, name="api.user.current_info")
+     * @Route(path="/api/user", methods={"GET"}, name="api.user.current_info")
      */
     public function user(TokenStorageInterface $tokenStorage): JsonResponse
     {

@@ -74,11 +74,3 @@ services:
     App\Application\Auth\Commands\Handler\LogoutHandler:
         tags:
             - { name: command_handler, handles: App\Application\Auth\Commands\Command\LogoutCommand }
-
-    App\Application\Auth\Commands\Handler\ForgotPasswordHandler:
-        tags:
-            - { name: command_handler, handles: App\Application\Auth\Commands\Command\ForgotPasswordCommand }
-
-    App\Application\Auth\Commands\Handler\RestorePasswordHandler:
-        tags:
-            - { name: command_handler, handles: App\Application\Auth\Commands\Command\RestorePasswordCommand }

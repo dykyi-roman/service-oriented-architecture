@@ -12,7 +12,7 @@ As we moved from monoliths to microservices, we needed to centralize our authori
 
 ## API Gateway
 
-![image](docs/apigateway.png)
+![image](apigateway.png)
 
 One common pattern here would be to use an API gateway as the entry point to your entire microservice architecture. 
 Incoming requests for authentication would be routed to the appropriate microservice. 
@@ -31,7 +31,7 @@ You could write a library that you import into your other microservices that req
 This library could have a mechanism to validate JWT's at the microservice level, so you never need to talk to your auth api to see if a JWT is valid or not. 
 See the description and diagram below:
 
-![image](docs/jwt-api-flow.png)
+![image](jwt-api-flow.png)
 
 Your auth server will need to be the single issuer of JWTs to your microservices. 
 So, when a user logs in and successfully authenticates, your auth server will issue a JWT signed with a private key (signing MUST be asymmetric - RS256 is one example) you keep on the auth server only;
@@ -44,7 +44,7 @@ By having the public key cached in your microservice, you will be able to valida
 
 ## Use Vault storage
 
-![image](docs/vault-api-flow.png)
+![image](vault-api-flow.png)
 
 It's made by those amazing folks at Hashicorp. It's a secret store, but can also do OTL credentials for MySQL/AWS/other, act as a CA, do encryption-as-a-service etc. 
 One great benefit is that you can deploy tokens to your servers that give them access to read from the vault (what they can read depends on the policies assigned to them). 

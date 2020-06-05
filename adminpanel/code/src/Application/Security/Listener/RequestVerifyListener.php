@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Throwable;
 
 final class RequestVerifyListener
 {
@@ -41,6 +42,9 @@ final class RequestVerifyListener
         } catch (AuthException $exception) {
             $this->tokenStorage->setToken(null);
             $event->setResponse(RedirectResponse::create('/'));
+        } catch (Throwable $exception) {
+            dump($exception->getMessage());
+            die();
         }
     }
 }

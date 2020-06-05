@@ -16,7 +16,6 @@ use Throwable;
 final class Auth
 {
     private const LOGIN_URI = '/api/user/login';
-    private const RESTORE_PASSWORD_URI = '/api/user/password/restore';
 
     private string $host;
     private ClientInterface $client;
@@ -44,26 +43,6 @@ final class Auth
                 512
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
-            $response = $this->client->sendRequest($request);
-
-            return $this->responseDataExtractor->extract($response);
-        } catch (Throwable $exception) {
-            throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
-        }
-    }
-
-    public function passwordRestore(string $contact, Password $password): array
-    {
-        try {
-            $payload = json_encode(
-                [
-                    'contact' => $contact,
-                    'password' => $password->toString()
-                ],
-                JSON_THROW_ON_ERROR | JSON_THROW_ON_ERROR,
-                512
-            );
-            $request = new Request('PUT', $this->host . self::RESTORE_PASSWORD_URI, [], $payload);
             $response = $this->client->sendRequest($request);
 
             return $this->responseDataExtractor->extract($response);

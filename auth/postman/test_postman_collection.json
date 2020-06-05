@@ -69,14 +69,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/user/registration",
+					"raw": "{{host}}/api/user",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
-						"user",
-						"registration"
+						"user"
 					]
 				},
 				"description": "Register user"
@@ -265,108 +264,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/api/user/current",
+					"raw": "{{host}}/api/user",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
-						"user",
-						"current"
-					]
-				},
-				"description": "get user data"
-			},
-			"response": []
-		},
-		{
-			"name": "admin/user",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "480f06e5-230d-4633-a59f-21411fdffe2e",
-						"exec": [
-							"pm.test(\"Log response errors\", function () {",
-							"    if (pm.response.json().data.error){",
-							"       console.log(pm.response.json());   ",
-							"    }",
-							"});",
-							"",
-							"pm.test(\"Response must be valid and have a body\", function () {",
-							"    pm.response.to.be.ok;",
-							"    pm.response.to.be.json;",
-							"});",
-							"",
-							"pm.test(\"Response status is 200\", function(){",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/admin/users/{{uuid}}",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"admin",
-						"users",
-						"{{uuid}}"
-					]
-				},
-				"description": "get user data"
-			},
-			"response": []
-		},
-		{
-			"name": "admin/users",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "7a0aebe1-8ac9-4c0c-8bb4-c533c8acee3b",
-						"exec": [
-							"pm.test(\"Log response errors\", function () {",
-							"    if (pm.response.json().data.error){",
-							"       console.log(pm.response.json());   ",
-							"    }",
-							"});",
-							"",
-							"pm.test(\"Response must be valid and have a body\", function () {",
-							"    pm.response.to.be.ok;",
-							"    pm.response.to.be.json;",
-							"});",
-							"",
-							"pm.test(\"Response status is 200\", function(){",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/admin/users",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"admin",
-						"users"
+						"user"
 					]
 				},
 				"description": "get user data"
@@ -485,29 +389,201 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "admin/user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "480f06e5-230d-4633-a59f-21411fdffe2e",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/admin/users/{{uuid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"{{uuid}}"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		},
+		{
+			"name": "admin/users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7a0aebe1-8ac9-4c0c-8bb4-c533c8acee3b",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/admin/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		},
+		{
+			"name": "admin/registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47b68f89-8078-4e74-aee3-45e5b290a336",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Status is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response has uuid\", function(){",
+							"    pm.expect(pm.response.json().data.uuid).to.be.a('string');",
+							"});",
+							"",
+							"pm.collectionVariables.set('uuid', pm.response.json().data.uuid)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de7f19b3-8757-4c72-ade7-c9e931f7624c",
+						"exec": [
+							"var my_timestamp = new Date();",
+							"postman.setEnvironmentVariable('randomInt',my_timestamp.getTime().toString().slice(0,10));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"admin{{randomInt}}@gmail.com\",\n\t\"password\":\"test00\",\n\t\"firstName\":\"Admin\",\n\t\"lastName\":\"Admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/admin/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				},
+				"description": "Register user"
+			},
+			"response": []
 		}
 	],
 	"variable": [
 		{
-			"id": "a7628d1c-885e-4c1a-a149-6cfc8d63c6c1",
+			"id": "1e4dda71-77fa-4b00-8e4d-b1d7c3f24583",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2c8a5e45-58e2-4ee2-926c-606a6383ba38",
+			"id": "275b3483-27e6-40c2-ad55-fbfc23895348",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "4b8b457e-4151-46be-8c0c-9ebfc8d7eee4",
+			"id": "546549c7-9b89-44c6-81fe-019ef3f7d9d3",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "fe39afba-7ab7-44c8-8d01-57e9dcaece53",
+			"id": "c854a06d-8109-45af-87f8-a2259f9034d9",
 			"key": "test",
 			"value": "",
 			"type": "string"

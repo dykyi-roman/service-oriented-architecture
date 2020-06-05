@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace App\Application\User\Command;
 
-use App\Application\User\Handler\UserRegisterHandler;
-use App\Domain\User\Request\UserRegistrationRequest;
-use App\Domain\User\ValueObject\Phone;
+use App\Domain\User\Request\AdminRegistrationRequest;
 use Immutable\ValueObject\Email;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @see UserRegisterHandler
+ * @see AdminRegisterHandler
  */
-final class UserRegisterCommand
+final class AdminRegisterCommand
 {
     private UuidInterface $uuid;
-    private UserRegistrationRequest $request;
+    private AdminRegistrationRequest $request;
 
-    public function __construct(UuidInterface $uuid, UserRegistrationRequest $request)
+    public function __construct(UuidInterface $uuid, AdminRegistrationRequest $request)
     {
         $this->uuid = $uuid;
         $this->request = $request;
@@ -37,11 +35,6 @@ final class UserRegisterCommand
     public function getPassword(): string
     {
         return $this->request->getPassword();
-    }
-
-    public function getPhone(): Phone
-    {
-        return $this->request->getPhone();
     }
 
     public function getFullName(): string

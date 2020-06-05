@@ -9,22 +9,19 @@ use App\Domain\Auth\Exception\AuthException;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
-use App\Domain\Auth\ValueObject\Phone;
 
 final class SignUpRequest
 {
     private Email $email;
-    private Phone $phone;
     private Password $password;
     private FullName $fullName;
 
-    public function __construct(string $email, string $password, string $phone, string $firstName, string $lastName)
+    public function __construct(string $email, string $password, string $firstName, string $lastName)
     {
-        $this->assertWhenEmptyFields([$email, $password, $phone, $firstName, $lastName]);
+        $this->assertWhenEmptyFields([$email, $password, $firstName, $lastName]);
 
         try {
             $this->email = new Email($email);
-            $this->phone = new Phone($phone);
             $this->password = new Password($password);
             $this->fullName = new FullName($firstName, $lastName);
         } catch (AuthException $exception) {
@@ -52,11 +49,6 @@ final class SignUpRequest
     public function password(): Password
     {
         return $this->password;
-    }
-
-    public function phone(): Phone
-    {
-        return $this->phone;
     }
 
     public function fullName(): FullName

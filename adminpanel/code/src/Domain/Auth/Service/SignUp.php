@@ -8,7 +8,6 @@ use App\Domain\Auth\Exception\AuthException;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
-use App\Domain\Auth\ValueObject\Phone;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +16,7 @@ use Throwable;
 
 final class SignUp
 {
-    private const LOGIN_URI = '/api/user/registration';
+    private const LOGIN_URI = '/api/admin/user';
 
     private string $host;
     private ClientInterface $client;
@@ -33,13 +32,12 @@ final class SignUp
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
-    public function createNewUser(Email $email, Password $password, Phone $phone, FullName $fullName): array
+    public function createNewUser(Email $email, Password $password, FullName $fullName): array
     {
         try {
             $payload = json_encode(
                 [
                     'email' => $email->toString(),
-                    'phone' => $phone->toString(),
                     'password' => $password->toString(),
                     'firstName' => $fullName->firstName(),
                     'lastName' => $fullName->lastName()
