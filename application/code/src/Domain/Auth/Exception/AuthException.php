@@ -18,9 +18,9 @@ class AuthException extends RuntimeException
         return new static(sprintf('Error in Sign up process: %s', $message), 1102);
     }
 
-    public static function invalidCredentials(): self
+    public static function invalidCredentials(string $message): self
     {
-        return new static('Invalid credentials', 1103);
+        return new static($message, 1103);
     }
 
     public static function publicKeyIsNotFound(string $key): self
@@ -66,5 +66,10 @@ class AuthException extends RuntimeException
     public static function changePasswordError(string $message): self
     {
         return new static(sprintf('Change password error: %s', $message), 1113);
+    }
+
+    public static function tokenIsBroken(): self
+    {
+        return new static('Token is broken', 1114);
     }
 }

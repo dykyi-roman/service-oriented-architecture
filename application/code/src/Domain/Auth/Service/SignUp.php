@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Auth\Service;
 
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Response\ApiResponse;
+use App\Domain\Auth\Response\ApiResponseInterface;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
@@ -33,8 +35,12 @@ final class SignUp
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
-    public function createNewUser(Email $email, Password $password, Phone $phone, FullName $fullName): array
-    {
+    public function createNewUser(
+        Email $email,
+        Password $password,
+        Phone $phone,
+        FullName $fullName
+    ): ApiResponseInterface {
         try {
             $payload = json_encode(
                 [
@@ -49,7 +55,9 @@ final class SignUp
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
-            return $this->responseDataExtractor->extract($response);
+            $dataExtract = $this->responseDataExtractor->extract($response);
+
+            return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
             throw AuthException::unexpectedErrorInSignUpProcess($exception->getMessage());
         }

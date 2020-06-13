@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Auth\Service;
 
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Response\ApiAuthorizeResponse;
+use App\Domain\Auth\Response\ApiResponse;
+use App\Domain\Auth\Response\ApiResponseInterface;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\Password;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
@@ -32,7 +35,7 @@ final class Auth
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
-    public function authorizeByEmail(Email $email, Password $password): array
+    public function authorizeByEmail(Email $email, Password $password): ApiResponseInterface
     {
         try {
             $payload = json_encode(
@@ -45,14 +48,15 @@ final class Auth
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
+            $extractData = $this->responseDataExtractor->extract($response);
 
-            return $this->responseDataExtractor->extract($response);
+            return new ApiAuthorizeResponse($extractData);
         } catch (Throwable $exception) {
             throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
         }
     }
 
-    public function passwordRestore(string $contact, Password $password): array
+    public function passwordRestore(string $contact, Password $password): ApiResponseInterface
     {
         try {
             $payload = json_encode(
@@ -65,8 +69,9 @@ final class Auth
             );
             $request = new Request('PUT', $this->host . self::RESTORE_PASSWORD_URI, [], $payload);
             $response = $this->client->sendRequest($request);
+            $dataExtractor = $this->responseDataExtractor->extract($response);
 
-            return $this->responseDataExtractor->extract($response);
+            return new ApiResponse($dataExtractor);
         } catch (Throwable $exception) {
             throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
         }

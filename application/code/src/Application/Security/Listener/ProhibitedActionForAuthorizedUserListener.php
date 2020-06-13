@@ -17,6 +17,14 @@ final class ProhibitedActionForAuthorizedUserListener
             return;
         }
 
+        if (null === $routeName = $event->getRequest()->attributes->get('_route')) {
+            return;
+        }
+
+        if ($routeName === 'web.index') {
+            return;
+        }
+
         if ('no' === $request->attributes->get('security')) {
             $event->setResponse(RedirectResponse::create('/'));
             return;

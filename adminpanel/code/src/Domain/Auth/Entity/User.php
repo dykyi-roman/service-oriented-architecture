@@ -7,7 +7,7 @@ namespace App\Domain\Auth\Entity;
 use stdClass;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class User implements UserInterface
+class User implements UserInterface
 {
     private const JWT_PAYLOAD_PROPERTIES = ['id', 'email', 'phone'];
 

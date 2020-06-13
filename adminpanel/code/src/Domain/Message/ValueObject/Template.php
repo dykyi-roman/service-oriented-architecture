@@ -6,8 +6,6 @@ namespace App\Domain\Message\ValueObject;
 
 final class Template
 {
-    public const REGISTRATION_SUCCESS = 'registration.success';
-
     private string $name;
     private string $lang;
     private array $variables;

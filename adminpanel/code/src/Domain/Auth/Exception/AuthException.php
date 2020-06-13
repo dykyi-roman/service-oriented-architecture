@@ -18,9 +18,9 @@ class AuthException extends RuntimeException
         return new static(sprintf('Error in Sign up process: %s', $message), 1102);
     }
 
-    public static function invalidCredentials(): self
+    public static function invalidCredentials(string $message): self
     {
-        return new static('Invalid credentials', 1103);
+        return new static($message, 1103);
     }
 
     public static function publicKeyIsNotFound(string $key): self
@@ -48,11 +48,6 @@ class AuthException extends RuntimeException
         return new static(sprintf('Could not found "%s" token in the Cookies', $token), 1109);
     }
 
-    public static function invalidPhoneFormat(): self
-    {
-        return new static('Invalid phone format', 1110);
-    }
-
     public static function invalidEmailFormat(): self
     {
         return new static('Invalid email format', 1111);
@@ -63,8 +58,8 @@ class AuthException extends RuntimeException
         return new static(sprintf('Your password is not secure. Min length should be "%d" symbol', $length), 1112);
     }
 
-    public static function changePasswordError(string $message): self
+    public static function tokenIsBroken(): self
     {
-        return new static(sprintf('Change password error: %s', $message), 1113);
+        return new static('Token is broken', 1113);
     }
 }

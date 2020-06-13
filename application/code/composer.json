@@ -28,6 +28,7 @@
         "twig/twig": "^3.0"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
         "phpunit/phpunit": "^9.1",
         "roave/security-advisories": "dev-master",

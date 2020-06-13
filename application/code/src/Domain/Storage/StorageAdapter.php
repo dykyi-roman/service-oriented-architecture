@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Storage;
 
 use App\Domain\Storage\Exception\StorageException;
+use App\Domain\Storage\Response\ApiResponse;
+use App\Domain\Storage\Response\ApiResponseInterface;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
@@ -34,7 +36,7 @@ final class StorageAdapter
     /**
      * @throws StorageException
      */
-    public function uploadFile(string $file, string $fileExt, string $dir = null): array
+    public function uploadFile(string $file, string $fileExt, string $dir = null): ApiResponseInterface
     {
         try {
             $dirData = [
@@ -57,8 +59,9 @@ final class StorageAdapter
             $headers = ['Content-Type' => 'multipart/form-data; boundary=' . $stream->getBoundary()];
             $request = new Request('POST', $this->host . self::UPLOAD_URI, $headers, $stream);
             $response = $this->client->sendRequest($request);
+            $dataExtract = $this->responseDataExtractor->extract($response);
 
-            return $this->responseDataExtractor->extract($response);
+            return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
             throw StorageException::uploadProblem($exception->getMessage());
         }
@@ -67,14 +70,15 @@ final class StorageAdapter
     /**
      * @throws StorageException
      */
-    public function downloadFile(string $file): array
+    public function downloadFile(string $file): ApiResponseInterface
     {
         try {
             $parameters = json_encode(['file' => $file]);
             $request = $request = new Request('GET', $this->host . self::DOWNLOAD_URI, [], $parameters);
             $response = $this->client->sendRequest($request);
+            $dataExtract = $this->responseDataExtractor->extract($response);
 
-            return $this->responseDataExtractor->extract($response);
+            return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
             throw StorageException::downloadProblem($exception->getMessage());
         }

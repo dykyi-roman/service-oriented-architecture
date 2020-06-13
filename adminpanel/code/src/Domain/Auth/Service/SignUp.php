@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Auth\Service;
 
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Response\ApiResponse;
+use App\Domain\Auth\Response\ApiResponseInterface;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
@@ -16,7 +18,8 @@ use Throwable;
 
 final class SignUp
 {
-    private const LOGIN_URI = '/api/admin/user';
+    private const LOGIN_URI = '/api/admin/users';
+    private const USERS_URI = '/api/admin/users';
 
     private string $host;
     private ClientInterface $client;
@@ -32,7 +35,7 @@ final class SignUp
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
-    public function createNewUser(Email $email, Password $password, FullName $fullName): array
+    public function createNewUser(Email $email, Password $password, FullName $fullName): ApiResponseInterface
     {
         try {
             $payload = json_encode(
@@ -47,7 +50,22 @@ final class SignUp
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
-            return $this->responseDataExtractor->extract($response);
+            $dtaExtract = $this->responseDataExtractor->extract($response);
+
+            return new ApiResponse($dtaExtract);
+        } catch (Throwable $exception) {
+            throw AuthException::unexpectedErrorInSignUpProcess($exception->getMessage());
+        }
+    }
+
+    public function getAllUsers(): ApiResponseInterface
+    {
+        try {
+            $request = new Request('GET', $this->host . self::USERS_URI);
+            $response = $this->client->sendRequest($request);
+            $dataExtract = $this->responseDataExtractor->extract($response);
+
+            return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
             throw AuthException::unexpectedErrorInSignUpProcess($exception->getMessage());
         }

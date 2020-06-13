@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace App\Domain\Auth;
 
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Response\ApiResponseInterface;
 use App\Domain\Auth\Service\Auth;
 use App\Domain\Auth\Service\SignUp;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
 use App\Domain\Auth\ValueObject\Phone;
-use App\Domain\Auth\ValueObject\Token;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
-final class AuthAdapter
+class AuthAdapter
 {
     private Auth $auth;
     private SignUp $signUp;
@@ -26,28 +24,31 @@ final class AuthAdapter
         $this->signUp = $signUp;
     }
 
-    public function authorize(Email $email, Password $password): Token
+    public function authorize(Email $email, Password $password): ApiResponseInterface
     {
         $response = $this->auth->authorizeByEmail($email, $password);
-
-        return new Token($response);
-    }
-
-    public function signUp(Email $email, Password $password, Phone $phone, FullName $fullName): UuidInterface
-    {
-        $response = $this->signUp->createNewUser($email, $password, $phone, $fullName);
-        if ($response['status'] === 'error') {
-            throw AuthException::unexpectedErrorInSignUpProcess($response['error']);
+        if ($response->hasError()) {
+            throw AuthException::invalidCredentials($response->getErrorMessage());
         }
 
-        return Uuid::fromString($response['data']['uuid']);
+        return $response;
+    }
+
+    public function signUp(Email $email, Password $password, Phone $phone, FullName $fullName): ApiResponseInterface
+    {
+        $response = $this->signUp->createNewUser($email, $password, $phone, $fullName);
+        if ($response->hasError()) {
+            throw AuthException::unexpectedErrorInSignUpProcess($response->getErrorMessage());
+        }
+
+        return $response;
     }
 
     public function passwordRestore(string $contact, Password $password): void
     {
         $response = $this->auth->passwordRestore($contact, $password);
-        if ($response['status'] === 'error') {
-            throw AuthException::changePasswordError($response['error']);
+        if ($response->hasError()) {
+            throw AuthException::changePasswordError($response->getErrorMessage());
         }
     }
 }

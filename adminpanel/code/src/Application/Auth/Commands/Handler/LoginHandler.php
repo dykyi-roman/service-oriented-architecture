@@ -26,8 +26,8 @@ final class LoginHandler
     {
         try {
             $loginRequest = $command->request();
-            $tokens = $this->authAdapter->authorize($loginRequest->login(), $loginRequest->password());
-            $this->commandBus->handle(new AuthorizeCommand($tokens->token(), $tokens->refreshToken()));
+            $response = $this->authAdapter->authorize($loginRequest->login(), $loginRequest->password());
+            $this->commandBus->handle(new AuthorizeCommand($response->token(), $response->refreshToken()));
         } catch (AuthException $exception) {
             throw AppAuthException::domainException($exception->getMessage(), $exception->getCode());
         }

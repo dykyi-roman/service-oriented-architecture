@@ -42,9 +42,6 @@ final class RequestVerifyListener
         } catch (AuthException $exception) {
             $this->tokenStorage->setToken(null);
             $event->setResponse(RedirectResponse::create('/'));
-        } catch (Throwable $exception) {
-            dump($exception->getMessage());
-            die();
         }
     }
 }

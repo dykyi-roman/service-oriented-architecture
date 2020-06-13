@@ -6,7 +6,6 @@ namespace App\UI\Http\Web;
 
 use App\Application\Auth\Commands\Command\ForgotPasswordCommand;
 use App\Application\Auth\Commands\Command\RestorePasswordCommand;
-use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\RestorePasswordRequest;
 use App\Application\Common\Response;
 use App\Domain\Message\Exception\MessageException;
@@ -14,7 +13,6 @@ use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;

@@ -12,9 +12,15 @@ final class ProhibitedActionForAuthorizedUserListener
     public function __invoke(RequestEvent $event)
     {
         $request = $event->getRequest();
-
         $authToken = $request->cookies->get('auth-token');
         if (null === $authToken) {
+            return;
+        }
+        if (null === $routeName = $event->getRequest()->attributes->get('_route')) {
+            return;
+        }
+
+        if ($routeName === 'web.index') {
             return;
         }
 
