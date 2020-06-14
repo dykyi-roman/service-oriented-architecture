@@ -181,6 +181,11 @@ class User implements UserInterface, JWTUserInterface
         return $this;
     }
 
+    public function setActive(bool $value): void
+    {
+        $this->isActive = $value;
+    }
+
     public function isActive(): bool
     {
         return $this->isActive;

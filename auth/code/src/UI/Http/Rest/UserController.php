@@ -6,6 +6,7 @@ namespace App\UI\Http\Rest;
 
 use App\Application\Common\Error;
 use App\Application\User\Command\UserRegisterCommand;
+use App\Application\User\DTO\UserDTO;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Request\UserRegistrationRequest;
 use App\Domain\User\Service\PasswordRestore;
@@ -148,7 +149,7 @@ class UserController extends ApiController
             return $this->respondNotFound(Error::create('User not Found!'));
         }
 
-        return $this->respondWithSuccess($user->toArray());
+        return $this->respondWithSuccess(UserDTO::transform($user));
     }
 
     /**

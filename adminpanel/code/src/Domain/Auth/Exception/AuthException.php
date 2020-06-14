@@ -62,4 +62,14 @@ class AuthException extends RuntimeException
     {
         return new static('Token is broken', 2113);
     }
+
+    public static function getAllUserError(string $message): self
+    {
+        return new static(sprintf('Error when get users list: %s', $message), 2114);
+    }
+
+    public static function getUserError(string $message): self
+    {
+        return new static(sprintf('Error when get user info: %s', $message), 2115);
+    }
 }

@@ -69,6 +69,11 @@ abstract class ApiController extends AbstractController
         return $this->respondWithSuccess($data, 201);
     }
 
+    public function respondUpdated(array $data = []): JsonResponse
+    {
+        return $this->respondWithSuccess($data, 202);
+    }
+
     // this method allows us to accept JSON payloads in POST requests
     // since Symfony 4 doesn’t handle that automatically:
     protected function transformJsonBody(Request $request): Request

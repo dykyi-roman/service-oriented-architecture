@@ -8,7 +8,9 @@ use App\Domain\User\Entity\User;
 
 interface ReadUserRepositoryInterface
 {
-    public function findUserByEmail(string $email): ?User;
+    public function findActiveUserByEmail(string $email): ?User;
+
+    public function findActiveUserById(string $id): ?User;
 
     public function findUserById(string $id): ?User;
 

@@ -6,6 +6,7 @@ namespace App\Application\User\Command;
 
 use App\Application\User\Handler\UserRegisterHandler;
 use App\Domain\User\Request\UserRegistrationRequest;
+use App\Domain\User\ValueObject\FullName;
 use App\Domain\User\ValueObject\Phone;
 use Immutable\ValueObject\Email;
 use Ramsey\Uuid\UuidInterface;
@@ -15,37 +16,18 @@ use Ramsey\Uuid\UuidInterface;
  */
 final class UserRegisterCommand
 {
-    private UuidInterface $uuid;
-    private UserRegistrationRequest $request;
+    public UuidInterface $uuid;
+    public FullName $fullName;
+    public Email $email;
+    public Phone $phone;
+    public string $password;
 
     public function __construct(UuidInterface $uuid, UserRegistrationRequest $request)
     {
         $this->uuid = $uuid;
-        $this->request = $request;
-    }
-
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    public function getEmail(): Email
-    {
-        return $this->request->getEmail();
-    }
-
-    public function getPassword(): string
-    {
-        return $this->request->getPassword();
-    }
-
-    public function getPhone(): Phone
-    {
-        return $this->request->getPhone();
-    }
-
-    public function getFullName(): string
-    {
-        return $this->request->getFullName()->toString();
+        $this->fullName = $request->getFullName();
+        $this->email = $request->getEmail();
+        $this->phone = $request->getPhone();
+        $this->password = $request->getPassword();
     }
 }

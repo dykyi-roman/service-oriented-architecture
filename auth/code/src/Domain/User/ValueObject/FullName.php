@@ -22,6 +22,13 @@ final class FullName extends ValueObject
         parent::__construct();
     }
 
+    public static function fromFullName(string $fullName): FullName
+    {
+        $name = explode(' ', $fullName);
+
+        return new self($name[1], $name[0]);
+    }
+
     /**
      * @inheritDoc
      * @throws \Immutable\Exception\ImmutableObjectException

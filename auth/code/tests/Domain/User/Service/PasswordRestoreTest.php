@@ -40,7 +40,7 @@ class PasswordRestoreTest extends WebTestCase
 
         $restoreService = new PasswordRestore($userFinder, $userStore, $this->mockEncoder($newPassword));
         $restoreService->restore('test@gmail.com', $newPassword);
-        $userWithNewPassword = $userFinder->findById($id->toString());
+        $userWithNewPassword = $userFinder->findActiveUserById($id->toString());
 
         $this->assertSame($userWithNewPassword->getPassword(), $newPassword);
     }
@@ -62,7 +62,7 @@ class PasswordRestoreTest extends WebTestCase
 
         $restoreService = new PasswordRestore($userFinder, $userStore, $this->mockEncoder($newPassword));
         $restoreService->restore('+380938982443', $newPassword);
-        $userWithNewPassword = $userFinder->findById($id->toString());
+        $userWithNewPassword = $userFinder->findActiveUserById($id->toString());
 
         $this->assertSame($userWithNewPassword->getPassword(), $newPassword);
     }

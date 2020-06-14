@@ -48,6 +48,10 @@ services:
     tags:
       - { name: tactician.handler, command: App\Application\User\Command\AdminRegisterCommand }
 
+  App\Application\User\Handler\UserUpdateHandler:
+    tags:
+      - { name: tactician.handler, command: App\Application\User\Command\UserUpdateCommand }
+
   App\Infrastructure\Repository\InMemory\InMemoryUserRepository:
     public: true
 

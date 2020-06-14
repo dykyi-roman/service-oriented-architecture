@@ -22,8 +22,6 @@ class WriteUserRepository extends ServiceEntityRepository implements WriteUserRe
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -45,8 +43,6 @@ class WriteUserRepository extends ServiceEntityRepository implements WriteUserRe
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -60,6 +56,16 @@ class WriteUserRepository extends ServiceEntityRepository implements WriteUserRe
         $user->setPassword($this->encoder->encodePassword($user, $password));
 
         $this->store($user);
+    }
+
+    public function updateUser(UuidInterface $id, string $fullName, bool $active): void
+    {
+        $user = $this->find($id->toString());
+        if ($user instanceof User) {
+            $user->setFullName($fullName);
+            $user->setActive($active);
+            $this->getEntityManager()->flush();
+        }
     }
 
     /**

@@ -47,10 +47,29 @@ class AuthAdapter
     {
         $response = $this->signUp->getAllUsers();
         if ($response->hasError()) {
-            throw AuthException::unexpectedErrorInSignUpProcess($response->getErrorMessage());
+            throw AuthException::getAllUserError($response->getErrorMessage());
         }
 
-        dump($response->getData());
-        die();
+        return $response;
+    }
+
+    public function getUser(string $id): ApiResponseInterface
+    {
+        $response = $this->signUp->getUserById($id);
+        if ($response->hasError()) {
+            throw AuthException::getUserError($response->getErrorMessage());
+        }
+
+        return $response;
+    }
+
+    public function updateUser(string $id, array $data): ApiResponseInterface
+    {
+        $response = $this->signUp->updateUserById($id, $data);
+        if ($response->hasError()) {
+            throw AuthException::getUserError($response->getErrorMessage());
+        }
+
+        return $response;
     }
 }

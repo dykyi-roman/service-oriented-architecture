@@ -19,7 +19,9 @@ use Throwable;
 final class SignUp
 {
     private const LOGIN_URI = '/api/admin/users';
-    private const USERS_URI = '/api/admin/users';
+    private const GET_USERS_URI = '/api/admin/users';
+    private const GET_USER_URI = '/api/admin/users/%s';
+    private const UPDATE_USER_URI = '/api/admin/users/%s';
 
     private string $host;
     private ClientInterface $client;
@@ -45,8 +47,7 @@ final class SignUp
                     'firstName' => $fullName->firstName(),
                     'lastName' => $fullName->lastName()
                 ],
-                JSON_THROW_ON_ERROR | JSON_THROW_ON_ERROR,
-                512
+                JSON_THROW_ON_ERROR,
             );
             $request = new Request('POST', $this->host . self::LOGIN_URI, [], $payload);
             $response = $this->client->sendRequest($request);
@@ -61,13 +62,40 @@ final class SignUp
     public function getAllUsers(): ApiResponseInterface
     {
         try {
-            $request = new Request('GET', $this->host . self::USERS_URI);
+            $request = new Request('GET', $this->host . self::GET_USERS_URI);
             $response = $this->client->sendRequest($request);
             $dataExtract = $this->responseDataExtractor->extract($response);
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw AuthException::unexpectedErrorInSignUpProcess($exception->getMessage());
+            throw AuthException::getAllUserError($exception->getMessage());
+        }
+    }
+
+    public function getUserById(string $id): ApiResponseInterface
+    {
+        try {
+            $request = new Request('GET', $this->host . sprintf(self::GET_USER_URI, $id));
+            $response = $this->client->sendRequest($request);
+            $dataExtract = $this->responseDataExtractor->extract($response);
+
+            return new ApiResponse($dataExtract);
+        } catch (Throwable $exception) {
+            throw AuthException::getUserError($exception->getMessage());
+        }
+    }
+
+    public function updateUserById(string $id, array $data): ApiResponseInterface
+    {
+        try {
+            $payload = json_encode($data, JSON_THROW_ON_ERROR);
+            $request = new Request('PUT', $this->host . sprintf(self::UPDATE_USER_URI, $id), [], $payload);
+            $response = $this->client->sendRequest($request);
+            $dataExtract = $this->responseDataExtractor->extract($response);
+
+            return new ApiResponse($dataExtract);
+        } catch (Throwable $exception) {
+            throw AuthException::getUserError($exception->getMessage());
         }
     }
 }

@@ -17,7 +17,7 @@ class InMemoryUserRepository implements WriteUserRepositoryInterface, ReadUserRe
      */
     private array $users = [];
 
-    public function findUserByEmail(string $email): ?User
+    public function findActiveUserByEmail(string $email): ?User
     {
         foreach ($this->users as $id => $user) {
             if ($user->getEmail() === $email) {
@@ -28,9 +28,14 @@ class InMemoryUserRepository implements WriteUserRepositoryInterface, ReadUserRe
         return null;
     }
 
-    public function findUserById(string $userId): ?User
+    public function findActiveUserById(string $userId): ?User
     {
         return isset($this->users[$userId]) ? $this->users[$userId] : null;
+    }
+
+    public function findUserById(string $id): ?User
+    {
+        return isset($this->users[$id]) ? $this->users[$id] : null;
     }
 
     /**
@@ -78,5 +83,14 @@ class InMemoryUserRepository implements WriteUserRepositoryInterface, ReadUserRe
     public function all(): array
     {
         return $this->users;
+    }
+
+    public function updateUser(UuidInterface $uuid, string $fullName, bool $active): void
+    {
+        $user = $this->users[$uuid->toString()];
+        $user->setFullName($fullName);
+        $user->setActive($active);
+
+        $this->users[$uuid->toString()] = $user;
     }
 }

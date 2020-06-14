@@ -17,4 +17,9 @@ class UserException extends Exception
     {
         return new static('User password restore problem', 5101);
     }
+
+    public static function updateUser(string $id): UserException
+    {
+        return new static(sprintf('Update user "%s" problem', $id), 5102);
+    }
 }

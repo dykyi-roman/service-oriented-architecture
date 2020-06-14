@@ -16,14 +16,19 @@ class ReadUserRepository extends ServiceEntityRepository implements ReadUserRepo
         parent::__construct($registry, User::class);
     }
 
-    public function findUserByEmail(string $email): ?User
+    public function findActiveUserByEmail(string $email): ?User
     {
         return $this->findOneBy(['email' => $email, 'isActive' => true]);
     }
 
-    public function findUserById(string $userId): ?User
+    public function findActiveUserById(string $userId): ?User
     {
         return $this->findOneBy(['id' => $userId, 'isActive' => true]);
+    }
+
+    public function findUserById(string $userId): ?User
+    {
+        return $this->findOneBy(['id' => $userId]);
     }
 
     public function all(): array

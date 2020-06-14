@@ -6,9 +6,12 @@ namespace App\UI\Http\Rest;
 
 use App\Application\Common\Error;
 use App\Application\User\Command\AdminRegisterCommand;
+use App\Application\User\Command\UserUpdateCommand;
+use App\Application\User\DTO\ApiUserDTO;
+use App\Domain\User\Entity\User;
 use App\Domain\User\Request\AdminRegistrationRequest;
+use App\Domain\User\Request\UserUpdateRequest;
 use App\Domain\User\Service\UserFinder;
-use App\Domain\User\Transformer\UsersToArrayTransformer;
 use App\Domain\User\ValueObject\FullName;
 use Exception;
 use Immutable\Exception\ImmutableObjectException;
@@ -53,12 +56,12 @@ class AdminController extends ApiController
     {
         try {
             $request = $this->transformJsonBody($request);
-            $user = $userFinder->findById($request->get('id', ''));
+            $user = $userFinder->findUserById($request->get('id', ''));
             if (null === $user) {
                 throw new UserNotFoundException('id', $request->get('id', ''));
             }
 
-            return $this->respondWithSuccess([$user->toArray()]);
+            return $this->respondWithSuccess(ApiUserDTO::transform($user));
         } catch (Throwable $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
@@ -84,7 +87,7 @@ class AdminController extends ApiController
         try {
             $users = $userFinder->findAll();
 
-            return $this->respondWithSuccess(UsersToArrayTransformer::transform($users));
+            return $this->respondWithSuccess(array_map(fn(User $user) => ApiUserDTO::transform($user), $users));
         } catch (Throwable $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }
@@ -92,8 +95,8 @@ class AdminController extends ApiController
 
     /**
      * @OA\Post(
-     *     tags={"User"},
-     *     path="/api/user",
+     *     tags={"Admin"},
+     *     path="/api/admin/user",
      *     summary="Register a new user",
      *     @OA\Parameter(
      *          name="query",
@@ -156,4 +159,59 @@ class AdminController extends ApiController
         return $this->respondCreated(['uuid' => $uuid->toString()]);
     }
 
+    /**
+     * @OA\Put(
+     *     tags={"Admin"},
+     *     path="/api/admin/users/{id}",
+     *     summary="Update user",
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string",
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="query",
+     *          in="query",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                  property="fullName",
+     *                  type="string",
+     *              ),
+     *              @OA\Property(
+     *                  property="active",
+     *                  type="boolean",
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success",
+     *     ),
+     * )
+     */
+
+    /**
+     * @Route(path="/api/admin/users/{id}", methods={"PUT"}, name="api.admin.user.update")
+     */
+    public function update(Request $request, CommandBus $commandBus): JsonResponse
+    {
+        try {
+            $request = $this->transformJsonBody($request);
+            $commandBus->handle(
+                new UserUpdateCommand(
+                    Uuid::fromString($request->get('id', '')),
+                    new UserUpdateRequest(
+                        $request->get('fullName', ''),
+                        $request->get('active', '')
+                    )
+                )
+            );
+        } catch (Exception | InvalidArgumentException | ImmutableObjectException $exception) {
+            return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
+        }
+
+        return $this->respondUpdated([]);
+    }
 }

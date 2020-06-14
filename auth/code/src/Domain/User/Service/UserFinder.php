@@ -16,9 +16,14 @@ class UserFinder
         $this->userRepository = $userRepository;
     }
 
-    public function findById(string $userId): ?User
+    public function findUserById(string $userId): ?User
     {
         return $this->userRepository->findUserById($userId);
+    }
+
+    public function findActiveUserById(string $userId): ?User
+    {
+        return $this->userRepository->findActiveUserById($userId);
     }
 
     public function findByContact(string $contact): ?User

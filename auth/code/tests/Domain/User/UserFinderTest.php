@@ -44,7 +44,7 @@ class UserFinderTest extends WebTestCase
         );
 
         $userFinder = new UserFinder($this->inMemoryUserRepository);
-        $user = $userFinder->findById($id->toString());
+        $user = $userFinder->findActiveUserById($id->toString());
         $this->assertInstanceOf(User::class, $user);
     }
 
@@ -54,7 +54,7 @@ class UserFinderTest extends WebTestCase
     public function testFindByIdFailed(): void
     {
         $userFinder = new UserFinder($this->inMemoryUserRepository);
-        $user = $userFinder->findById(Uuid::uuid4()->toString());
+        $user = $userFinder->findActiveUserById(Uuid::uuid4()->toString());
         $this->assertNull($user);
     }
 }

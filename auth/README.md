@@ -39,6 +39,7 @@ php bin/console doctrine:migrations:migrate
 | /api/admin/users        | POST    | ANY    | ALL   |
 | /api/admin/users        | GET     | ANY    | ALL   |
 | /api/admin/users/{id}   | GET     | ANY    | ALL   |
+| /api/admin/users/{id}   | PUT     | ANY    | ALL   |
 
 ## Requirements
 

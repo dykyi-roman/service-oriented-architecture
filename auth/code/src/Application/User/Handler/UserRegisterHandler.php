@@ -42,15 +42,15 @@ final class UserRegisterHandler
         try {
             $this->metrics->startTiming('registration');
             $this->userRepository->createUser(
-                $command->getUuid(),
-                $command->getEmail()->getAddress(),
-                $command->getPassword(),
-                $command->getPhone()->toString(),
-                $command->getFullName()
+                $command->uuid,
+                $command->email->getAddress(),
+                $command->password,
+                $command->phone->toString(),
+                $command->fullName->toString()
             );
             $this->metrics->endTiming('registration', 1.0, ['error' => 0]);
             $this->metrics->inc('registration');
-            $this->dispatcher->dispatch(new UserRegisteredEvent($command->getUuid(), $command->getEmail()));
+            $this->dispatcher->dispatch(new UserRegisteredEvent($command->uuid, $command->email));
         } catch (Throwable $exception) {
             $message = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
             $this->logger->error($message, ['error' => $exception->getMessage()]);

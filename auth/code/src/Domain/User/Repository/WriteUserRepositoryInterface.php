@@ -17,5 +17,7 @@ interface WriteUserRepositoryInterface
         string $fullName
     ): void;
 
+    public function updateUser(UuidInterface $uuid, string $fullName, bool $active): void;
+
     public function store(User $user): void;
 }

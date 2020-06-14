@@ -391,7 +391,7 @@
 			"response": []
 		},
 		{
-			"name": "admin/user",
+			"name": "admin/users/{id}",
 			"event": [
 				{
 					"listen": "test",
@@ -422,6 +422,56 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"url": {
+					"raw": "{{host}}/api/admin/users/{{uuid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"{{uuid}}"
+					]
+				},
+				"description": "get user data"
+			},
+			"response": []
+		},
+		{
+			"name": "admin/users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "053643fe-14e9-4407-9031-7ca30b801671",
+						"exec": [
+							"pm.test(\"Log response errors\", function () {",
+							"    if (pm.response.json().data.error){",
+							"       console.log(pm.response.json());   ",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response status is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullName\":\"Roman Dikiy\",\n    \"active\": \"1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
 				"url": {
 					"raw": "{{host}}/api/admin/users/{{uuid}}",
 					"host": [
@@ -565,25 +615,25 @@
 	],
 	"variable": [
 		{
-			"id": "1e4dda71-77fa-4b00-8e4d-b1d7c3f24583",
+			"id": "3c899782-f5b3-461e-a24f-4f20bed891cd",
 			"key": "access_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "275b3483-27e6-40c2-ad55-fbfc23895348",
+			"id": "9f2f1496-3c50-44a7-b83a-42c93f4703f3",
 			"key": "refresh_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "546549c7-9b89-44c6-81fe-019ef3f7d9d3",
+			"id": "fb73e38e-81b2-4f88-b023-90019c7dbcc0",
 			"key": "uuid",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c854a06d-8109-45af-87f8-a2259f9034d9",
+			"id": "04ed2509-57bd-4e9a-8ee6-b995ea84e2c2",
 			"key": "test",
 			"value": "",
 			"type": "string"

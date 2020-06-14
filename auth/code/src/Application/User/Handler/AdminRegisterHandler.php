@@ -37,12 +37,12 @@ final class AdminRegisterHandler
     {
         try {
             $this->userRepository->createAdmin(
-                $command->getUuid(),
-                $command->getEmail()->getAddress(),
-                $command->getPassword(),
-                $command->getFullName()
+                $command->uuid,
+                $command->email->getAddress(),
+                $command->password,
+                $command->fullName->toString()
             );
-            $this->dispatcher->dispatch(new UserRegisteredEvent($command->getUuid(), $command->getEmail()));
+            $this->dispatcher->dispatch(new UserRegisteredEvent($command->uuid, $command->email));
         } catch (Throwable $exception) {
             $message = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
             $this->logger->error($message, ['error' => $exception->getMessage()]);

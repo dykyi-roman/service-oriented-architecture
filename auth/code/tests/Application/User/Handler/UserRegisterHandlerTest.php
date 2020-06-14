@@ -8,8 +8,8 @@ use App\Application\User\Command\UserRegisterCommand;
 use App\Application\User\Handler\UserRegisterHandler;
 use App\Domain\User\Entity\User;
 use App\Domain\User\Exception\UserException;
+use App\Domain\User\Request\UserRegistrationRequest;
 use App\Domain\User\ValueObject\FullName;
-use App\Domain\User\ValueObject\UserRegistrationRequest;
 use App\Infrastructure\Metrics\InMemoryMetrics;
 use App\Infrastructure\Repository\InMemory\InMemoryUserRepository;
 use Faker\Factory;
@@ -63,7 +63,7 @@ class UserRegisterHandlerTest extends WebTestCase
             new NullLogger())
         )->handle($command);
 
-        $user = $this->inMemoryUserRepository->findUserById($command->getUuid()->toString());
+        $user = $this->inMemoryUserRepository->findActiveUserById($command->uuid->toString());
 
         $this->assertInstanceOf(User::class, $user);
     }
@@ -80,7 +80,7 @@ class UserRegisterHandlerTest extends WebTestCase
 
         $command = $this->getUserRegisterCommand();
 
-        $this->createUser($command->getUuid());
+        $this->createUser($command->uuid);
 
         (new UserRegisterHandler(
             $this->inMemoryUserRepository,
