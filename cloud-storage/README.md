@@ -1,4 +1,4 @@
-Cloud storage service
+Storage service
 =======
 
 ![image](docs/architecture.png)

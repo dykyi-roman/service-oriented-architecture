@@ -40,10 +40,7 @@ final class SignUpTest extends TestCase
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willReturn($response);
 
-        $bagMock = $this->createMock(ParameterBagInterface::class);
-        $bagMock->method('get')->willReturn('test-host');
-
-        $signUp = new SignUp($clientMock, $bagMock, new ResponseDataExtractor());
+        $signUp = new SignUp($clientMock, new ResponseDataExtractor(), 'test-host');
         $response = $signUp->createNewUser(
             new Email($faker->email),
             new Password($faker->password),
@@ -67,10 +64,7 @@ final class SignUpTest extends TestCase
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willThrowException($exception);
 
-        $bagMock = $this->createMock(ParameterBagInterface::class);
-        $bagMock->method('get')->willReturn('test-host');
-
-        $auth = new SignUp($clientMock, $bagMock, new ResponseDataExtractor());
+        $auth = new SignUp($clientMock, new ResponseDataExtractor(),'test-host');
         $auth->createNewUser(
             new Email($faker->email),
             new Password($faker->password),

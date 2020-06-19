@@ -27,10 +27,7 @@ final class CertReceiverTest extends TestCase
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willReturn($response);
 
-        $bagMock = $this->createMock(ParameterBagInterface::class);
-        $bagMock->expects(self::once())->method('get')->willReturn('test-host');
-
-        $certReceiver = new CertReceiver($clientMock, $bagMock, new ResponseDataExtractor());
+        $certReceiver = new CertReceiver($clientMock, new ResponseDataExtractor(), 'test-host');
         $result = $certReceiver->downloadPublicKey(tempnam(sys_get_temp_dir(), 'Tux'));
 
         $this->assertTrue($result);
@@ -47,10 +44,7 @@ final class CertReceiverTest extends TestCase
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willThrowException($exception);
 
-        $bagMock = $this->createMock(ParameterBagInterface::class);
-        $bagMock->expects(self::once())->method('get')->willReturn('test-host');
-
-        $certReceiver = new CertReceiver($clientMock, $bagMock, new ResponseDataExtractor());
+        $certReceiver = new CertReceiver($clientMock, new ResponseDataExtractor(), 'test-host');
         $certReceiver->downloadPublicKey(tempnam(sys_get_temp_dir(), 'Tux'));
     }
 }

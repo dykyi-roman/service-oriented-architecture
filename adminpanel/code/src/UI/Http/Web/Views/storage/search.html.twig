@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 80px"></div>
+    <h1>Storage</h1>
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="userId" class="sr-only">User ID</label>
+            <input type="text" class="form-control" name="userId" placeholder="123e4567-e89b-12d3-a456-426614174000">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">File Name</th>
+            <th scope="col">Url</th>
+            <th scope="col">Size</th>
+            <th scope="col"><i class="fa fa-list" aria-hidden="true"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

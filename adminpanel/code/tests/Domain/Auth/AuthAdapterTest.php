@@ -17,8 +17,6 @@ use Faker\Factory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
-use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @coversDefaultClass AuthAdapter
@@ -41,11 +39,8 @@ class AuthAdapterTest extends TestCase
         $client = $this->createMock(ClientInterface::class);
         $client->expects(self::once())->method('sendRequest')->willReturn($response);
 
-        $bag = $this->createMock(ParameterBagInterface::class);
-        $bag->method('get')->willReturn('test-host');
-
-        $auth = new Auth($client, $bag, new ResponseDataExtractor());
-        $signUp = new SignUp($client, $bag, new ResponseDataExtractor());
+        $auth = new Auth($client, new ResponseDataExtractor(), 'test-host');
+        $signUp = new SignUp($client, new ResponseDataExtractor(), 'test-host');
 
         $authAdapter = new AuthAdapter($auth, $signUp);
         $token = $authAdapter->authorize(new Email($faker->email), new Password($faker->password));
@@ -74,11 +69,8 @@ class AuthAdapterTest extends TestCase
         $client = $this->createMock(ClientInterface::class);
         $client->expects(self::once())->method('sendRequest')->willReturn($response);
 
-        $bag = $this->createMock(ParameterBagInterface::class);
-        $bag->method('get')->willReturn('test-host');
-
-        $auth = new Auth($client, $bag, new ResponseDataExtractor());
-        $signUp = new SignUp($client, $bag, new ResponseDataExtractor());
+        $auth = new Auth($client, new ResponseDataExtractor(), 'test-host');
+        $signUp = new SignUp($client, new ResponseDataExtractor(), 'test-host');
 
         $authAdapter = new AuthAdapter($auth, $signUp);
         $response = $authAdapter->signUp(

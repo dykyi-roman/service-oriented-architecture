@@ -33,10 +33,7 @@ final class AuthTest extends TestCase
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willReturn($response);
 
-        $bagMock = $this->createMock(ParameterBagInterface::class);
-        $bagMock->method('get')->willReturn('test-host');
-
-        $auth = new Auth($clientMock, $bagMock, new ResponseDataExtractor());
+        $auth = new Auth($clientMock, new ResponseDataExtractor(), 'test-host');
         $response = $auth->authorizeByEmail(new Email($faker->email), new Password($faker->password));
 
         $this->assertInstanceOf(ApiAuthorizeResponse::class, $response);
@@ -57,10 +54,7 @@ final class AuthTest extends TestCase
         $client = $this->createMock(ClientInterface::class);
         $client->expects(self::once())->method('sendRequest')->willThrowException($exception);
 
-        $bag = $this->createMock(ParameterBagInterface::class);
-        $bag->method('get')->willReturn('test-host');
-
-        $auth = new Auth($client, $bag, new ResponseDataExtractor());
+        $auth = new Auth($client, new ResponseDataExtractor(), 'test-host');
         $auth->authorizeByEmail(new Email($faker->email), new Password($faker->password));
     }
 }
