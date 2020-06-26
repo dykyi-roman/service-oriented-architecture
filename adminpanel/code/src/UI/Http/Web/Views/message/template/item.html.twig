@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 100px"></div>
+    <h1>Message/Templates</h1>
+    <form method="post" action="{{ path('message.template.update', {'id': template.id}) }}">
+        <div class="form-group">
+            <label for="phone">Name</label>
+            <input readonly type="text" class="form-control" placeholder="Name" value="{{ template.name }}">
+        </div>
+        <div class="form-group">
+            <label for="lang">Lang</label>
+            <input readonly type="text" class="form-control" aria-describedby="lang" placeholder="Lang" value="{{ template.lang }}">
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <input readonly type="text" class="form-control" placeholder="Type" value="{{ template.type }}">
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" class="form-control" name="subject" placeholder="Subject" value="{{ template.subject }}">
+        </div>
+        <div class="form-group">
+            <label for="context">Context</label>
+            <input type="text" class="form-control" name="context" placeholder="Context" value="{{ template.context }}">
+        </div>
+        <div class="pull-right">
+            <button onclick="goBack()" class="btn btn-secondary">Go Back</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

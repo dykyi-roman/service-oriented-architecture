@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 80px"></div>
+    <h1>Storage</h1>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">File Name</th>
+            <th scope="col">Url</th>
+            <th scope="col">Size</th>
+            <th scope="col"><i class="fa fa-list" aria-hidden="true"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+{#        {% for file in files %}#}
+{#            <tr>#}
+{#                <td>{{ file.fullName }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

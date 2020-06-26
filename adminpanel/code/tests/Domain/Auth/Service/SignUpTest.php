@@ -15,7 +15,6 @@ use Faker\Factory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @coversDefaultClass SignUp
@@ -33,7 +32,8 @@ final class SignUpTest extends TestCase
             200,
             [],
             json_encode(
-                ['status' => ApiResponseInterface::STATUS_SUCCESS, 'data' => ['test' => 'value']]
+                ['status' => ApiResponseInterface::STATUS_SUCCESS, 'data' => ['test' => 'value']],
+                JSON_THROW_ON_ERROR
             )
         );
 
@@ -57,18 +57,19 @@ final class SignUpTest extends TestCase
      */
     public function testRaiseExceptionWhenCreateNewUser(): void
     {
-        $this->expectException(AuthException::class);
         $faker = Factory::create();
 
-        $exception = AuthException::unexpectedErrorInSignUpProcess('error');
+        $exception = AuthException::createNewUserError('error');
         $clientMock = $this->createMock(ClientInterface::class);
         $clientMock->expects(self::once())->method('sendRequest')->willThrowException($exception);
 
         $auth = new SignUp($clientMock, new ResponseDataExtractor(),'test-host');
-        $auth->createNewUser(
+        $response = $auth->createNewUser(
             new Email($faker->email),
             new Password($faker->password),
             new FullName($faker->firstName, $faker->lastName)
         );
+
+        $this->assertTrue($response->hasError());
     }
 }

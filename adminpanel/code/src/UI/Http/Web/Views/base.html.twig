@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('storage.files.search.get') }}">Storage</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('message.templates.get') }}">Messages</a>
+                    </li>
                   <li class="nav-item">
                         <a class="nav-link" href="{{ path('web.logout') }}">Logout</a>
                   </li>
@@ -36,6 +39,18 @@
             </ul>
         </div>
     </nav>
+    <div class="limiter">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
     {% block body %}{% endblock %}
 </div>
 

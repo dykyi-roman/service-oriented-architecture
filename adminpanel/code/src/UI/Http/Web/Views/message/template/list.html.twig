@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 80px"></div>
+    <div class="row">
+        <div class="d-inline-block">
+            <h1>Message/Templates</h1>
+        </div>
+        <div class="col-8 pt-2">
+             <button class="pull-right btn btn-dark"><a href="{{ path('message.templates.create.get') }}">Create</a></button>
+        </div>
+    </div>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Lang</th>
+            <th scope="col">Type</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Context</th>
+            <th scope="col"><i class="fa fa-list" aria-hidden="true"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for template in templates %}
+            <tr>
+                <td>{{ template.name }}</td>
+                <td>{{ template.lang }}</td>
+                <td>{{ template.type }}</td>
+                <td>{{ template.subject }}</td>
+                <td>{{ template.context|length > 50 ? template.context|slice(0, 50) ~ '...' : template.context }}</td>
+                <td>
+                    <a href="{{ path('message.template.get', {id: template.id}) }}"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                    <a href="{{ path('message.template.delete', {id: template.id}) }}"><i class="fa fa-times text-danger" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

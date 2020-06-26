@@ -6,6 +6,7 @@
 
 {% block body %}
     <div style="margin-top: 100px"></div>
+    <h1>Auth</h1>
     <form method="post" action="{{ path('auth.user.update', {'id': user.id}) }}">
         <div class="form-group">
             <label for="phone">Full name</label>

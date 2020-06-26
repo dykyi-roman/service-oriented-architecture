@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Storage;
+namespace App\Domain\Storage\Service;
 
 use App\Domain\Storage\Exception\StorageException;
 use App\Domain\Storage\Response\ApiResponse;
@@ -38,7 +38,7 @@ final class StorageAdapter
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw StorageException::couldNotFindAnyFiles($userId);
+            throw StorageException::couldNotFindAnyFiles($userId, $exception->getMessage());
         }
     }
 }

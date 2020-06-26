@@ -31,6 +31,9 @@ final class Auth
         $this->responseDataExtractor = $responseDataExtractor;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function authorizeByEmail(Email $email, Password $password): ApiAuthorizeResponse
     {
         try {
@@ -48,7 +51,7 @@ final class Auth
 
             return new ApiAuthorizeResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw AuthException::unexpectedErrorInAuthoriseProcess($exception->getMessage());
+            throw $exception;
         }
     }
 }

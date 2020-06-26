@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Auth;
+namespace App\Domain\Auth\Service;
 
 use App\Domain\Auth\Exception\AuthException;
 use App\Domain\Auth\Response\ApiResponseInterface;
-use App\Domain\Auth\Service\Auth;
-use App\Domain\Auth\Service\SignUp;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;
 use App\Domain\Auth\ValueObject\Password;
@@ -37,13 +35,13 @@ class AuthAdapter
     {
         $response = $this->signUp->createNewUser($email, $password, $fullName);
         if ($response->hasError()) {
-            throw AuthException::unexpectedErrorInSignUpProcess($response->getErrorMessage());
+            throw AuthException::createNewUserError($response->getErrorMessage());
         }
 
         return $response;
     }
 
-    public function allUsers(): ApiResponseInterface
+    public function getAllUsers(): ApiResponseInterface
     {
         $response = $this->signUp->getAllUsers();
         if ($response->hasError()) {
@@ -57,7 +55,7 @@ class AuthAdapter
     {
         $response = $this->signUp->getUserById($id);
         if ($response->hasError()) {
-            throw AuthException::getUserError($response->getErrorMessage());
+            throw AuthException::getUserError($id, $response->getErrorMessage());
         }
 
         return $response;
@@ -67,7 +65,7 @@ class AuthAdapter
     {
         $response = $this->signUp->updateUserById($id, $data);
         if ($response->hasError()) {
-            throw AuthException::getUserError($response->getErrorMessage());
+            throw AuthException::getUserError($id, $response->getErrorMessage());
         }
 
         return $response;

@@ -159,7 +159,7 @@ final class AdminController extends ApiController
         try {
             $template = $this->templateEditor->getOneById($request->getId());
 
-            return $this->respondWithSuccess([$template->toArray()]);
+            return $this->respondWithSuccess($template->toArray());
         } catch (TemplateException $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }

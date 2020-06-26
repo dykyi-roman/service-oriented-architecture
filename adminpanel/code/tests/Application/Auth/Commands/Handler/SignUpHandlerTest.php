@@ -8,7 +8,7 @@ use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Commands\Handler\SignUpHandler;
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\SignUpRequest;
-use App\Domain\Auth\AuthAdapter;
+use App\Domain\Auth\Service\AuthAdapter;
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;
 

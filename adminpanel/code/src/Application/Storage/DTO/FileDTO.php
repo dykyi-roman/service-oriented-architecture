@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Storage\DTO;
+namespace App\Application\Storage\DTO;
 
 final class FileDTO
 {

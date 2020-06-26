@@ -10,12 +10,12 @@ class AuthException extends RuntimeException
 {
     public static function unexpectedErrorInAuthoriseProcess(string $message): self
     {
-        return new static(sprintf('Error in Authorise process: %s', $message), 2101);
+        return new static(sprintf('Error in Authorise process. Error: %s', $message), 2101);
     }
 
-    public static function unexpectedErrorInSignUpProcess(string $message): self
+    public static function createNewUserError(string $message): self
     {
-        return new static(sprintf('Error in Sign up process: %s', $message), 2102);
+        return new static(sprintf('Error in Sign up process. Error: %s', $message), 2102);
     }
 
     public static function invalidCredentials(string $message): self
@@ -65,11 +65,16 @@ class AuthException extends RuntimeException
 
     public static function getAllUserError(string $message): self
     {
-        return new static(sprintf('Error when get users list: %s', $message), 2114);
+        return new static(sprintf('Error when get users list. Error: %s', $message), 2114);
     }
 
-    public static function getUserError(string $message): self
+    public static function getUserError(string $id, string $message): self
     {
-        return new static(sprintf('Error when get user info: %s', $message), 2115);
+        return new static(sprintf('Error when get user "%s". Error: %s', $id, $message), 2115);
+    }
+
+    public static function updateUserError(string $id, string $message): self
+    {
+        return new static(sprintf('Error when update user "%s". Error: %s', $id, $message), 2116);
     }
 }

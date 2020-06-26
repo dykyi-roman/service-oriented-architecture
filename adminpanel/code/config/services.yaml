@@ -42,10 +42,6 @@ services:
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface: '@App\Application\Security\Service\TokenStorage'
 
     ########## Services ###########
-    App\Domain\Storage\StorageAdapter:
-        bind:
-            $host: '%STORAGE_SERVICE_HOST%'
-
     App\Domain\Auth\Service\CertReceiver:
         bind:
             $host: '%AUTH_SERVICE_HOST%'
@@ -57,6 +53,14 @@ services:
     App\Domain\Auth\Service\Auth:
         bind:
             $host: '%AUTH_SERVICE_HOST%'
+
+    App\Domain\Storage\Service\StorageAdapter:
+        bind:
+            $host: '%STORAGE_SERVICE_HOST%'
+
+    App\Domain\Message\Template\Service\TemplateAdapter:
+        bind:
+            $host: '%MESSAGE_SERVICE_HOST%'
 
     ########## Listener ###########
     App\Application\Security\Listener\RequestVerifyListener:

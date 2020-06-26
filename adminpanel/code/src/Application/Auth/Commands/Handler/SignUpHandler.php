@@ -6,8 +6,8 @@ namespace App\Application\Auth\Commands\Handler;
 
 use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Service\AuthAdapter;
 
 final class SignUpHandler
 {

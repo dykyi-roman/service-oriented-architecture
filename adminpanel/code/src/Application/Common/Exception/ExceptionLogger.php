@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Common\Exception;
 
-final class LoggerException
+final class ExceptionLogger
 {
     /**
      * @param string|array $error

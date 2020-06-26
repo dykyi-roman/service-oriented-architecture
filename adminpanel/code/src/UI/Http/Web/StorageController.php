@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Application\Common\Exception\LoggerException;
-use App\Domain\Storage\DTO\FileDTO;
-use App\Domain\Storage\StorageAdapter;
+use App\Application\Common\Exception\ExceptionLogger;
+use App\Application\Storage\DTO\FileDTO;
+use App\Domain\Storage\Service\StorageAdapter;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +44,7 @@ class StorageController extends AbstractController
 
             return $this->render('storage/list.html.twig', ['files' => $files]);
         } catch (Throwable $exception) {
-            $this->logger->error(...LoggerException::log(__METHOD__, $exception->getMessage()));
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $this->flashBag->add('error', 'web.storage.files.get.error.code.' . $exception->getCode());
 
             return $this->redirectToRoute('web.index');

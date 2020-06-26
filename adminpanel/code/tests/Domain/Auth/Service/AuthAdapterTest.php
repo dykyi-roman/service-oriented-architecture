@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Auth;
+namespace App\Tests\Domain\Auth\Service;
 
-use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Response\ApiAuthorizeResponse;
 use App\Domain\Auth\Response\ApiResponseInterface;
 use App\Domain\Auth\Service\Auth;
+use App\Domain\Auth\Service\AuthAdapter;
 use App\Domain\Auth\Service\SignUp;
 use App\Domain\Auth\ValueObject\Email;
 use App\Domain\Auth\ValueObject\FullName;

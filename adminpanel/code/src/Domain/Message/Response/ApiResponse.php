@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Auth\Response;
+namespace App\Domain\Message\Response;
 
 final class ApiResponse implements ApiResponseInterface
 {
@@ -23,27 +23,6 @@ final class ApiResponse implements ApiResponseInterface
             $this->errorCode = (int) $payload['code'];
             $this->errorMessage = (string) $payload['error'];
         }
-    }
-
-    public static function withError(string $errorMessage, int $errorCode = 0): ApiResponse
-    {
-        return new self(
-            [
-                'status' => ApiResponseInterface::STATUS_ERROR,
-                'error' => $errorMessage,
-                'code' => $errorCode,
-            ]
-        );
-    }
-
-    public static function withSuccess(array $data): ApiResponse
-    {
-        return new self(
-            [
-                'status' => ApiResponseInterface::STATUS_ERROR,
-                'data' => $data,
-            ]
-        );
     }
 
     public function isSuccess(): bool

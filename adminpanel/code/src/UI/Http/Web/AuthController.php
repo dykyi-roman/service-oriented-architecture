@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Domain\Storage\DTO\FileDTO;
-use App\Application\Common\Exception\LoggerException;
-use App\Domain\Auth\AuthAdapter;
+use App\Application\Auth\DTO\UserDTO;
+use App\Application\Common\Exception\ExceptionLogger;
+use App\Domain\Auth\Service\AuthAdapter;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,16 +30,16 @@ class AuthController extends AbstractController
     /**
      * @Route(path="/auth", name="auth.users.get", defaults={"security" = "yes"})
      */
-    public function getUsers(AuthAdapter $authAdapter): Response
+    public function getAllUsers(AuthAdapter $authAdapter): Response
     {
         try {
-            $response = $authAdapter->allUsers();
-            $users = array_map((fn(array $user) => new FileDTO($user)), $response->getData());
+            $response = $authAdapter->getAllUsers();
+            $users = array_map((fn(array $user) => new UserDTO($user)), $response->getData());
 
             return $this->render('auth/list.html.twig', ['users' => $users]);
         } catch (Throwable $exception) {
-            $this->logger->error(...LoggerException::log(__METHOD__, $exception->getMessage()));
-            $this->flashBag->add('error', 'web.auth.update.error.code.' . $exception->getCode());
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
+            $this->flashBag->add('error', 'web.auth.users.get.error.code.' . $exception->getCode());
 
             return $this->redirectToRoute('web.index');
         }
@@ -53,12 +53,12 @@ class AuthController extends AbstractController
         try {
             $response = $authAdapter->getUser($id);
 
-            return $this->render('auth/item.html.twig', ['user' => new FileDTO($response->getData())]);
+            return $this->render('auth/item.html.twig', ['user' => new UserDTO($response->getData())]);
         } catch (Throwable $exception) {
-            $this->logger->error(...LoggerException::log(__METHOD__, $exception->getMessage()));
-            $this->flashBag->add('error', 'web.auth.update.error.code.' . $exception->getCode());
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
+            $this->flashBag->add('error', 'web.auth.user.get.error.code.' . $exception->getCode());
 
-            return $this->redirectToRoute('web.index');
+            return $this->redirectToRoute('auth.users.get');
         }
     }
 
@@ -72,10 +72,10 @@ class AuthController extends AbstractController
 
             return $this->redirectToRoute('auth.user.get', ['id' => $id]);
         } catch (Throwable $exception) {
-            $this->logger->error(...LoggerException::log(__METHOD__, $exception->getMessage()));
-            $this->flashBag->add('error', 'web.auth.update.error.code.' . $exception->getCode());
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
+            $this->flashBag->add('error', 'web.auth.user.update.error.code.' . $exception->getCode());
 
-            return $this->redirectToRoute('web.index');
+            return $this->redirectToRoute('auth.users.get');
         }
     }
 }
