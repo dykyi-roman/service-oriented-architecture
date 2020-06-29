@@ -9,11 +9,11 @@ final class Template
     public const TYPE_PHONE = 'phone';
     public const TYPE_EMAIL = 'email';
 
-    private string $name;
-    private string $lang;
-    private string $type;
-    private string $subject;
-    private string $context;
+    public string $name;
+    public string $lang;
+    public string $type;
+    public string $subject;
+    public string $context;
 
     public function __construct(string $name, string $lang, string $type, string $subject, string $context)
     {
@@ -24,16 +24,5 @@ final class Template
         $this->context = $context;
 
         //todo:: add some validation here
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'name' => $this->name,
-            'lang' => $this->lang,
-            'type' => $this->type,
-            'subject' => $this->subject,
-            'context' => $this->context,
-        ];
     }
 }

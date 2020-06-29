@@ -8,7 +8,7 @@ use App\Application\Common\Error;
 use App\Application\User\Command\AdminRegisterCommand;
 use App\Application\User\Command\UserUpdateCommand;
 use App\Application\User\DTO\ApiUserDTO;
-use App\Domain\User\Entity\User;
+use App\Application\User\Transformer\UsersToArrayTransformer;
 use App\Domain\User\Request\AdminRegistrationRequest;
 use App\Domain\User\Request\UserUpdateRequest;
 use App\Domain\User\Service\UserFinder;
@@ -87,7 +87,7 @@ class AdminController extends ApiController
         try {
             $users = $userFinder->findAll();
 
-            return $this->respondWithSuccess(array_map(fn(User $user) => ApiUserDTO::transform($user), $users));
+            return $this->respondWithSuccess(UsersToArrayTransformer::transformForApi($users));
         } catch (Throwable $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }

@@ -6,6 +6,7 @@ namespace App\UI\Http\Web;
 
 use App\Application\Common\Exception\ExceptionLogger;
 use App\Application\Storage\DTO\FileDTO;
+use App\Application\Storage\Transformer\ArrayToFilesTransformer;
 use App\Domain\Storage\Service\StorageAdapter;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,7 @@ class StorageController extends AbstractController
     {
         try {
             $response = $storageAdapter->searchFilesByUserId($userId);
-            $files = array_map((fn(array $file) => new FileDTO($file)), $response->getData());
+            $files = ArrayToFilesTransformer::transform($response->getData());
 
             return $this->render('storage/list.html.twig', ['files' => $files]);
         } catch (Throwable $exception) {

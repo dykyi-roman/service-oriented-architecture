@@ -6,6 +6,8 @@ namespace App\UI\Http\Web;
 
 use App\Application\Common\Exception\ExceptionLogger;
 use App\Application\Message\Template\DTO\TemplateDTO;
+use App\Application\Message\Template\Transformer\ArrayToTemplatesTransformer;
+use App\Application\Message\Template\Transformer\ArrayToUsersTransformer;
 use App\Domain\Message\Template\Service\TemplateAdapter;
 use App\Domain\Message\Template\ValueObject\Template;
 use Psr\Log\LoggerInterface;
@@ -29,7 +31,12 @@ class MessageTemplateController extends AbstractController
     }
 
     /**
-     * @Route(path="/message/templates/create", methods={"GET"}, name="message.templates.create.get", defaults={"security" = "yes"})
+     * @Route(
+     *     path="/message/templates/create",
+     *     methods={"GET"},
+     *     name="message.templates.create.get",
+     *     defaults={"security" = "yes"}
+     *     )
      */
     public function createNewTemplateForm(Request $request, TemplateAdapter $templateAdapter): Response
     {
@@ -37,7 +44,12 @@ class MessageTemplateController extends AbstractController
     }
 
     /**
-     * @Route(path="/message/templates", methods={"POST"}, name="message.templates.create.post", defaults={"security" = "yes"})
+     * @Route(
+     *     path="/message/templates",
+     *     methods={"POST"},
+     *     name="message.templates.create.post",
+     *     defaults={"security" = "yes"}
+     *     )
      */
     public function createNewTemplate(Request $request, TemplateAdapter $templateAdapter): Response
     {
@@ -72,7 +84,7 @@ class MessageTemplateController extends AbstractController
     {
         try {
             $response = $templateAdapter->getAllTemplates();
-            $templates = array_map((fn(array $template) => new TemplateDTO($template)), $response->getData());
+            $templates = ArrayToTemplatesTransformer::transform($response->getData());
 
             return $this->render('message/template/list.html.twig', ['templates' => $templates]);
         } catch (Throwable $exception) {
@@ -84,7 +96,12 @@ class MessageTemplateController extends AbstractController
     }
 
     /**
-     * @Route(path="/message/templates/{id}", methods={"GET"}, name="message.template.get", defaults={"security" = "yes"})
+     * @Route(
+     *     path="/message/templates/{id}",
+     *     methods={"GET"},
+     *     name="message.template.get",
+     *     defaults={"security" = "yes"}
+     *     )
      */
     public function getOneTemplate(string $id, TemplateAdapter $templateAdapter): Response
     {
@@ -102,7 +119,12 @@ class MessageTemplateController extends AbstractController
     }
 
     /**
-     * @Route(path="/message/templates/{id}", methods={"POST"}, name="message.template.update", defaults={"security" = "yes"})
+     * @Route(
+     *     path="/message/templates/{id}",
+     *     methods={"POST"},
+     *     name="message.template.update",
+     *     defaults={"security" = "yes"}
+     *     )
      */
     public function updateTemplate(string $id, Request $request, TemplateAdapter $templateAdapter): RedirectResponse
     {
@@ -119,7 +141,12 @@ class MessageTemplateController extends AbstractController
     }
 
     /**
-     * @Route(path="/message/templates/delete/{id}", methods={"GET"}, name="message.template.delete", defaults={"security" = "yes"})
+     * @Route(
+     *     path="/message/templates/delete/{id}",
+     *     methods={"GET"},
+     *     name="message.template.delete",
+     *     defaults={"security" = "yes"}
+     *     )
      */
     public function deleteTemplate(string $id, TemplateAdapter $templateAdapter): RedirectResponse
     {

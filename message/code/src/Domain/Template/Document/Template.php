@@ -102,16 +102,4 @@ class Template
     {
         $this->context = $context;
     }
-
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'type' => $this->type,
-            'lang' => $this->lang,
-            'subject' => $this->subject,
-            'context' => $this->context,
-        ];
-    }
 }

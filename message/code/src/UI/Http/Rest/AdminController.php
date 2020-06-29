@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Http\Rest;
 
 use App\Application\Common\Error;
+use App\Application\Template\DTO\TemplateDTO;
 use App\Application\Template\Transformer\TemplatesToArrayTransformer;
 use App\Application\Template\Request\CreateTemplateRequest;
 use App\Application\Template\Request\TemplateRequest;
@@ -159,7 +160,7 @@ final class AdminController extends ApiController
         try {
             $template = $this->templateEditor->getOneById($request->getId());
 
-            return $this->respondWithSuccess($template->toArray());
+            return $this->respondWithSuccess(TemplateDTO::transform($template));
         } catch (TemplateException $exception) {
             return $this->respondWithError(Error::create($exception->getMessage(), $exception->getCode()));
         }

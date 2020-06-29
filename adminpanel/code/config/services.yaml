@@ -67,6 +67,10 @@ services:
         tags:
             - { name: kernel.event_listener }
 
+    App\Application\Security\Listener\PersistActionsListener:
+        tags:
+            - { name: kernel.event_listener }
+
     App\Application\Security\Listener\ProhibitedActionForAuthorizedUserListener:
         tags:
             - { name: kernel.event_listener }

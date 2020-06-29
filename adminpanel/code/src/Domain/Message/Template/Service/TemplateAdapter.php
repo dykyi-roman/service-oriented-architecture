@@ -2,6 +2,7 @@
 
 namespace App\Domain\Message\Template\Service;
 
+use App\Application\Message\Template\DTO\TemplateCreateDTO;
 use App\Domain\Message\Response\ApiResponse;
 use App\Domain\Message\Response\ApiResponseInterface;
 use App\Domain\Message\Template\Exception\MessageException;
@@ -33,7 +34,7 @@ final class TemplateAdapter
     public function createTemplate(Template $template): ApiResponseInterface
     {
         try {
-            $payload = json_encode($template->toArray(), JSON_THROW_ON_ERROR);
+            $payload = json_encode(TemplateCreateDTO::transform($template), JSON_THROW_ON_ERROR);
             $request = new Request('POST', $this->host . self::TEMPLATES_URI, [], $payload);
             $response = $this->client->sendRequest($request);
             $dtaExtract = $this->responseDataExtractor->extract($response);

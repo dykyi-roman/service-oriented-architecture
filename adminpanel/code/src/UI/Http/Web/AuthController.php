@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Http\Web;
 
 use App\Application\Auth\DTO\UserDTO;
+use App\Application\Auth\Transformer\ArrayToUsersTransformer;
 use App\Application\Common\Exception\ExceptionLogger;
 use App\Domain\Auth\Service\AuthAdapter;
 use Psr\Log\LoggerInterface;
@@ -34,7 +35,7 @@ class AuthController extends AbstractController
     {
         try {
             $response = $authAdapter->getAllUsers();
-            $users = array_map((fn(array $user) => new UserDTO($user)), $response->getData());
+            $users = ArrayToUsersTransformer::transform($response->getData());
 
             return $this->render('auth/list.html.twig', ['users' => $users]);
         } catch (Throwable $exception) {
