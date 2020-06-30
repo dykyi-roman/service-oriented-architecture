@@ -8,6 +8,7 @@ parameters:
     JWT_PUBLIC_KEY: '%env(resolve:JWT_PUBLIC_KEY)%'
     AUTH_SERVICE_HOST: '%env(resolve:AUTH_SERVICE_HOST)%'
     STORAGE_SERVICE_HOST: '%env(resolve:STORAGE_SERVICE_HOST)%'
+    MESSAGE_SERVICE_HOST: '%env(resolve:MESSAGESERVICEHOST)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -44,6 +45,23 @@ services:
     App\Infrastructure\HttpClient\ResponseDataExtractorInterface: '@App\Infrastructure\HttpClient\ResponseDataExtractor'
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface: '@App\Application\Security\Service\TokenStorage'
     App\Infrastructure\Cache\CacheInterface: '@App\Infrastructure\Cache\RedisCache'
+
+    ########## Services ###########
+    App\Domain\Auth\Service\CertReceiver:
+        bind:
+            $host: '%AUTH_SERVICE_HOST%'
+
+    App\Domain\Auth\Service\SignUp:
+        bind:
+            $host: '%AUTH_SERVICE_HOST%'
+
+    App\Domain\Auth\Service\Auth:
+        bind:
+            $host: '%AUTH_SERVICE_HOST%'
+
+    App\Domain\Storage\Service\StorageAdapter:
+        bind:
+            $host: '%STORAGE_SERVICE_HOST%'
 
     ########## Listener ###########
     App\Application\Security\Listener\RequestVerifyListener:

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Auth\Commands\Handler;
 
 use App\Application\Auth\Commands\Command\ForgotPasswordCommand;
-use App\Domain\Message\MessageAdapter;
+use App\Domain\Message\Service\MessageAdapter;
 use App\Domain\TemporaryCode\WriteTemporaryCodeInterface;
 
 final class ForgotPasswordHandler

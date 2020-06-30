@@ -14,7 +14,6 @@ use App\Domain\Auth\ValueObject\Phone;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
 
 final class SignUp
@@ -27,10 +26,10 @@ final class SignUp
 
     public function __construct(
         ClientInterface $client,
-        ParameterBagInterface $bag,
-        ResponseDataExtractorInterface $responseDataExtractor
+        ResponseDataExtractorInterface $responseDataExtractor,
+        string $host
     ) {
-        $this->host = $bag->get('AUTH_SERVICE_HOST');
+        $this->host = $host;
         $this->client = $client;
         $this->responseDataExtractor = $responseDataExtractor;
     }
@@ -59,7 +58,7 @@ final class SignUp
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw AuthException::unexpectedErrorInSignUpProcess($exception->getMessage());
+            return ApiResponse::withError($exception->getMessage(), $exception->getCode());
         }
     }
 }

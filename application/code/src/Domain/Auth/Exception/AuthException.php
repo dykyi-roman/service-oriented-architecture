@@ -13,34 +13,39 @@ class AuthException extends RuntimeException
         return new static(sprintf('Error in Authorise process: %s', $message), 1101);
     }
 
+    public static function createNewUserError(string $message): self
+    {
+        return new static(sprintf('Error in Sign up process. Error: %s', $message), 1102);
+    }
+
     public static function unexpectedErrorInSignUpProcess(string $message): self
     {
-        return new static(sprintf('Error in Sign up process: %s', $message), 1102);
+        return new static(sprintf('Error in Sign up process: %s', $message), 1103);
     }
 
     public static function invalidCredentials(string $message): self
     {
-        return new static($message, 1103);
+        return new static($message, 1104);
     }
 
     public static function publicKeyIsNotFound(string $key): self
     {
-        return new static(sprintf('Public key is not found by path %s', $key), 1104);
+        return new static(sprintf('Public key is not found by path %s', $key), 1105);
     }
 
     public static function publicKeyIsNotUpdated(string $message): self
     {
-        return new static(sprintf('Could not download a new public key. Reason: %s', $message), 1105);
+        return new static(sprintf('Could not download a new public key. Reason: %s', $message), 1106);
     }
 
     public static function tokenIsExpired(): self
     {
-        return new static('Token is expired', 1106);
+        return new static('Token is expired', 1107);
     }
 
     public static function tokenIsNotDecoded(): self
     {
-        return new static('Could not extract payload from token', 1107);
+        return new static('Could not extract payload from token', 1108);
     }
 
     public static function tokenIsNotFoundInCookies(string $token): self

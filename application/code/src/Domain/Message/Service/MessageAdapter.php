@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Message;
+namespace App\Domain\Message\Service;
 
 use App\Application\Sender\Message\Message;
 use App\Application\Sender\Message\UnauthorizedMessage;

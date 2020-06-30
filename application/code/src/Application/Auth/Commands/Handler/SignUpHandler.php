@@ -7,8 +7,8 @@ namespace App\Application\Auth\Commands\Handler;
 use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Events\UserRegisteredEvent;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Service\AuthAdapter;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -33,6 +33,7 @@ final class SignUpHandler
                 $signUpRequest->phone(),
                 $signUpRequest->fullName()
             );
+
             $uuid = Uuid::fromString($response->getData()['uuid']);
             $this->dispatcher->dispatch(new UserRegisteredEvent($uuid, $signUpRequest->email()));
         } catch (AuthException $exception) {

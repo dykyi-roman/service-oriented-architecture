@@ -5,7 +5,7 @@ namespace App\Domain\Message\Template\Service;
 use App\Application\Message\Template\DTO\TemplateCreateDTO;
 use App\Domain\Message\Response\ApiResponse;
 use App\Domain\Message\Response\ApiResponseInterface;
-use App\Domain\Message\Template\Exception\MessageException;
+use App\Domain\Message\Template\Exception\TemplateException;
 use App\Domain\Message\Template\ValueObject\Template;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\Request;
@@ -41,7 +41,7 @@ final class TemplateAdapter
 
             return new ApiResponse($dtaExtract);
         } catch (Throwable $exception) {
-            throw MessageException::createTemplateError($exception->getMessage());
+            throw TemplateException::createTemplateError($exception->getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ final class TemplateAdapter
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw MessageException::getAllTemplatesError($exception->getMessage());
+            throw TemplateException::getAllTemplatesError($exception->getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ final class TemplateAdapter
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw MessageException::getTemplateError($id, $exception->getMessage());
+            throw TemplateException::getTemplateError($id, $exception->getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ final class TemplateAdapter
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw MessageException::updateTemplateError($id, $exception->getMessage());
+            throw TemplateException::updateTemplateError($id, $exception->getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ final class TemplateAdapter
 
             return new ApiResponse($dataExtract);
         } catch (Throwable $exception) {
-            throw MessageException::deleteTemplateError($id, $exception->getMessage());
+            throw TemplateException::deleteTemplateError($id, $exception->getMessage());
         }
     }
 }

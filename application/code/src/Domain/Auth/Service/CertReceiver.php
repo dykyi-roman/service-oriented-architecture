@@ -8,7 +8,6 @@ use App\Domain\Auth\Exception\AuthException;
 use App\Infrastructure\HttpClient\ResponseDataExtractorInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
 
 final class CertReceiver
@@ -21,10 +20,10 @@ final class CertReceiver
 
     public function __construct(
         ClientInterface $client,
-        ParameterBagInterface $bag,
-        ResponseDataExtractorInterface $responseDataExtractor
+        ResponseDataExtractorInterface $responseDataExtractor,
+        string $host
     ) {
-        $this->host = $bag->get('AUTH_SERVICE_HOST');
+        $this->host = $host;
         $this->client = $client;
         $this->responseDataExtractor = $responseDataExtractor;
     }

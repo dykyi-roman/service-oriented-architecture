@@ -6,8 +6,8 @@ namespace App\Application\Auth\Commands\Handler;
 
 use App\Application\Auth\Commands\Command\RestorePasswordCommand;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Service\AuthAdapter;
 use App\Domain\TemporaryCode\ReadTemporaryCodeInterface;
 
 final class RestorePasswordHandler

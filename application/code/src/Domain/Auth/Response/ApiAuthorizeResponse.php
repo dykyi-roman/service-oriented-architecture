@@ -14,6 +14,8 @@ final class ApiAuthorizeResponse implements ApiResponseInterface
 
     public function __construct(array $tokens)
     {
+        $this->errorCode = 0;
+        $this->errorMessage = '';
         $this->tokens = $tokens;
         if ($this->isSuccess()) {
             $this->token = $tokens['token'] ?? '';

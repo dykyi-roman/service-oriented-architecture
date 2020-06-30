@@ -10,7 +10,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use UnexpectedValueException;
 
-final class Guard
+class Guard
 {
     public function verify(string $token, string $file): User
     {

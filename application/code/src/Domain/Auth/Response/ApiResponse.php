@@ -25,6 +25,17 @@ final class ApiResponse implements ApiResponseInterface
         }
     }
 
+    public static function withError(string $errorMessage, int $errorCode = 0): ApiResponse
+    {
+        return new self(
+            [
+                'status' => ApiResponseInterface::STATUS_ERROR,
+                'error' => $errorMessage,
+                'code' => $errorCode,
+            ]
+        );
+    }
+
     public function isSuccess(): bool
     {
         return $this->status === ApiResponseInterface::STATUS_SUCCESS;

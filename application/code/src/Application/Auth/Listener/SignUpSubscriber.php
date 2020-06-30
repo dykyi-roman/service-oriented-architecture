@@ -6,7 +6,7 @@ namespace App\Application\Auth\Listener;
 
 use App\Application\Auth\Events\UserRegisteredEvent;
 use App\Domain\Message\Exception\MessageException;
-use App\Domain\Message\MessageAdapter;
+use App\Domain\Message\Service\MessageAdapter;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

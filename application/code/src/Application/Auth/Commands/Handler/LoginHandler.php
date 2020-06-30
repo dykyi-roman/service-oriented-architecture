@@ -7,8 +7,8 @@ namespace App\Application\Auth\Commands\Handler;
 use App\Application\Auth\Commands\Command\AuthorizeCommand;
 use App\Application\Auth\Commands\Command\LoginCommand;
 use App\Application\Auth\Exception\AppAuthException;
-use App\Domain\Auth\AuthAdapter;
 use App\Domain\Auth\Exception\AuthException;
+use App\Domain\Auth\Service\AuthAdapter;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 
 final class LoginHandler
