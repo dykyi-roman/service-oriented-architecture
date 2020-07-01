@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Common\Exception;
+namespace App\Application\Common\Service;
 
 final class ExceptionLogger
 {

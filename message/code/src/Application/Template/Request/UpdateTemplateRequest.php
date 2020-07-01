@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Template\Request;
 
-use App\Application\Common\JsonSchemaValidator;
+use App\Application\Common\Service\JsonSchemaValidator;
 use App\Application\Template\Exception\JsonSchemaException;
 use Exception;
 use InvalidArgumentException;

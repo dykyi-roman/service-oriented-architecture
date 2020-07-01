@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Application\Common\Exception\ExceptionLogger;
+use App\Application\Common\Service\ExceptionLogger;
 use App\Application\Message\Template\DTO\TemplateDTO;
 use App\Application\Message\Template\Transformer\ArrayToTemplatesTransformer;
-use App\Application\Message\Template\Transformer\ArrayToUsersTransformer;
 use App\Domain\Message\Template\Service\TemplateAdapter;
 use App\Domain\Message\Template\ValueObject\Template;
 use Psr\Log\LoggerInterface;
@@ -38,7 +37,7 @@ class MessageTemplateController extends AbstractController
      *     defaults={"security" = "yes"}
      *     )
      */
-    public function createNewTemplateForm(Request $request, TemplateAdapter $templateAdapter): Response
+    public function createNewTemplateForm(): Response
     {
         return $this->render('message/template/create.html.twig');
     }

@@ -105,6 +105,10 @@ make pre-commit
 [Sending sms reminders with symfony](https://www.twilio.com/blog/sending-sms-reminders-with-symfony-php-framework)
 
 [Symfony messenger](https://symfony.com/doc/current/messenger.html)
+
+[Symfony notifier](https://symfony.com/doc/current/notifier.html)
+
+[NATS](https://docs.nats.io/nats-concepts/intro)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

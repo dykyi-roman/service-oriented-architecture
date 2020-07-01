@@ -8,6 +8,7 @@ use App\Application\Auth\Commands\Command\ForgotPasswordCommand;
 use App\Application\Auth\Commands\Command\RestorePasswordCommand;
 use App\Application\Auth\Request\RestorePasswordRequest;
 use App\Application\Common\Response;
+use App\Application\Common\Service\ExceptionLogger;
 use App\Domain\Message\Exception\MessageException;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Throwable;
 
 class PasswordController extends AbstractController
 {
@@ -49,7 +51,7 @@ class PasswordController extends AbstractController
 
             return $this->render('password/restore.html.twig', ['contact' => $request->get('contact')]);
         } catch (MessageException $exception) {
-            $this->logger->error('App::PasswordController::forgotPostAction', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $this->flashBag->add('error', 'web.password.forgot.error.code.' . $exception->getCode());
         }
 
@@ -76,8 +78,8 @@ class PasswordController extends AbstractController
             $this->flashBag->add('success', 'web.password.restore.success');
 
             return $this->redirectToRoute('web.index');
-        } catch (\Throwable $exception) {
-            $this->logger->error('App::PasswordController::restorePostAction', ['error' => $exception->getMessage()]);
+        } catch (Throwable $exception) {
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $this->flashBag->add('error', 'web.password.restore.error.code.' . $exception->getCode());
         }
 
@@ -97,7 +99,7 @@ class PasswordController extends AbstractController
         try {
             $commandBus->handle(new ForgotPasswordCommand($request->get('contact', '')));
         } catch (MessageException $exception) {
-            $this->logger->error('App::PasswordController::resendCodeAction', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $this->flashBag->add('error', 'web.password.forgot.resend.error.code.' . $exception->getCode());
         }
 

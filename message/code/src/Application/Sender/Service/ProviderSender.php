@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Sender\Service;
 
+use App\Application\Common\Service\ExceptionLogger;
 use App\Application\Sender\Message\MessageNotSent;
 use App\Application\Sender\Message\MessageSent;
 use App\Domain\Sender\Exception\MessageException;
@@ -61,7 +62,7 @@ final class ProviderSender
                 throw MessageException::messageNotSent();
             }
         } catch (MessageException | TemplateException | ImmutableObjectException | InvalidValueException $exception) {
-            $this->logger->error('Message::SentToProvider', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
 
             $tmp = isset($template) ? $template->toJson() : '';
             $event = new MessageNotSent($data->userId, $tmp, $exception->getMessage());

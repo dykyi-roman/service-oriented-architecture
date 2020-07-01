@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Http\Web;
 
-use App\Application\Common\Exception\ExceptionLogger;
-use App\Application\Storage\DTO\FileDTO;
+use App\Application\Common\Service\ExceptionLogger;
 use App\Application\Storage\Transformer\ArrayToFilesTransformer;
 use App\Domain\Storage\Service\StorageAdapter;
 use Psr\Log\LoggerInterface;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Sender\MessageHandler;
 
+use App\Application\Common\Service\ExceptionLogger;
 use App\Application\Sender\Message\MessageNotSent;
 use App\Domain\Sender\Document\NotSent;
 use App\Domain\Sender\Repository\NotSentPersistRepositoryInterface;
@@ -31,7 +32,7 @@ class MessageNotSentHandler implements MessageHandlerInterface
 
             $this->persistRepository->save($document);
         } catch (Throwable $exception) {
-            $this->logger->error('Message::MessageNotSentHandler', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             echo sprintf('Message::MessageNotSentHandler::%s', $exception->getMessage());
         }
     }

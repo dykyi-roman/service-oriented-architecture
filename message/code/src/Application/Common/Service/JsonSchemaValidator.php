@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Common;
+namespace App\Application\Common\Service;
 
 use JsonException;
 use JsonSchema\Validator;

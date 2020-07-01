@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Auth\Listener;
 
 use App\Application\Auth\Events\UserRegisteredEvent;
+use App\Application\Common\Service\ExceptionLogger;
 use App\Domain\Message\Exception\MessageException;
 use App\Domain\Message\Service\MessageAdapter;
 use Psr\Log\LoggerInterface;
@@ -33,7 +34,7 @@ final class SignUpSubscriber implements EventSubscriberInterface
         try {
             $this->messageAdapter->sendRegistrationSuccessMessage($event->uuid(), $event->email());
         } catch (MessageException $exception) {
-            $this->logger->error('App::SignUpSubscriber::onUserRegistered', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
         }
     }
 }

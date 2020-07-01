@@ -10,6 +10,7 @@ use App\Application\Auth\Commands\Command\SignUpCommand;
 use App\Application\Auth\Exception\AppAuthException;
 use App\Application\Auth\Request\LoginRequest;
 use App\Application\Auth\Request\SignUpRequest;
+use App\Application\Common\Service\ExceptionLogger;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +52,7 @@ class SecurityController extends AbstractController
             $commandBus->handle(new LoginCommand($request));
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
-            $logger->error('App::SecurityController::loginPostAction', ['error' => $exception->getMessage()]);
+            $logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $flashBag->add('error', 'web.login.error.code.' . $exception->getCode());
         }
 
@@ -89,7 +90,7 @@ class SecurityController extends AbstractController
 
             return $this->redirectToRoute('web.index');
         } catch (AppAuthException $exception) {
-            $logger->error('App::SecurityController::signUpPostAction', ['error' => $exception->getMessage()]);
+            $logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $flashBag->add('error', 'web.sign-up.error.code.' . $exception->getCode());
         }
 

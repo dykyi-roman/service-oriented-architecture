@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Template;
 
+use App\Application\Common\Service\ExceptionLogger;
 use App\Domain\Sender\ValueObject\MessageType;
 use App\Domain\Template\Document\Template;
 use App\Domain\Template\Exception\TemplateException;
@@ -46,7 +47,7 @@ final class TemplateEditor
                 $template->body()
             );
         } catch (Throwable $exception) {
-            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             throw TemplateException::createTemplateProblem($name);
         }
     }
@@ -59,7 +60,7 @@ final class TemplateEditor
         try {
             $this->writeTemplateRepository->edit($id, $template->subject(), $template->body());
         } catch (Throwable $exception) {
-            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage())]);
             throw TemplateException::updateTemplateProblem($id);
         }
     }
@@ -72,7 +73,7 @@ final class TemplateEditor
         try {
             $this->writeTemplateRepository->remove($id);
         } catch (Throwable $exception) {
-            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             throw TemplateException::deleteTemplateProblem($id);
         }
     }
@@ -90,7 +91,7 @@ final class TemplateEditor
 
             return $template;
         } catch (Throwable $exception) {
-            $this->logger->error('Message::TemplateEditor', ['error' => $exception->getMessage(),]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             throw TemplateException::notFoundTemplateById($id);
         }
     }

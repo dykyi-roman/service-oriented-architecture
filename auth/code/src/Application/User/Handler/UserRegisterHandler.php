@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\User\Handler;
 
+use App\Application\Common\Service\ExceptionLogger;
 use App\Application\User\Command\UserRegisterCommand;
 use App\Domain\User\Event\UserRegisteredEvent;
 use App\Domain\User\Exception\UserException;
@@ -52,8 +53,7 @@ final class UserRegisterHandler
             $this->metrics->inc('registration');
             $this->dispatcher->dispatch(new UserRegisteredEvent($command->uuid, $command->email));
         } catch (Throwable $exception) {
-            $message = sprintf('%s::%s', substr(strrchr(__CLASS__, "\\"), 1), __FUNCTION__);
-            $this->logger->error($message, ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             $this->metrics->endTiming('registration', 1.0, ['error' => 1]);
 
             throw UserException::createUser();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Console\Commands;
 
+use App\Application\Common\Service\ExceptionLogger;
 use App\Domain\Auth\Exception\AuthException;
 use App\Domain\Auth\Service\CertReceiver;
 use Illuminate\Console\Command;
@@ -32,7 +33,7 @@ class CertDownloadCommand extends Command
                 $result = $this->certReceiver->downloadPublicKey(env('JWT_PUBLIC_KEY'));
                 $this->info(sprintf('JWT key is updated status %s', $result ? 'success' : 'failed'));
             } catch (AuthException $exception) {
-                $this->logger->error(sprintf('Error: %s', $exception->getMessage()));
+                $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             }
 
             sleep((int)$this->option('iteration_sleep'));

@@ -6,7 +6,7 @@ namespace App\UI\Http\Web;
 
 use App\Application\Auth\DTO\UserDTO;
 use App\Application\Auth\Transformer\ArrayToUsersTransformer;
-use App\Application\Common\Exception\ExceptionLogger;
+use App\Application\Common\Service\ExceptionLogger;
 use App\Domain\Auth\Service\AuthAdapter;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Sender\MessageHandler;
 
-use App\Application\Common\JsonSchemaValidator;
+use App\Application\Common\Service\ExceptionLogger;
+use App\Application\Common\Service\JsonSchemaValidator;
 use App\Application\Sender\Message\Message;
 use App\Application\Sender\Service\ProviderSender;
 use JsonException;
@@ -36,7 +37,7 @@ class MessageHandler implements MessageHandlerInterface
             $this->schemaValidator->validate($content, self::SCHEMA);
             $this->providerSender->send($content);
         } catch (JsonException $exception) {
-            $this->logger->error('Application::MessageHandler', ['error' => $exception->getMessage()]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
         }
     }
 }
