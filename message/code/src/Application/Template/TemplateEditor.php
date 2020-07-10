@@ -86,7 +86,7 @@ final class TemplateEditor
         try {
             $template = $this->readTemplateRepository->findById($id);
             if (null === $template) {
-                throw new RuntimeException('');
+                throw new RuntimeException('Template is not found');
             }
 
             return $template;

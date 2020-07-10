@@ -25,7 +25,7 @@ final class PersistActionsListener
     {
         $user = null;
         $token = $this->tokenStorage->getToken();
-        if ($token instanceof TokenInterface ) {
+        if ($token instanceof TokenInterface) {
             $user = $token->getUser();
         }
 

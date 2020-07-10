@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Common;
 
-use App\Application\Common\JsonSchemaValidator;
+use App\Application\Common\Service\JsonSchemaValidator;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
- * @coversDefaultClass \App\Application\Common\JsonSchemaValidator
+ * @coversDefaultClass JsonSchemaValidator
  */
 class JsonSchemaValidatorTest extends WebTestCase
 {
