@@ -162,7 +162,7 @@ For more information, click [here](vault/README.md).
 
 [REST vs Messaging for Microservices – Which One is Best?](https://solace.com/blog/experience-awesomeness-event-driven-microservices/)
 
-[Create an SSL Certificate on Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
+[Enable HTTPS on your local Docker dev environment](https://dev.to/aschmelyun/enable-https-on-your-local-docker-dev-environment-2k3c?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)
 
 [json-schema](https://json-schema.org/understanding-json-schema/reference/object.html)
 

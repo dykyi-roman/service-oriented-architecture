@@ -1,7 +1,8 @@
 version: '3.7'
 services:
     web:
-        image: nginx:stable-alpine
+        build:
+            context: docker/nginx
         ports:
             - "5000:80"
             - "5001:443"
@@ -9,7 +10,6 @@ services:
             - "5001"
         volumes:
             - ./code:/var/www/html/code
-            - ./docker/nginx/ssl:/etc/nginx/ssl
             - ./docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
         links:
             - php

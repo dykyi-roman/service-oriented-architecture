@@ -13,14 +13,6 @@ JWT: (Json Web Token) is an open standard (RFC 7519) that defines the Token form
 
 Read more how is work, click [here](docs/JWT.md)
 
-## Configuration
-
-Run migrations:
-
-```
-php bin/console doctrine:migrations:migrate 
-```
-
 ## App endpoints
 
 | Path                    | Method  | Scheme | Grant |
@@ -46,6 +38,20 @@ php bin/console doctrine:migrations:migrate
 * PHP 7.4
 * Symfony 5.0
 * MySQL 8.0
+
+## Configuration
+
+Run migrations:
+
+```
+php bin/console doctrine:migrations:migrate 
+```
+
+Add docker machine IP to /etc/hosts:  
+
+```
+127.0.0.1 auth.test
+```
 
 ## Clients
 

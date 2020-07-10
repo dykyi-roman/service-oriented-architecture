@@ -19,6 +19,15 @@ Storage service
 | /api/admin/user/{userId}/storage/files      | GET     | ANY    | ALL   |
 | /api/admin/user/{userId}/storage/files/{id} | GET     | ANY    | ALL   |
 
+
+## Configuration
+
+Add docker machine IP to /etc/hosts:  
+
+```
+127.0.0.1 storage.test
+```
+
 ## Requirements
 
 * PHP 7.4

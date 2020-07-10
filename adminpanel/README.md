@@ -41,11 +41,19 @@ Security Assertion Markup Language (SAML) is a standard for logging users into a
 
 ![image](docs/SAMLflow.png)
 
-# Endpoints
+## Endpoints
 
 | Path                    | Method | Scheme | Grant |
 | ----------------------  | ------ | ------ | ----- |
 | /api/...                | POST   | ANY    | ALL   |
+
+## Configuration
+
+Add docker machine IP to /etc/hosts:  
+
+```
+127.0.0.1 admin.test
+```
 
 ## Requirements
 

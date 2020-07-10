@@ -65,6 +65,14 @@ and push the data in the next queue ["sent", "notSent"]. I following YAGNI princ
 | /api/admin/templates/{id}      | PUT    | ANY    | ALL   |
 | /api/admin/templates/{id}      | DELETE | ANY    | ALL   |
 
+## Configuration
+
+Add docker machine IP to /etc/hosts:  
+
+```
+127.0.0.1 admin.test
+```
+
 ## Requirements
 
 * PHP 7.4

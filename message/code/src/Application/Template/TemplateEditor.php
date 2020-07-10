@@ -60,7 +60,7 @@ final class TemplateEditor
         try {
             $this->writeTemplateRepository->edit($id, $template->subject(), $template->body());
         } catch (Throwable $exception) {
-            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage())]);
+            $this->logger->error(...ExceptionLogger::log(__METHOD__, $exception->getMessage()));
             throw TemplateException::updateTemplateProblem($id);
         }
     }

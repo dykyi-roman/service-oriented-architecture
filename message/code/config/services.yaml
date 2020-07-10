@@ -84,6 +84,10 @@ services:
     App\Infrastructure\Clients\TwilioClient:
         public: true
 
+    App\Domain\Auth\Service\CertReceiver:
+        bind:
+            $host: '%AUTH_SERVICE_HOST%'
+
     twilio.client:
         class: Twilio\Rest\Client
         arguments: ['%env(resolve:TWILIO_SID)%', '%env(resolve:TWILIO_TOKEN)%']

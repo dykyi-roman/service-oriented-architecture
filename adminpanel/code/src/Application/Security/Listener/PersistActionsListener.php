@@ -7,6 +7,7 @@ namespace App\Application\Security\Listener;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class PersistActionsListener
@@ -24,11 +25,11 @@ final class PersistActionsListener
     {
         $user = null;
         $token = $this->tokenStorage->getToken();
-        if ($token) {
+        if ($token instanceof TokenInterface ) {
             $user = $token->getUser();
         }
 
-        if ($user instanceof UserInterface) {
+        if (!$user instanceof UserInterface) {
             return;
         }
 
