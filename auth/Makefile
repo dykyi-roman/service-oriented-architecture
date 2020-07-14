@@ -1,17 +1,22 @@
 placeholder:
-	@echo "----------------------------------------------------"
-	@echo "| COMMAND      | DESCRIPTION                       |"
-	@echo "----------------------------------------------------"
-	@echo "| init         | Up from the ground                |"
-	@echo "| start        | Up all docker containers          |"
-	@echo "| stop         | Down all docker containers        |"
-	@echo "| restart      | Restart all docker containers     |"
-	@echo "| cache-clear  | Clear cache                       |"
-	@echo "| phpcs        | Run phpcs                         |"
-	@echo "| psalm        | Run psalm                         |"
-	@echo "| php-test     | Run phpunit tests                 |"
-	@echo "| postman-test | Run postman tests                 |"
-	@echo "| pre-commit   | phpcs clean-code psalm tests-run  |"
+	@echo "----------------------------------------------------------"
+	@echo "| COMMAND            | DESCRIPTION                       |"
+	@echo "----------------------------------------------------------"
+	@echo "| init               | Up from the ground                |"
+	@echo "| start              | Up all docker containers          |"
+	@echo "| stop               | Down all docker containers        |"
+	@echo "| restart            | Restart all docker containers     |"
+	@echo "| ------------------ | --------------------------------- |"
+	@echo "| docker-sync-start  | Up docker sync                    |"
+	@echo "| docker-sync-stop   | Down docker sync                  |"
+	@echo "| docker-sync-clean  | Clean docker sync                 |"
+	@echo "| ------------------ | --------------------------------- |"
+	@echo "| cache-clear        | Clear cache                       |"
+	@echo "| phpcs              | Run phpcs                         |"
+	@echo "| psalm              | Run psalm                         |"
+	@echo "| php-test           | Run phpunit tests                 |"
+	@echo "| postman-test       | Run postman tests                 |"
+	@echo "| pre-commit         | phpcs clean-code psalm tests-run  |"
 
 init:
 	docker-compose down -v --remove-orphans
@@ -47,3 +52,12 @@ postman-test:
 
 pre-commit: phpcs psalm php-tests postman-test
 	@:
+
+docker-sync-start:
+	docker-sync-stack start
+
+docker-sync-stop:
+	docker-compose down
+
+docker-sync-clean:
+	docker-sync-stack clean

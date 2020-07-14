@@ -25,6 +25,7 @@ Service oriented architecture
 - [Metrics](metrics/README.md)
 - [Travis CI](https://travis-ci.org/github/dykyi-roman/service-oriented-architecture)
 - [Vault](vault/README.md) 
+- <a href="https://github.com/dykyi-roman/service-oriented-architecture/tree/master#docker-sync">Docker Sync</a>
 
 # Intro
 
@@ -156,6 +157,30 @@ In PHP applications there's a common pattern to keep configuration values and ac
 
 For more information, click [here](vault/README.md).
 
+## Docker Sync
+
+After using Docker in some projects, it’s amazing how much more organized and isolated the files, technologies, and resources become. 
+The integration between containers is easy and leaves the host free of installation and setup of many languages, databases, etc. It’s easy to instantly put another project up to facilitate some specific task without a huge setup.
+
+However, after using “Docker for Mac” for a long time, it’s clear that exists a performance issue on Mac/Windows because of the file system. 
+Basically, in a Linux environment, Docker runs on the host without a VM (Virtual Machine), and this provides a fast response when changing/accessing files. 
+On a Mac/Windows environment, it’s necessary to have a VM between Host and Containers, causing high latency when accessing files.
+
+### Configuration
+
+Install docker-sync gem on your machine:
+```
+gem install docker-sync
+```
+
+Install unison:
+```
+brew install unison
+brew install eugenmayer/dockersync/unox
+```
+
+Two important points for docker sync works is the docker-sync.yml and docker-compose.mac.yml files.
+
 ## Resources:
 
 [Messaging Patterns for Event-Driven Microservices](https://solace.com/blog/messaging-patterns-for-event-driven-microservices/)
@@ -177,6 +202,8 @@ For more information, click [here](vault/README.md).
 [Travis](https://docs.travis-ci.com/user/job-lifecycle/)
 
 [Best practices rest api](https://www.merixstudio.com/blog/best-practices-rest-api-development)
+
+[Docker sync](http://docker-sync.io/)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

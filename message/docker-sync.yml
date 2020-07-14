@@ -1,0 +1,19 @@
+version: "2"
+
+options:
+  verbose: false
+
+syncs:
+  app-native-osx-sync:
+    src: '.'
+    sync_userid: '999'
+    sync_excludes_type: 'none'
+    sync_excludes:
+      - 'Name .DS_Store'
+      - 'Path .idea'
+      - 'Path .git'
+      - 'Path .php_cs.cache'
+      - 'Path var'
+      - 'Path data'
+      - 'Path public'
+      - 'Path vendor'
