@@ -6,3 +6,4 @@
 /.idea
 /code/symfony.lock
 /code/composer.lock
+.DS_Store
