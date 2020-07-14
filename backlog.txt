@@ -1,8 +1,7 @@
-adminka
- - think about server (based on CQRS) 
- - create super admin (console command)
- 
 yandex tank
+
+adminka
+ - think about server (based on CQRS)
 
 cloud-storage:
  - linked userId with upload file (finish admin contoller)
