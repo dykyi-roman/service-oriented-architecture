@@ -84,6 +84,8 @@ make pre-commit
 [JWT Refresh Token](https://github.com/markitosgv/JWTRefreshTokenBundle)
 
 [JWT Debugger](https://jwt.io/)
+
+[User authentication and authorization with shared session in a micro-services architecture](https://carlos-compains.medium.com/user-authentication-and-authorization-with-shared-session-in-a-micro-services-architecture-b2dd43043efd)
     
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
